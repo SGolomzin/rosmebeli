@@ -4,7 +4,7 @@ pubDate: 2022-10-05
 description: "В этой статье рассказывается о том как правильно выбрать детскую кроватку."
 ttr: 1
 image:
-  url: "/images/posts/post-3.jpg"
+  url: "/rosmebeli/images/posts/post-3.jpg"
   alt: "Фотография готового проекта детской кроватки"
 ---
 

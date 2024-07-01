@@ -4,7 +4,7 @@ pubDate: 2022-11-01
 description: "В этой статье рассказывается о том как правильно подобрать себе кухню."
 ttr: 5
 image:
-  url: "/images/posts/post-1.jpg"
+  url: "/rosmebeli/images/posts/post-1.jpg"
   alt: "Фотография готового проекта кухни"
 ---
 

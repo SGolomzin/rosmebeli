@@ -25,6 +25,9 @@ paths.forEach((path, i) => {
 	if (pageName in PagenameLocalization) {
 		pageName = PagenameLocalization[pageName as keyof typeof PagenameLocalization];
 	}
+	// убраем  base ссылку
+	if (pageName === 'rosmebeli') return;
+
   parts.push({
 		pageName,
 		href

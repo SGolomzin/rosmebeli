@@ -4,7 +4,7 @@ pubDate: 2023-03-12
 description: "В этой статье рассказывается о том как правильно подобрать себе шкаф."
 ttr: 7
 image:
-  url: "/images/posts/post-2.jpg"
+  url: "/rosmebeli/images/posts/post-2.jpg"
   alt: "Фотография готового проекта шкафа"
 ---
 

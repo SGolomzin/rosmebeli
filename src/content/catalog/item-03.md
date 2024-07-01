@@ -5,7 +5,7 @@ price: 25000
 rating: 3
 isAvailable: true
 thumbnail:
-  url: "/images/placeholders/placeholder_0.jpg"
+  url: "/rosmebeli/images/placeholders/placeholder_0.jpg"
   alt: "Превью-заглушка товара"
 details:
   bodyMaterials: ["МДФ"]
