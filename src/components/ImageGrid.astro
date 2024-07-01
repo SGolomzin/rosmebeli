@@ -13,7 +13,7 @@ const { images, class: className, ...rest } = Astro.props;
 <div class:list={["image-grid", className]} {...rest}>
 	{images.slice(0, 5).map((image, i) => (
 		<img
-			src={`/images/placeholders/placeholder_${i + 1}.jpg`}
+			src={`/rosmebeli/images/placeholders/placeholder_${i + 1}.jpg`}
 			alt={image.alt}
 			data-name={`image-${i}`}
 		/>
