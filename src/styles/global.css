@@ -1,15 +1,17 @@
 @font-face {
   font-family: "TildaSans VF";
   font-display: swap;
-  src: local("TildaSans-VF"), url("/fonts/TildaSans-VF.woff") format("woff"),
-    url("/fonts/TildaSans-VF.woff2") format("woff2");
+  src: local("TildaSans-VF"),
+    url("/rosmebeli/fonts/TildaSans-VF.woff") format("woff"),
+    url("/rosmebeli/fonts/TildaSans-VF.woff2") format("woff2");
 }
 
 @font-face {
   font-family: "OpenRunde Bold";
   font-weight: bold;
-  src: local("OpenRunde-Bold"), url("/fonts/OpenRunde-Bold.woff") format("woff"),
-    url("/fonts/OpenRunde-Bold.woff2") format("woff2");
+  src: local("OpenRunde-Bold"),
+    url("/rosmebeli/fonts/OpenRunde-Bold.woff") format("woff"),
+    url("/rosmebeli/fonts/OpenRunde-Bold.woff2") format("woff2");
 }
 
 :root {
@@ -41,7 +43,8 @@ html {
   color: var(--clr-100);
 
   background-color: var(--clr-primary-400);
-  background-image: url("/images/noise.webp"), url("/images/lines.svg");
+  background-image: url("/rosmebeli/images/noise.webp"),
+    url("/rosmebeli/images/lines.svg");
   background-repeat: repeat, repeat-y;
   background-position: 0, center;
 
@@ -142,7 +145,7 @@ a:hover {
 [data-theme="dark"] {
   color: var(--clr-100);
   background-color: var(--clr-primary-400);
-  background-image: url("/images/noise.webp");
+  background-image: url("/rosmebeli/images/noise.webp");
 }
 
 .label,
