@@ -1,0 +1,82 @@
+---
+const paths = Astro.url.pathname.split('/').filter(x => x);
+
+interface Props extends astroHTML.JSX.HTMLAttributes {
+	currentPage?: string;
+}
+
+import { Icon } from 'astro-icon/components';
+
+const PagenameLocalization = {
+	"catalog": "Каталог",
+	"posts": "Статьи",
+};
+
+let parts = [{
+	pageName: 'Главная',
+	href: '/'
+}];
+
+paths.forEach((path, i) => {
+  const href = `/${paths.slice(0, i + 1).join('/')}`;
+	// Заменяем - и _ на пробел
+	let pageName = path.replace(/[-_]/g, ' ');
+	// Переводим название страницы на русский язык (если возможно)
+	if (pageName in PagenameLocalization) {
+		pageName = PagenameLocalization[pageName as keyof typeof PagenameLocalization];
+	}
+  parts.push({
+		pageName,
+		href
+	});
+})
+
+const { currentPage, class: className, ...rest } = Astro.props;
+---
+
+<nav
+	class:list={[
+		"breadcrumbs",
+		className
+	]}
+	aria-label="Хлебные крошки"
+	{...rest}
+>
+  <ol class="breadcrumbs" role="list">
+    {parts.map(({ pageName, href }, i) => <li class="breadcrumbs__item" role="listitem">
+			{i !== 0 ? <Icon name="chevron-right" /> : null}
+			{i === parts.length - 1
+				? <span>{currentPage ? currentPage : pageName}</span>
+				: <a href={href}>{pageName}</a>
+			}
+		</li>)}
+  </ol>
+</nav>
+
+<style lang="scss">
+	[data-icon] {
+		scale: 2;
+	}
+
+	.breadcrumbs {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+
+		margin: 0 0 0.5rem;
+		padding: 0;
+
+		line-height: 150%;
+		list-style: none;
+
+		&__item {
+			display: flex;
+			gap: 0.5rem;
+			align-items: center;
+
+			span {
+				font-weight: bold;
+			}
+		}
+	}
+</style>

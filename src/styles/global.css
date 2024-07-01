@@ -1,0 +1,234 @@
+@font-face {
+  font-family: "TildaSans VF";
+  font-display: swap;
+  src: local("TildaSans-VF"), url("/fonts/TildaSans-VF.woff") format("woff"),
+    url("/fonts/TildaSans-VF.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "OpenRunde Bold";
+  font-weight: bold;
+  src: local("OpenRunde-Bold"), url("/fonts/OpenRunde-Bold.woff") format("woff"),
+    url("/fonts/OpenRunde-Bold.woff2") format("woff2");
+}
+
+:root {
+  --clr-100: #efefef;
+  --clr-400: #abaeb7;
+  --clr-900: #1a1a1b;
+  --clr-primary-100: #4c6e79;
+  --clr-primary-400: #003b4d;
+  --clr-primary-700: #002834;
+  --clr-secondary-100: #f3e9da;
+  --clr-secondary-400: #ffc978;
+  --clr-secondary-700: #faa453;
+  --clr-error: #f44e38;
+  --clr-pastel-red: #cc5a71;
+  --clr-pastel-blue: #717ec3;
+  --clr-pastel-green: #c1d9d4;
+  --font-family-primary: "TildaSans VF", system-ui, sans-serif;
+  --font-family-secondary: "OpenRunde Bold", system-ui, sans-serif;
+  --main-header-height: 6.5rem;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: var(--main-header-height);
+
+  box-sizing: border-box;
+
+  font-family: var(--font-family-primary);
+  color: var(--clr-100);
+
+  background-color: var(--clr-primary-400);
+  background-image: url("/images/noise.webp"), url("/images/lines.svg");
+  background-repeat: repeat, repeat-y;
+  background-position: 0, center;
+
+  @media (width >= 420px) {
+    background-position: 0, calc(50vw - 1440px / 2); /* второе значение убирает сдвиг контента при открытии модального окна (50vw выравнивет по центру за вычетом полного размера svg изображения деленного пополам) */
+  }
+}
+
+body,
+html {
+  display: flex;
+  flex-direction: column;
+
+  min-width: 420px;
+  height: 100%;
+  margin: 0;
+}
+
+body:has(dialog[open]) {
+  overflow-y: hidden;
+}
+
+main {
+  flex-grow: 1;
+}
+
+h1 {
+  font-size: 2.25rem;
+}
+
+h2 {
+  font-size: 1.75rem;
+}
+
+h3 {
+  font-size: 1.5rem;
+  font-weight: 400;
+}
+
+h4 {
+  font-size: 1.25rem;
+}
+
+h2,
+h3,
+h4 {
+  letter-spacing: 0.02em;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  margin: 0 0 1em;
+}
+
+p {
+  line-height: 1.5;
+}
+
+a {
+  cursor: pointer;
+
+  display: inline-block;
+
+  line-height: 1.5;
+  color: var(--clr-400);
+  text-decoration: none;
+  text-underline-position: under;
+}
+
+a:hover {
+  color: var(--clr-secondary-400);
+  text-decoration: underline;
+  text-decoration-style: dotted;
+}
+
+/* a:visited {
+  color: var(--clr-secondary-700);
+} */
+
+/* a::after {
+  content: "";
+
+  position: relative;
+  bottom: 0.2em;
+
+  display: block;
+
+  border-bottom: 1px dashed currentcolor;
+} */
+
+[data-theme="light"] {
+  color: var(--clr-900);
+  background: var(--clr-100);
+}
+
+[data-theme="dark"] {
+  color: var(--clr-100);
+  background-color: var(--clr-primary-400);
+  background-image: url("/images/noise.webp");
+}
+
+.label,
+.label-sm {
+  font-size: 0.875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.13em;
+}
+
+.label-sm {
+  font-size: 0.6875rem;
+}
+
+.decor-wrapper {
+  /* decor gutter */
+  --d-g: 12px;
+
+  position: relative;
+  transform-style: preserve-3d;
+}
+
+.decor-wrapper::before {
+  content: "";
+
+  position: absolute;
+
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+
+  border: 6px solid var(--clr-secondary-400);
+}
+
+.decor-top-left::before {
+  transform: translate3d(calc(var(--d-g) * -1), calc(var(--d-g) * -1), -1px);
+}
+
+.decor-bottom-right::before {
+  transform: translate3d(var(--d-g), var(--d-g), -1px);
+}
+
+.decor-top::before {
+  transform: translate3d(var(--d-g), calc(var(--d-g) * -2), -1px);
+  width: calc(100% - 24px);
+}
+
+.decor-bottom::before {
+  transform: translate3d(var(--d-g), calc(var(--d-g) * 2), -1px);
+  width: calc(100% - 24px);
+}
+
+/* Tablet and up */
+@media (width >= 576px) {
+  h1 {
+    font-size: 2.5rem;
+  }
+
+  h2 {
+    font-size: 2rem;
+  }
+
+  h3 {
+    font-size: 1.75rem;
+  }
+
+  h4 {
+    font-size: 1.375rem;
+  }
+}
+
+/* Desktop and up */
+@media (width >= 768px) {
+  h1 {
+    font-size: 3rem;
+  }
+
+  h2 {
+    font-size: 2.5rem;
+  }
+
+  h3 {
+    font-size: 2.25rem;
+  }
+
+  h4 {
+    font-size: 1.5rem;
+  }
+}

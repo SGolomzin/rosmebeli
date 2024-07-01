@@ -1,0 +1,42 @@
+---
+import Layout from "../../layouts/BaseLayout.astro"
+import { getCollection } from "astro:content";
+
+import BlogCard from "../../components/BlogCard.astro";
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+
+const allPosts = await getCollection("posts");
+---
+
+<Layout title="Статьи | РОСМЕБЕЛЬ">
+	<main>
+		<section class="section-block">
+			<div class="container">
+				<Breadcrumbs />
+				<h1>Статьи</h1>
+				<div class="posts">
+					{allPosts.map((post) => (
+						<BlogCard post={post} />
+					))}
+				</div>
+		</section>
+	</main>
+</Layout>
+
+<style lang="scss">
+	@import "../../styles/_breakpoints.scss";
+
+	.posts {
+		display: grid;
+		grid-template-columns: repeat(1, minmax(0, 1fr));
+		gap: 1.25rem;
+
+		@include breakpoint(md) {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
+
+		@include breakpoint(xl) {
+			grid-template-columns: repeat(3, minmax(0, 1fr));
+		}
+	}
+</style>

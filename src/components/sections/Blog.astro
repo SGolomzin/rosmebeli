@@ -1,0 +1,71 @@
+---
+import { getCollection } from "astro:content";
+
+import AnimatedHeading from "../AnimatedHeading.astro";
+import Link from "../Link.astro";
+import BlogCard from "../BlogCard.astro";
+
+const allPosts = await getCollection("posts");
+const sortedPosts = allPosts.sort((a, b) => new Date(b.data.pubDate).valueOf() - new Date(a.data.pubDate).valueOf());
+const recentPosts = sortedPosts.slice(0, 3);
+---
+
+<section class="section-block">
+	<div class="container conainer-grid">
+		<div class="container-grid__heading container-grid__heading--centered">
+			<AnimatedHeading class="features__heading" title="Последние статьи" tag="h2"/>
+			<p class="features__text">Следите за новостями в нашем блоге о дизайне интерьера.</p>
+		</div>
+		<div class="features__content container-grid__content">
+			<div class="recent-posts">
+				{recentPosts.map((post) => (
+					<BlogCard post={post} />
+				))}
+			</div>
+
+			<Link
+				class="show-all"
+				href="/posts"
+				appearance="button-ghost"
+				icon="arrow-right"
+			>Смотреть все</Link>
+		</div>
+	</div>
+</section>
+
+<style lang="scss">
+	@import "../../styles/_breakpoints.scss";
+
+	.features__heading {
+		margin-bottom: 0;
+	}
+
+	.features__text {
+		color: var(--clr-100);
+		opacity: .65;
+	}
+
+	.features__content {
+		display: flex;
+		flex-direction: column;
+		gap: 2.25rem;
+	}
+
+	.recent-posts {
+		display: grid;
+		grid-template-columns: repeat(1, minmax(0, 1fr));
+		gap: 1.25rem;
+
+		@include breakpoint(md) {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
+
+		@include breakpoint(xl) {
+			grid-template-columns: repeat(3, minmax(0, 1fr));
+		}
+	}
+
+	.show-all {
+		align-self: center;
+	}
+</style>

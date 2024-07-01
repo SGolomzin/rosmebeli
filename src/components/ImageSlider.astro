@@ -1,0 +1,123 @@
+<section class="section-block" data-theme="light">
+	<swiper-container
+		id="image-slider"
+		allow-touch-move="false"
+		centered-slides="true"
+		centered-slides-bounds="true"
+		space-between={32}
+		speed={500}
+		loop={true}
+		autoplay={true}
+		height={280}
+	>
+		<swiper-slide>
+			<img
+				src="images/placeholders/placeholder_1.jpg"
+				alt="placeholder"
+			/>
+		</swiper-slide>
+		<swiper-slide>
+			<img
+				src="images/placeholders/placeholder_2.jpg"
+				alt="placeholder"
+			/>
+		</swiper-slide>
+		<swiper-slide>
+			<img
+				src="images/placeholders/placeholder_3.jpg"
+				alt="placeholder"
+			/>
+		</swiper-slide>
+		<swiper-slide>
+			<img
+				src="images/placeholders/placeholder_4.jpg"
+				alt="placeholder"
+			/>
+		</swiper-slide>
+		<swiper-slide>
+			<img
+				src="images/placeholders/placeholder_1.jpg"
+				alt="placeholder"
+			/>
+		</swiper-slide>
+		<swiper-slide>
+			<img
+				src="images/placeholders/placeholder_2.jpg"
+				alt="placeholder"
+			/>
+		</swiper-slide>
+	</swiper-container>
+</section>
+
+{/* GSAP animations */}
+<script>
+	function init() {
+		gsap.from('#image-slider', {
+			opacity: 0,
+			yPercent: 200,
+			duration: 1,
+			scrollTrigger: {
+				trigger: '#image-slider'
+			}
+		})
+	}
+
+	window.addEventListener('load', init);
+</script>
+
+<script>
+	import { register } from 'swiper/element/bundle';
+	register()
+
+	import type { SwiperContainer } from 'swiper/element/bundle';
+
+	const slider: SwiperContainer | null = document.querySelector('#image-slider');
+
+	const breakpoints = {
+    0: {
+      slidesPerView: 1
+    },
+    768: {
+      slidesPerView: 2
+    },
+		1200: {
+			slidesPerView: 3
+		},
+    1400: {
+      slidesPerView: "auto"
+    }
+  }
+
+	if (slider) {
+		Object.assign(slider, { breakpoints: breakpoints });
+	}
+</script>
+
+<style is:global>
+	swiper-container {
+		width: 100%;
+		height: 100%;
+	}
+
+	swiper-slide {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+
+		width: 30%;
+		height: 100%;
+	}
+
+	swiper-slide > img {
+		display: block;
+		width: 100%;
+		height: 200px;
+		object-fit: cover;
+	}
+</style>
+
+<style>
+	.section-block {
+		--section-top-padding: 0;
+	}
+</style>

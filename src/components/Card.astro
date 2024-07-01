@@ -1,0 +1,48 @@
+---
+interface Props extends astroHTML.JSX.HTMLAttributes {
+	bordered?: boolean;
+	shaded?: boolean;
+	filled?: boolean;
+}
+
+const {
+	bordered = false,
+	shaded = false,
+	filled = false,
+	class: className,
+	...rest
+} = Astro.props;
+---
+<div
+	class:list={[
+		"card",
+		{ "card--bordered": bordered },
+		{ "card--shaded": shaded },
+		{ "card--filled": filled },
+		className
+	]}
+	{...rest}
+>
+	<slot />
+</div>
+
+<style lang="scss">
+	.card {
+		overflow: hidden;
+		box-sizing: border-box;
+		width: 100%;
+		padding: 1rem 1.25rem 2rem;
+
+		&--bordered {
+			border: 1px solid var(--clr-secondary-400);
+		}
+
+		&--shaded {
+			box-shadow: 0 4px 4px -2px rgb(24 39 75 / 8%), 0 2px 4px -2px rgb(24 39 75 / 12%);
+		}
+
+		&--filled {
+			padding: 0;
+		}
+	}
+</style>

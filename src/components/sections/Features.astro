@@ -1,0 +1,127 @@
+---
+import AnimatedHeading from "../AnimatedHeading.astro";
+
+const FeatureItems = [
+	{
+		title: "Оригинальное стилистическое оформление",
+		text: "Испытайте идеальное сочетание функциональности и стиля с нашими услугами по изготовлению мебели на заказ. Наши опытные мастера создают уникальные предметы, которые удовлетворят ваши конкретные потребности и улучшат эстетику вашего пространства.",
+		isActive: true
+	},
+	{
+		title: "Индивидуальный процесс проектирования",
+		text: "Наш процесс проектирования специально разработан таким образом, чтобы каждая деталь вашей индивидуальной мебели была тщательно спланирована и выполнена. От первоначальной концепции до окончательной сборки мы уделяем приоритетное внимание вашему видению и обеспечиваем исключительные результаты.",
+		isActive: false
+	},
+	{
+		title: "Материалы премиум-качества",
+		text: "Для создания мебели на заказ мы используем только лучшие материалы. От прочной древесины твердых пород до роскошной отделки — наша приверженность качеству гарантирует, что ваша мебель выдержит испытание временем и превзойдет ваши ожидания.",
+		isActive: false
+	}
+]
+---
+
+<section
+	class="section-block"
+	data-theme="light"
+>
+	<div class="container container-grid">
+		<AnimatedHeading
+			class="features__title container-grid__heading"
+			title="Мебель на заказ — это" tag="h2"
+		/>
+		<div class="features container-grid__content">
+			<ul class="features__list">
+				{FeatureItems.map(({ title, text, isActive }, i) => (
+					<li data-is-active={`${isActive}`} data-tab={++i}>
+						<h4 class="features__title">{title}</h4>
+						<p class="features__text">{text}</p>
+					</li>
+				))}
+			</ul>
+			<div class="features__preview">
+				<img src="/images/placeholders/placeholder_1.jpg" alt="Tab 1" data-tab="1" />
+				<img src="/images/placeholders/placeholder_2.jpg" alt="Tab 2" data-tab="2"/>
+				<img src="/images/placeholders/placeholder_3.jpg" alt="Tab 3" data-tab="3" />
+			</div>
+		</div>
+	</div>
+</section>
+
+<script>
+	const FeaturesList = document.querySelector(".features__list");
+	const Features = [...FeaturesList?.children || []];
+
+	Features.forEach((f) => {
+		f.addEventListener("click", () => {
+			Features.forEach((item) => {
+				item.setAttribute("data-is-active", "false");
+			});
+			f.setAttribute("data-is-active", "true");
+		})
+	});
+
+</script>
+
+<style lang="scss">
+	@import "../../styles/_breakpoints.scss";
+
+	$tabs: 3;
+
+	.features {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 1.25rem;
+		align-items: center;
+
+		@include breakpoint(md) {
+			grid-template-columns: 1fr 1fr;
+		}
+
+		&__list {
+			display: flex;
+			flex-direction: column;
+			gap: 2.25rem;
+
+			margin: 0;
+			padding: 0;
+
+			list-style: none;
+
+			& > li {
+				padding-left: 2.25rem;
+				text-wrap: pretty;
+				border-left: 3px solid transparent;
+
+				&[data-is-active="true"] {
+					border-left-color: var(--clr-secondary-400);
+				}
+			}
+		}
+
+		&__preview {
+			position: relative;
+			overflow: hidden;
+			aspect-ratio: 1 / 1;
+
+			& > img {;
+				position: absolute;
+
+				width: 100%;
+				height: 100%;
+
+				opacity: 0;
+				object-fit: cover;
+
+				transition: all 300ms ease-in;
+			}
+		}
+
+		@for $tab from 1 through $tabs {
+			&:has(li[data-tab="#{$tab}"][data-is-active="true"]) {
+				img:nth-child(#{$tab}) {
+					opacity: 1;
+				}
+			}
+		}
+	}
+</style>

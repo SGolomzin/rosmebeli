@@ -1,0 +1,61 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props extends astroHTML.JSX.HTMLAttributes {
+	product: CollectionEntry<'catalog'>
+}
+
+import Card from "./Card.astro";
+import ImageThumbnail from './ImageThumbnail.astro';
+import Link from "./Link.astro";
+
+const { product, class: className, ...rest } = Astro.props
+---
+
+<Card
+	class:list={[
+		"catalog-card",
+		className
+	]}
+	shaded
+	filled
+	{...rest}
+>
+	<ImageThumbnail
+		src={product.data.thumbnail.url}
+		alt={product.data.thumbnail.alt}
+	/>
+	<Card class="catalog-card__info" filled>
+		<span class="catalog-card__name">{product.data.name}</span>
+		<span class="catalog-card__variant">{product.data.variant}</span>
+	</Card>
+	<Link class="catalog-card__link" href={`/catalog/${product.slug}`} appearance="button" icon="arrow-right">Подробнее</Link>
+</Card>
+
+<style lang="scss">
+	@import "../styles/_design.scss";
+
+	.catalog-card {
+		display: grid;
+		grid-template-rows: 375px 2lh min-content;
+		gap: 0.5rem;
+		margin: 1rem;
+
+		@include scaleOnHover(1.05);
+
+		&__info {
+			display: flex;
+			flex-direction: column;
+			align-items: flex-start;
+			align-self: start;
+		}
+
+		&__name {
+			font-weight: bold;
+		}
+
+		&__variant {
+			color: var(--clr-400);
+		}
+	}
+</style>

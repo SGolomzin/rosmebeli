@@ -1,0 +1,90 @@
+---
+type Image = {
+	url: string;
+	alt: string;
+}
+
+interface Props extends astroHTML.JSX.HTMLAttributes {
+	images: Image[];
+}
+
+const { images, class: className, ...rest } = Astro.props;
+---
+<div class:list={["image-grid", className]} {...rest}>
+	{images.slice(0, 5).map((image, i) => (
+		<img
+			src={`/images/placeholders/placeholder_${i + 1}.jpg`}
+			alt={image.alt}
+			data-name={`image-${i}`}
+		/>
+	))}
+</div>
+
+<script>
+	import { Flip } from 'gsap/Flip';
+	gsap.registerPlugin(Flip);
+
+	const images = gsap.utils.toArray<HTMLImageElement>('.image-grid img');
+	let activeImage = images[0];
+
+	images.forEach(image => {
+		image.addEventListener('click', () => changeGrid(image))
+	})
+
+	function changeGrid(image: HTMLImageElement) {
+		if (image === activeImage) return;
+		const state = Flip.getState(activeImage);
+
+		activeImage.dataset.name = image.dataset.name;
+		image.dataset.name = "image-0";
+		activeImage = image;
+
+		Flip.from(state, {
+			duration: 0,
+			simple: true
+		});
+	}
+</script>
+
+<style lang="scss">
+	@import "../styles/_breakpoints.scss";
+
+	.image-grid {
+		display: grid;
+		grid-template:
+			"image-0 image-0 image-0 image-0"
+			"image-1 image-2 image-3 image-4";
+		grid-template-columns: repeat(4, 1fr);
+		grid-template-rows: 450px 100px;
+		gap: 1rem;
+
+		@include breakpoint(md) {
+			grid-template:
+				"image-0 image-0 image-1 image-2"
+				"image-0 image-0 image-3 image-4";
+			grid-template-columns: repeat(4, 1fr);
+			grid-template-rows: repeat(2, 230px);
+		}
+
+		img {
+			will-change: transform;
+			cursor: pointer;
+
+			width: 100%;
+			height: 100%;
+
+			object-fit: cover;
+
+			@for $i from 0 to 4 {
+				&[data-name=image-#{$i}] {
+					grid-area: image-#{$i};
+				}
+			}
+
+			&[data-name="image-0"] {
+				cursor: default;
+				z-index: 1;
+			}
+		}
+	}
+</style>

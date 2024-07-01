@@ -1,0 +1,180 @@
+---
+import Statistics from '../Statistics.astro';
+import type { StatisticsProps } from '../Statistics.astro';
+
+import Input from '../Input.astro';
+import Button from "../Button.astro";
+import Ticker from '../Ticker.astro';
+import Modal from '../Modal.astro';
+
+const Stats: StatisticsProps[] = [
+	{
+		value: "14 лет",
+		description: "успешной работы"
+	},
+	{
+		value: "2,500+",
+		description: "довольных клиентов"
+	},
+	{
+		value: "18",
+		description: "месяцев гарантии"
+	}
+]
+---
+<section id="hero" class="section-block">
+	<div class="container">
+		<div class="hero__promo">
+			<div>
+				<p class="hero__promo-text label">Качественная мебель на заказ · Изготавливаем в Москве и Московской области</p>
+				<h1 class="hero__promo-slogan">Производство мебели по индивидуальным проектам</h1>
+				<h4 class="hero__promo-sub-text">Помогаем в создании идеальной мебели для вашего дома</h4>
+				<Modal id="hero-modal">
+					<Button
+						class="hero__promo-button"
+						slot="trigger"
+						appearance="ghost"
+						onclick="openDialog('hero-modal')"
+					>Заказать обратный звонок</Button>
+					<form
+						action="/"
+						method="dialog"
+					>
+						<Input
+							label="Ваше имя"
+							theme="light"
+							placeholder="Как к Вам можно обращаться?"
+						/>
+						<Input
+							label="Ваш телефон"
+							theme="light"
+							placeholder="Введите ваш телефон"
+							mask="+7 (999) 999-99-99"
+						/>
+						<Button
+							type="submit"
+						>Отправить</Button>
+					</form>
+				</Modal>
+				<Statistics class="hero__promo-stats" stats={Stats} />
+			</div>
+		</div>
+		<div class="hero__ticker">
+			<Ticker
+				class="ticker ticker--ttb"
+				axis="y"
+				direction="reverse"
+				speed="slow"
+			>
+				<img src="images/placeholders/placeholder_1.jpg" alt="placeholder" />
+				<img src="images/placeholders/placeholder_3.jpg" alt="placeholder"/>
+				<img src="images/placeholders/placeholder_2.jpg" alt="placeholder"/>
+				<img src="images/placeholders/placeholder_4.jpg" alt="placeholder"/>
+				<img src="images/placeholders/placeholder_5.jpg" alt="placeholder"/>
+			</Ticker>
+			<Ticker
+				class="ticker ticker--btt"
+				axis="y"
+				speed="slow"
+			>
+				<img src="images/placeholders/placeholder_1.jpg" alt="placeholder"/>
+				<img src="images/placeholders/placeholder_2.jpg" alt="placeholder"/>
+				<img src="images/placeholders/placeholder_3.jpg" alt="placeholder"/>
+				<img src="images/placeholders/placeholder_4.jpg" alt="placeholder"/>
+				<img src="images/placeholders/placeholder_5.jpg" alt="placeholder"/>
+			</Ticker>
+		</div>
+	</div>
+</section>
+
+{/* GSAP animations */}
+<script>
+	const tl = gsap.timeline({ defaults:{ opacity: 0, ease: "back" }});
+	function init() {
+		tl.from(".hero__promo", { ease: "linear", autoAlpha: 0 })
+			.from(".hero__promo-slogan", { x: 80, duration: 1 })
+			.from(".hero__promo-sub-text", { x: -80, duration:1 }, "<")
+			.from(".hero__promo-text", { y: 30 }, "-=0.2")
+			.from(".hero__promo-button", { y: 50 }, "-=0.4")
+			.from(".hero__promo-stats > *", { y: 50, stagger: 0.2 }, "-=0.4")
+			.from(".hero__ticker", { autoAlpha: 0 }, "<")
+			.from(".ticker--ttb", { y: "-100%", ease: "sine", opacity: 0, duration: 3 })
+			.from(".ticker--btt", { y: "100%", ease: "sine", opacity: 0, duration: 3 }, "<")
+	}
+
+	window.addEventListener("load", init);
+</script>
+
+<style lang="scss">
+	@import "../../styles/_breakpoints.scss";
+	@import "../../styles/_design.scss";
+
+	section {
+		min-height: calc(100vh - var(--section-top-padding) - var(--section-bottom-padding));
+	}
+
+	.container {
+		display: grid;
+		grid-template-columns: repeat(12, 1fr);
+		grid-template-rows: 1fr;
+		gap: 1.25rem;
+	}
+
+	.hero__promo {
+		z-index: 1;
+		grid-column: 1 / -1;
+		grid-row: 1 / 2;
+		align-self: center;
+
+		&-text {
+			color: var(--clr-secondary-400);
+		}
+
+		&-slogan {
+			margin: 15px 0 20px;
+
+			font-weight: 800;
+			line-height: 1.12;
+			text-transform: uppercase;
+			letter-spacing: 0.02em;
+		}
+
+		&-sub-text {
+			color: var(--clr-400);
+		}
+
+		@include initialHidden();
+
+		@include breakpoint(xl) {
+			grid-column: 1 / span 8;
+			grid-row: 1 / span 1;
+		}
+	}
+
+	.hero__ticker {
+		display: grid;
+		grid-column: 1 / -1;
+		grid-row: 2 / 3;
+		grid-template-columns: 1fr 1fr;
+		gap: 1.25rem;
+
+		max-height: calc((100vh - var(--section-top-padding) - var(--section-bottom-padding)) / 1.5);
+
+		mask: none;
+
+		@include initialHidden();
+
+		@include breakpoint(xl) {
+			grid-column: span 6 / -1;
+			grid-row: 1 / span 1;
+			max-height: calc(100vh - var(--section-top-padding) - var(--section-bottom-padding));
+			mask: linear-gradient(
+				90deg,
+				transparent,
+				white 30%,
+				white 70%,
+				transparent
+			);
+		}
+	}
+</style>

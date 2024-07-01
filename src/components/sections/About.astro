@@ -1,0 +1,86 @@
+---
+import Button from "../Button.astro"
+import AnimatedHeading from "../AnimatedHeading.astro"
+---
+
+<section
+	id="about-us"
+	class="section-block"
+	data-theme="light"
+>
+	<div class="container">
+		<AnimatedHeading class="about-us__heading" title="О Нас" tag="h1"/>
+		<div class="about-us">
+			<p>Наш коллектив предлагает вниманию клиентов новинки современной мебели где каждый покупатель сможет выбрать себе мебельные изделия по доступным ценам. Мы всегда рады видеть вас в числе постоянных клиентов. Вас очень удивит широкий ассортимент и множество возможностей заказа на страницах нашего каталога.</p>
+			<p>Здесь вся мебель представляется с гарантией от производителя. Специалисты нашей компании с радостью помогут заказать выгодный вариант мебели, которая поможет создать в вашем доме необыкновенный уют и комфорт.</p>
+
+			<Button
+				class="about-us__button"
+				appearance="primary"
+				icon="arrow-right"
+			>Подробнее</Button>
+		</div>
+	</div>
+</section>
+
+{/* GSAP animations */}
+<script>
+	function init() {
+		gsap.from(".about-us", {
+			opacity: 0,
+			xPercent: 300,
+			duration: 2,
+			ease: "sine",
+			scrollTrigger: ".about-us"
+		});
+	}
+
+	window.addEventListener("load", init);
+</script>
+
+<style lang="scss">
+	@import "../../styles/_breakpoints.scss";
+
+	section {
+		// необходимо чтобы избавиться от полосы прокрутки во время анимации
+		overflow: hidden;
+	}
+
+	.container {
+		display: grid;
+		grid-template-columns: repeat(12, 1fr);
+	}
+
+	.about-us {
+		grid-column: 1 / -1;
+
+		&__heading {
+			grid-column: 1 / -1;
+			align-self: baseline;
+		}
+
+		&__button {
+			margin-top: 2.25rem;
+		}
+
+		@include breakpoint(md) {
+			grid-column: span 9;
+
+			&__heading {
+				grid-column: span 3;
+			}
+
+			&__button {
+				margin-top: 3rem;
+			}
+		}
+
+		@include breakpoint(lg) {
+			grid-column: 6 / -2;
+
+			&__heading {
+				grid-column: 2 / 6;
+			}
+		}
+	}
+</style>

@@ -1,0 +1,116 @@
+---
+import { Icon } from 'astro-icon/components';
+
+interface Props extends astroHTML.JSX.ButtonHTMLAttributes {
+  appearance?: "primary" | "ghost";
+	scale?: boolean;
+	icon?: string;
+}
+
+const {
+	appearance = "primary",
+	scale = false,
+	icon,
+	class: className,
+	...rest
+} = Astro.props;
+---
+
+<button
+	class:list={[
+		"button",
+		`button--${appearance}`,
+		{ "button--scale": scale },
+		{ "button--icon": icon },
+		className
+	]}
+	{...rest}
+>
+  <slot />
+	{icon && <Icon name={icon} />}
+</button>
+
+<style lang="scss">
+	@import "../styles/_design.scss";
+
+  .button {;
+    cursor: pointer;
+
+		display: inline-flex;
+		gap: 0.25rem;
+		align-items: center;
+		justify-content: center;
+
+		min-width: 6rem;
+		padding: 0.5rem 1.25rem 0.5625rem;
+
+		font-size: 1rem;
+		font-weight: 400;
+		text-align: center;
+    letter-spacing: 0.08em;
+
+    border: 1px solid var(--clr-400);
+
+		@include outline(var(--clr-secondary-400));
+
+		&--icon {
+			justify-content: space-between;
+			padding-right: 1rem;
+		}
+
+		&--scale {
+			@include scaleOnHover(1.1);
+		}
+
+		&--primary {
+			background-color: var(--clr-100);
+
+			&:focus-visible {
+				border-color: var(--clr-pastel-blue);
+			};
+
+			&:hover {
+				background-color: var(--clr-400);
+			};
+
+			&:active {
+				color: var(--clr-pastel-blue);
+			}
+		}
+
+		&--ghost {
+			color: currentcolor;
+			background-color: transparent;
+			border-color: var(--clr-secondary-400);
+
+			&:focus-visible {
+				border-color: var(--clr-pastel-red);
+			};
+
+			&:hover {
+				color: var(--clr-pastel-red);
+				background-color: var(--clr-secondary-400);
+			};
+
+			&:active {
+				color: var(--clr-pastel-red);
+			}
+		};
+
+		&:disabled {
+			cursor: not-allowed;
+			color: var(--clr-400);
+			background-color: transparent;
+			border-color: var(--clr-400);
+
+			// disable scaling for disabled buttons
+			&:hover {
+				scale: 1;
+			}
+		}
+  }
+
+	[data-icon] {;
+		scale: 1.125;
+	}
+</style>

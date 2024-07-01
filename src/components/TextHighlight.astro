@@ -1,0 +1,50 @@
+---
+
+---
+
+<mark class="text-highlight"><slot /></mark>
+
+<script>
+	import { gsap } from "gsap";
+	import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+	gsap.registerPlugin(ScrollTrigger);
+
+	function init() {
+		gsap.utils.toArray<HTMLElement>(".text-highlight").forEach((highlight) => {
+			ScrollTrigger.create({
+				trigger: highlight,
+				start: "-100px center",
+				onEnter: () => highlight.classList.add("text-highlight--active")
+			});
+		});
+	}
+
+	window.addEventListener("load", () => init());
+</script>
+
+<style lang="scss">
+	.text-highlight {
+		--duration: 1s;
+		--ease: cubic-bezier(0.25, 1, 0.5, 1);
+		--color-text-highlight: var(--clr-900);
+		--bg-color-highlight: var(--clr-secondary-400);
+
+		all: unset;
+		background-repeat: no-repeat;
+		background-size: 0% 100%;
+		transition:
+			color calc(var(--duration) / 4) var(--ease),
+    	background-color calc(var(--duration) / 4) var(--ease),
+    	background-size var(--duration) var(--ease);
+
+		&--active {
+			color: var(--color-text-highlight);
+			background-image: linear-gradient(
+				var(--bg-color-highlight),
+				var(--bg-color-highlight)
+			);
+			background-size: 100% 100%;
+		}
+	}
+</style>

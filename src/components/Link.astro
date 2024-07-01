@@ -1,0 +1,107 @@
+---
+import { Icon } from 'astro-icon/components';
+
+interface Props extends astroHTML.JSX.AnchorHTMLAttributes {
+	appearance?: "primary" | "button" | "button-ghost";
+	href: string;
+	scale?: boolean;
+	icon?: string;
+}
+
+const {
+	appearance = "primary",
+	href,
+	scale = false,
+	icon,
+	class: className,
+	...rest
+} = Astro.props;
+---
+
+<a
+	class:list={[
+		"link",
+		`link--${appearance}`,
+		{ "link--scale": scale },
+		{ "link--icon": icon },
+		className
+	]}
+	href={href}
+	{...rest}
+>
+	<slot />
+	{icon && <Icon name={icon} />}
+</a>
+
+<style lang="scss">
+	@import "../styles/_design.scss";
+
+	.link {
+		cursor: pointer;
+
+		display: inline-flex;
+		gap: 0.25rem;
+		align-items: center;
+		justify-content: center;
+
+		&--scale {
+			@include scaleOnHover(1.1);
+		}
+
+		&--button,
+		&--button-ghost {
+			min-width: 6rem;
+			padding: 0.5rem 1.25rem 0.5625rem;;
+
+			font-size: 1rem;
+			font-weight: 400;
+			text-align: center;
+			text-decoration: none;
+			letter-spacing: 0.08em;
+
+			border: 1px solid var(--clr-400);
+
+			@include outline(var(--clr-secondary-400));
+		}
+
+		&--button {
+			color: var(--clr-900);
+			background-color: var(--clr-100);
+
+			&:focus-visible {
+				border-color: var(--clr-pastel-blue);
+			}
+
+			&:hover {
+				background-color: var(--clr-400);
+			}
+
+			&:active {
+				color: var(--clr-pastel-blue);
+			}
+
+			&-ghost {
+				color: currentcolor;
+				background-color: transparent;
+				border-color: var(--clr-secondary-400);
+
+				&:focus-visible {
+					border-color: var(--clr-pastel-red);
+				}
+
+				&:hover {
+					color: var(--clr-pastel-red);
+					background-color: var(--clr-secondary-400);
+				}
+
+				&:active {
+					color: var(--clr-pastel-red);
+				}
+			}
+		}
+	}
+
+	[data-icon] {
+		scale: 1.125;
+	}
+</style>

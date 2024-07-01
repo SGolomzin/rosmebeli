@@ -1,0 +1,33 @@
+{
+  "name": "rosmebeli",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro check && astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/check": "^0.7.0",
+    "astro": "^4.11.0",
+    "astro-icon": "^1.1.0",
+    "gsap": "^3.12.5",
+    "inputmask": "^5.0.7",
+    "sass": "^1.77.4",
+    "swiper": "^11.1.4",
+    "typescript": "^5.4.5"
+  },
+  "devDependencies": {
+    "@types/inputmask": "^5.0.7",
+    "postcss-html": "^1.7.0",
+    "postcss-scss": "^4.0.9",
+    "stylelint": "^16.6.1",
+    "stylelint-config-clean-order": "^6.0.0",
+    "stylelint-config-html": "^1.1.0",
+    "stylelint-config-recommended-scss": "^14.0.0",
+    "stylelint-config-standard": "^36.0.0",
+    "stylelint-scss": "^6.3.1"
+  }
+}

@@ -1,0 +1,77 @@
+@import "./breakpoints";
+
+.section-block {
+  --section-top-padding: var(--main-header-height);
+  --section-bottom-padding: 3rem;
+
+  padding: var(--section-top-padding) 0 var(--section-bottom-padding);
+}
+
+.container {
+  max-width: 100%;
+  margin-right: auto;
+  margin-left: auto;
+  padding-right: 1rem;
+  padding-left: 1rem;
+
+  &-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+
+    &__heading {
+      grid-column: 1 / -1;
+
+      &--centered {
+        text-align: center;
+      }
+    }
+
+    &__content {
+      grid-column: 1 / -1;
+    }
+  }
+
+  @include breakpoint(sm) {
+    max-width: 540px;
+    padding-left: calc(100vw - 100%); // = размеру блока скроллбара, убирает сдвиг контента при открытии модального окна (~16.8px)
+  }
+
+  @include breakpoint(md) {
+    max-width: 720px;
+
+    &-grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  @include breakpoint(lg) {
+    max-width: 960px;
+  }
+
+  @include breakpoint(xl) {
+    max-width: 1140px;
+
+    &-grid {
+      grid-template-columns: repeat(12, 1fr);
+
+      &__heading {
+        grid-column: 2 / -1;
+
+        &--centered {
+          grid-column: 1 / -1;
+        }
+      }
+    }
+  }
+
+  @include breakpoint(xxl) {
+    max-width: 1320px;
+  }
+}
+
+.full-width {
+  max-width: 100% !important;
+  margin-right: 0;
+  margin-left: 0;
+}

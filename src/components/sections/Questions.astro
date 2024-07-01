@@ -1,0 +1,28 @@
+---
+import { getCollection } from "astro:content";
+import type { CollectionEntry } from 'astro:content';
+
+import AnimatedHeading from "../AnimatedHeading.astro";
+import Accordion from "../Accordion.astro";
+
+const allQuestions = await getCollection("faq");
+const allQuestionsData = await Promise.all(allQuestions.map((entry: CollectionEntry<'faq'>) => entry.render() ));
+---
+
+<section class="section-block" data-theme="light">
+	<div class="container">
+		<div>
+			<AnimatedHeading title="Вопросы и ответы" tag="h2"/>
+			<div aria-labelledby="faq">
+				{allQuestionsData.map(({
+					Content,
+					remarkPluginFrontmatter: { title }
+				}) => (
+						<Accordion header={title} name="faq">
+							<Content />
+						</Accordion>
+				))}
+			</div>
+		</div>
+	</div>
+</section>

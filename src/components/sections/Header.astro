@@ -1,0 +1,288 @@
+---
+import { Icon } from 'astro-icon/components';
+
+import Button from "../Button.astro";
+import Modal from '../Modal.astro';
+import Navigation from "../Navigation.astro";
+import CustomerForm from '../CustomerForm.astro';
+
+interface Props {
+	theme?: "dark" | "light";
+	links: {
+		label: string;
+		href: string;
+		active?: boolean;
+	}[];
+}
+
+const { theme = "dark", links } = Astro.props;
+---
+
+<header class="main-header">
+	<div class="container">
+		<a
+			class="header__logo"
+			href="/"
+			aria-label="Переход на главную страницу"
+		>
+				<Icon name="logo" />
+		</a>
+		<button
+			class="header__menu-button"
+			data-navigation-expanded="false"
+			title="Открыть меню навигации"
+		>
+			<Icon name="menu" />
+			<Icon name="x" />
+		</button>
+		<div class="header__navigation-block">
+			<Navigation
+				links={links}
+			/>
+			<div class="header__promo">
+				<a href="tel:+7 (967) 128-02-00">+7&nbsp;(967)&nbsp;128&#8209;02&#8209;00</a>
+				<Modal id="header-modal">
+					<Button
+						scale
+						appearance="ghost"
+						slot="trigger"
+						onclick="openDialog('header-modal')"
+					>Вызвать&nbsp;замерщика</Button>
+					<CustomerForm id="header-form" method="dialog" theme="light"/>
+				</Modal>
+			</div>
+		</div>
+	</div>
+</header>
+
+<script>
+	const header = document.querySelector(".main-header");
+	const menuButton = document.querySelector(".header__menu-button") as HTMLElement | null;
+
+	function isExpanded() {
+		if (!menuButton) return;
+		return menuButton.dataset.navigationExpanded === "true";
+	}
+
+	function setExpanded(expanded: boolean) {
+		if (!menuButton) return;
+		menuButton.dataset.navigationExpanded = expanded ? "true" : "false";
+		menuButton.title = expanded ? "Закрыть меню навигации" : "Открыть меню навигации";
+	}
+
+	// При скролле добавляем/удаляем класс "scrolled"
+	window.addEventListener("scroll", () => {
+		if (window.scrollY > 0) {
+			header?.classList.add("scrolled");
+		} else {
+			header?.classList.remove("scrolled");
+		}
+	});
+
+	// Открываем/закрываем навигацию при нажатии на кнопку
+	menuButton?.addEventListener("click", () => {
+		if (isExpanded()) {
+			setExpanded(false);
+		} else {
+			setExpanded(true);
+		}
+	});
+
+	// Закрываем навигацию при клике вне ее области
+	window.addEventListener("click", (event) => {
+		if (!menuButton) return;
+		if (isExpanded() && event.target instanceof Node && !menuButton.contains(event.target)) {
+			setExpanded(false);
+		}
+	})
+
+	// Закрываем навигацию при клике на Esc
+	window.addEventListener("keydown", (event) => {
+		if (isExpanded() && event.key === "Escape") {
+			setExpanded(false);
+		}
+	})
+</script>
+
+{/*
+	TODO SCSS
+*/}
+<style>
+	.main-header {
+		position: fixed;
+		z-index: 9001;
+		inset: 0;
+
+		width: 100%;
+		height: 0;
+	}
+
+	.container::before {
+		content: "";
+
+		position: absolute;
+		z-index: -1;
+		inset: 0;
+
+		width: 100%;
+		height: var(--main-header-height);
+
+		transition: 300ms;
+	}
+
+	.scrolled .container::before {
+		background-color:color-mix(in srgb, var(--clr-primary-700) 95%, transparent);
+		backdrop-filter: blur(5px);
+	}
+
+	[data-icon] {
+		font-size: 2.5rem;
+	}
+
+	.container {
+		display: grid;
+		grid-template-areas:
+			"logo menu-button"
+			"nav-block nav-block";
+		grid-template-columns: 1fr auto;
+		grid-template-rows: var(--main-header-height, min-content) 0fr;
+
+		transition: 300ms;
+	}
+
+	.container:has([data-navigation-expanded="true"]) {
+		grid-template-rows: var(--main-header-height, min-content) 1fr;
+	}
+
+	.header__logo {
+		display: flex;
+		grid-area: logo;
+		align-items: center;
+
+		padding: 2rem 0;
+
+		color: currentcolor;
+	}
+
+	.header__menu-button {
+		cursor: pointer;
+
+		display: block;
+		grid-area: menu-button;
+
+		padding: 0;
+
+		line-height: 0;
+		color: currentcolor;
+
+		background-color: transparent;
+		border: none;
+	}
+
+	.header__menu-button:hover,
+	.header__menu-button:focus-visible {
+		color: var(--clr-secondary-400);
+	}
+
+	.header__menu-button:active {
+		color: var(--clr-secondary-700);
+	}
+
+	.header__menu-button[data-navigation-expanded="true"] > [data-icon="menu"],
+	.header__menu-button[data-navigation-expanded="false"] > [data-icon="x"] {
+		display: none;
+	}
+
+	.header__menu-button[data-navigation-expanded="true"] > [data-icon="x"],
+	.header__menu-button[data-navigation-expanded="false"] > [data-icon="menu"] {
+		display: block;
+	}
+
+	.header__navigation-block {
+		overflow: hidden;
+		grid-area: nav-block;
+
+		color: var(--clr-900);
+
+		background-color: var(--clr-100);
+		box-shadow: 0 4px 4px -2px rgb(24 39 75 / 8%), 0 2px 4px -2px rgb(24 39 75 / 12%);
+	}
+
+	.header__navigation-block::before {
+		content: "";
+
+		position: absolute;
+		z-index: -1;
+		left: 0;
+
+		display: none;
+
+		width: 100%;
+		height: 100vh;
+
+		background: rgb(0 0 0 / 50%);
+	}
+
+	.container:has([data-navigation-expanded="true"]) .header__navigation-block::before {
+		display: block;
+	}
+
+	.header__promo {
+		display: flex;
+		flex-direction: column;
+		gap: 1.25rem;
+		align-items: center;
+
+		padding: 1rem 1.5rem;
+	}
+
+	a[href^="tel"] {
+		font-size: 1.5rem;
+		font-weight: 700;
+		color: currentcolor;
+		text-decoration: none;
+	}
+
+	a[href^="tel"]:hover {
+		color: var(--clr-secondary-400);
+	}
+
+	@media (width >= 1200px) {
+		.container {
+			grid-template-areas:
+				"logo nav-block";
+			grid-template-columns: auto 1fr;
+		}
+
+		.header__menu-button {
+			display: none;
+		}
+
+		.header__navigation-block {
+			overflow: visible;
+			display: flex;
+			align-items: center;
+			justify-content: flex-end;
+
+			color: var(--clr-100);
+
+			background-color: transparent;
+			box-shadow: none;
+		}
+
+		.container:has([data-navigation-expanded="true"]) .header__navigation-block::before {
+			display: none;
+		}
+
+		.header__promo {
+			flex-direction: row;
+			gap: 1.25rem;
+			align-items: center;
+			padding: 0;
+		}
+
+		a[href^="tel"] {
+			font-size: 1rem;
+		}
+	}
+</style>

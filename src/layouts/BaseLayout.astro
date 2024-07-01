@@ -1,0 +1,78 @@
+---
+import "../styles/normalize.css";
+import "../styles/global.css";
+import "../styles/layout.scss";
+
+import Header from "../components/sections/Header.astro";
+import Footer from "../components/sections/Footer.astro";
+
+const HeaderLinks = Astro.url.pathname === '/'
+  ? [
+      {
+        label: "Главная",
+        href: "#top",
+        active: true
+      },
+      {
+        label: "О Нас",
+        href: "#about-us"
+      },
+      {
+        label: "Наши работы",
+        href: "#catalog"
+      },
+      {
+        label: "Отзывы",
+        href: "#reviews"
+      },
+      {
+        label: "Контакты",
+        href: "#contacts"
+      }
+    ]
+  : [
+      {
+        label: "Главная",
+        href: "/"
+      },
+      {
+        label: "Каталог",
+        href: "/catalog"
+      },
+      {
+        label: "Статьи",
+        href: "/posts"
+      }
+    ];
+
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+---
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="Astro description" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+  </head>
+  <body>
+    <Header links={HeaderLinks} />
+    <slot />
+    <Footer />
+    <script>
+      import gsap from "gsap";
+      import ScrollTrigger from "gsap/ScrollTrigger";
+
+      window.gsap = gsap;
+      window.ScrollTrigger = ScrollTrigger;
+
+      gsap.registerPlugin(ScrollTrigger);
+    </script>
+  </body>
+</html>

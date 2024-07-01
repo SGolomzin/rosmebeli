@@ -1,0 +1,82 @@
+---
+import { getCollection } from "astro:content";
+
+import AnimatedHeading from "../AnimatedHeading.astro";
+import CatalogCard from "../CatalogCard.astro";
+import Link from "../Link.astro";
+
+const allProducts = await getCollection("catalog");
+---
+
+<section id="catalog" class="section-block">
+	<div class="container container-grid">
+		<div class="container-grid__heading">
+			<AnimatedHeading class="catalog-heading" title="Наши работы" tag="h1" />
+			<div class="container-grid__heading-slogan">
+				<p>Мы создаем мебель, которая вдохновляет.</p>
+				<Link href="/catalog" appearance="button-ghost" icon="arrow-right">Перейти в каталог</Link>
+			</div>
+		</div>
+		<div class="container-grid__content">
+			<swiper-container
+				id="catalog-slider"
+				space-between="20"
+				slides-per-view="auto"
+				keyboard="true"
+				scrollbar-hide="true"
+			>
+				{
+					allProducts.map((product) => (
+						<swiper-slide>
+							<CatalogCard product={product} />
+						</swiper-slide>
+					))
+				}
+			</swiper-container>
+		</div>
+	</div>
+</section>
+
+<script>
+	import type { SwiperContainer } from 'swiper/element/bundle';
+
+	const slider: SwiperContainer | null = document.querySelector('#catalog-slider');
+
+	const breakpoints = {
+    0: {
+      slidesPerView: 1
+    },
+    768: {
+      slidesPerView: 2
+    },
+		1200: {
+			slidesPerView: "auto"
+		}
+  }
+
+	if (slider) {
+		Object.assign(slider, { breakpoints: breakpoints });
+	}
+</script>
+
+<style lang="scss">
+	@import "../../styles/_design.scss";
+	@import "../../styles/_breakpoints.scss";
+
+	.container-grid__heading {
+		& .catalog-heading {
+			margin: 0;
+		}
+
+		&-slogan {
+			display: flex;
+			flex-direction: column;
+			justify-content: space-between;
+
+			@include breakpoint(md) {
+				flex-direction: row;
+				align-items: baseline;
+			}
+		}
+	}
+</style>

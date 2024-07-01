@@ -1,0 +1,38 @@
+---
+interface Props extends astroHTML.JSX.FormHTMLAttributes {
+	id: string;
+	theme?: "dark" | "light";
+};
+
+import Input from './Input.astro';
+import Button from './Button.astro';
+
+const { id, theme = "dark", class: className, ...rest } = Astro.props;
+---
+
+<form
+	class:list={[
+		"customer-form",
+		className
+	]}
+	{...rest}
+>
+	<Input
+		id=`${id}__customer-name`
+		label="Ваш телефон"
+		type="tel"
+		placeholder="Введите ваш телефон"
+		mask="+7 (999) 999-99-99"
+		theme={theme}
+	/>
+	<Input
+		id=`${id}__customer-address`
+		label="Ваш адрес"
+		placeholder="Введите ваш адрес"
+		theme={theme}
+	/>
+	<p class="contacts__agreement">Нажимая кнопку “Отправить” вы соглашаетесь на обработку
+		<a href="#">персональных данных</a>
+	</p>
+	<Button type="submit">Отправить</Button>
+</form>

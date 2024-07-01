@@ -1,0 +1,69 @@
+---
+import type { ProductDetails  } from '../schemas';
+import { productDetailsTraslation } from '../schemas';
+
+interface Props extends astroHTML.JSX.HTMLAttributes {
+	details: ProductDetails;
+}
+
+const { details, class: className, ...rest } = Astro.props;
+---
+<div class:list={["product-details", className]} {...rest}>
+	{Object.entries(details).map(([key, value]) => (
+		<div class="product-details__item">
+			<div class="key-wrapper">
+				<span class="product-details__key">{productDetailsTraslation[key as keyof ProductDetails]}</span>
+				<span class="product-details__separator"></span>
+			</div>
+			<span class="product-details__value">{
+				typeof value === 'string' ? value : value.join(', ')
+			}</span>
+		</div>
+	))}
+</div>
+
+<style lang="scss">
+	.product-details {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+
+		&__item {
+			display: grid;
+			grid-template-columns: 2fr 1fr;
+			gap: 10px;
+		}
+
+		&__key {
+			flex: 0 0 auto;
+			font-weight: bold;
+		}
+
+		&__separator {
+			--separator-color: var(--clr-primary-100);
+
+			flex: 1 1 auto;
+			align-self: baseline;
+			height: 1lh;
+			background: linear-gradient(
+				90deg,
+				transparent,
+				transparent 50%,
+				var(--separator-color) 50%
+			) 0/6px 1px repeat-x;
+		}
+
+		&__value {
+			flex: 1 1 auto;
+		}
+	}
+
+	.key-wrapper {
+		display: flex;
+		flex-wrap: nowrap;
+		gap: 10px;
+	}
+</style>
+
+
+

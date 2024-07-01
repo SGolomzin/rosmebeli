@@ -1,0 +1,84 @@
+---
+import IconButton from './IconButton.astro';
+
+interface Props {
+	id: string;
+	isForm?: boolean;
+}
+
+const { id, isForm = false } = Astro.props;
+---
+<Fragment>
+	<slot name="trigger">
+		<button
+			onclick={`openDialog('${id}')`}
+		>Открыть</button>
+	</slot>
+
+	<dialog id={id}>
+		<div class="dialog__wrapper">
+			<IconButton
+				class="dialog__close-button"
+				size="sm"
+				icon="x"
+				aria-label="Закрыть модальное окно"
+				onclick={`closeDialog('${id}')`}
+			/>
+			<slot>Здесь ничего нет. Нажмите `Esc` чтобы закрыть</slot>
+		</div>
+	</dialog>
+</Fragment>
+
+<script is:inline>
+	// Добавляем обработчики откртыия и закрытия модального окна глобально для всего документа
+	function openDialog(id) {
+		const dialog = document.getElementById(id);
+		dialog?.showModal();
+	}
+
+	function closeDialog(id) {
+		const dialog = document.getElementById(id);
+		dialog?.close();
+	}
+</script>
+
+<script>
+	// Добавляем обработчик для закрытия модального окна при клике на бекдроп (для всех модальных окон на странице)
+	const dialogs = document.querySelectorAll("dialog");
+
+	function closeOnBackDropClick({ currentTarget, target }: MouseEvent) {
+		const dialogElement = currentTarget
+		const isClickedOnBackDrop = target === dialogElement
+		if (isClickedOnBackDrop) {
+			(dialogElement as HTMLDialogElement).close()
+		}
+	}
+
+	dialogs.forEach((dialog) => {
+		dialog.addEventListener("click", closeOnBackDropClick);
+	})
+</script>
+
+<style lang="scss">
+	dialog {
+		max-width: clamp(20rem, 50vw, 50ch);
+		padding: 0;
+		border: 0;
+
+		&::backdrop {
+			opacity: 0.3;
+			background: rgb(0 0 0 / 50%);
+		}
+
+		.dialog__wrapper {
+			display: flex;
+			flex-direction: column;
+			gap: 1rem;
+			padding: 1rem 1rem 2rem;
+		}
+
+		.dialog__close-button {
+			align-self: flex-end;
+		}
+	}
+</style>

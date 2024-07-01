@@ -1,0 +1,82 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props extends astroHTML.JSX.HTMLAttributes {
+	post: CollectionEntry<'posts'>
+}
+
+import { declOfNum } from '../helpers/helpers';
+
+import ImageThumbnail from './ImageThumbnail.astro';
+import Card from './Card.astro';
+
+const { post, class: className, ...rest } = Astro.props;
+---
+
+<a href={`/posts/${post.slug}`}>
+	<Card
+		class:list={[
+			"blog-post-card",
+			className
+		]}
+		bordered
+		shaded
+		filled
+		{...rest}
+	>
+		<ImageThumbnail
+			src={post.data.image.url}
+			alt={post.data.image.alt}
+		/>
+		<Card class="blog-post-card__content">
+			<h4 class="blog-post-card__title">{post.data.title}</h4>
+			<p class="blog-post-card__description">{post.data.description}</p>
+			<div class="blog-post-card__meta label-sm">
+				<span>{post.data.pubDate.toLocaleDateString('ru-RU', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
+				<span>Время прочтения: {post.data.ttr} {declOfNum(post.data.ttr, ['минута', 'минуты', 'минут'])}</span>
+			</div>
+		</Card>
+	</Card>
+</a>
+
+<style lang="scss">
+	@import "../styles/_design.scss";
+
+	a {
+		color: var(--clr-100);
+		text-decoration: none;
+	}
+
+	.blog-post-card {
+		display: grid;
+		grid-template-rows: 220px auto;
+
+		@include scaleOnHover(1.05);
+
+		&__content {
+			display: flex;
+			flex-direction: column;
+			gap: 0.5rem;
+			justify-content: space-between;
+		}
+
+		&__title {;
+			margin: 0;
+		}
+
+		&__description {
+			margin: 0 0 1rem;
+		}
+
+		&__meta {;
+			display: flex;
+			flex-direction: row;
+			gap: 0.5rem;
+			justify-content: space-between;
+
+			margin-top: auto;
+
+			opacity: .65;
+		}
+	}
+</style>

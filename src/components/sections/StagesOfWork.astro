@@ -1,0 +1,47 @@
+---
+import Steps from "../Steps.astro";
+import type { StepProps } from "../Steps.astro";
+
+import AnimatedHeading from "../AnimatedHeading.astro";
+
+const steps: StepProps[] = [
+	{
+		icon: 'tapemeasure',
+		title: 'Замер',
+		text: 'Вы оставляете заявку на сайте или звоните нашему менеджеру. К вам в удобное для вас время бесплатно выезжает дизайнер-замерщик мебели и рассчитывает габариты проектируемой мебели.'
+	},
+	{
+		icon: 'layers',
+		title: 'Проект',
+		text: 'Мы предоставляем вам на рассмотрение 3 дизайн проекта на выбор. Помогаем определиться с выбором материалов для вашей мебели и составляем смету.'
+	},
+	{
+		icon: 'closet',
+		title: 'Изготовление',
+		text: 'На нашем заводе мы создаем проект вашей мечты в оговоренные сроки. Тщательно следим за качеством и комплектацией проекта.'
+	},
+	{
+		icon: 'package',
+		title: 'Доставка',
+		text: 'Бесплатно доставляем по Москве и Московской области и собираем готовую мебель. Предоставляем гарантию на 18 месяцев.'
+	}
+]
+---
+
+<section class="section-block" data-theme="light">
+	<div class="container container-grid">
+		<AnimatedHeading
+			class="container-grid__heading container-grid__heading--centered"
+			title="Этапы работ"
+			tag="h2"
+		/>
+		<Steps steps={steps} class="container-grid__content" />
+	</div>
+</section>
+
+<style>
+	.section-block {
+		--section-top-padding: 0;
+		--section-bottom-padding: 0;
+	}
+</style>

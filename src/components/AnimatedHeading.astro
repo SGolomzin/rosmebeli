@@ -1,0 +1,40 @@
+---
+interface Props extends astroHTML.JSX.HTMLAttributes {
+	title: string;
+	tag?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
+}
+
+import TextWrapper from './TextWrapper.astro';
+
+const { title, tag: Element = "h1", class: className, ...props} = Astro.props;
+---
+<Element class:list={["animated-heading", className]} {...props}><TextWrapper text={title} /></Element>
+
+{/* GSAP animations */}
+<script>
+	import { gsap } from "gsap";
+	import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+	gsap.registerPlugin(ScrollTrigger);
+
+	function init() {
+		gsap.utils.toArray<HTMLElement>(".animated-heading").forEach((heading) => {
+			gsap.fromTo(
+				heading.childNodes,
+				{
+					y: 30,
+					opacity: 0,
+				},
+				{
+					y: 0,
+					opacity: 1,
+					stagger: 0.04,
+					ease: "power4.out",
+					scrollTrigger: heading
+				}
+			)
+		})
+	}
+
+	window.addEventListener("load", () => init());
+</script>

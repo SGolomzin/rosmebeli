@@ -1,0 +1,142 @@
+---
+interface Props extends astroHTML.JSX.HTMLAttributes {
+	axis?: "y" | "x";
+	direction?: "reverse" | "forwards" ;
+	speed?: "slow" | "normal" | "fast";
+	gap?: number;
+}
+
+const {
+	axis = "x",
+	direction = "forvards",
+	speed = "normal",
+	gap = 20,
+	class: className
+} = Astro.props;
+---
+
+<div
+	class:list={["ticker", className]}
+	data-axis={axis}
+	data-direction={direction}
+	data-speed={speed}
+	data-gap={gap}
+>
+	<div class="ticker__inner">
+		<slot />
+	</div>
+</div>
+
+<script>
+	const tickers = document.querySelectorAll(".ticker") as NodeListOf<HTMLElement>;
+
+	if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches){
+		addTicker();
+	}
+
+	function setTickerAttributes() {
+		tickers.forEach(ticker => {
+			const gap = Number(ticker.dataset.gap);
+			ticker.style.setProperty("--ticker-gap", `${gap}px`);
+		});
+	}
+
+	function addTicker() {
+		tickers.forEach(ticker => {
+			ticker.setAttribute('data-animated', 'true');
+
+			const tickerInner = ticker.querySelector(".ticker__inner");
+			if (!tickerInner) return;
+			const scrollerContent = Array.from(tickerInner.children);
+
+			scrollerContent.forEach((item) => {
+				const duplicatedItem = item.cloneNode(true) as HTMLElement;
+				duplicatedItem.setAttribute("aria-hidden", "true");
+				tickerInner.appendChild(duplicatedItem);
+			});
+		});
+	}
+
+	setTickerAttributes();
+</script>
+
+<style lang="scss">
+	.ticker {
+		max-width: 100%;
+		max-height: 100%;
+
+		&__inner {
+			display: flex;
+			flex-wrap: wrap;
+			gap: var(--ticker-gap, 20px);
+		}
+
+		&[data-animated="true"] {
+			overflow: hidden;
+			mask: linear-gradient(
+				var(--ticker-mask-angle, 90deg),
+				transparent,
+				white 20%,
+				white 80%,
+				transparent
+			);
+
+			.ticker__inner {
+				flex-wrap: nowrap;
+				animation:
+					var(--ticker-animation-name, ticker-x)
+					var(--ticker-animation-duration, 40s)
+					var(--ticker-animation-direction, forwards)
+					linear infinite;
+			}
+		}
+
+		&[data-axis="x"] {
+			--ticker-animation-name: ticker-x;
+			--ticker-mask-angle: 90deg;
+
+			.ticker__inner {
+				flex-direction: row;
+				width: max-content;
+			}
+		}
+
+		&[data-axis="y"] {
+			--ticker-animation-name: ticker-y;
+			--ticker-mask-angle: 0deg;
+
+			.ticker__inner {
+				flex-direction: column;
+			height: max-content;
+			}
+		}
+
+		&[data-direction="reverse"] {
+			--ticker-animation-direction: reverse;
+		}
+
+		&[data-direction="forwards"] {
+			--ticker-animation-direction: forwards;
+		}
+
+		&[data-speed="fast"] {
+			--ticker-animation-duration: 20s;
+		}
+
+		&[data-speed="slow"] {
+			--ticker-animation-duration: 60s;
+		}
+	}
+
+	@keyframes ticker-x {
+		to {
+			transform: translateX(calc(-50% - var(--ticker-gap) / 2));
+		}
+	}
+
+	@keyframes ticker-y {
+		to {
+			transform: translateY(calc(-50% - var(--ticker-gap) / 2))
+		}
+	}
+</style>

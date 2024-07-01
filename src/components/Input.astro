@@ -1,0 +1,175 @@
+---
+interface Props extends astroHTML.JSX.InputHTMLAttributes {
+  theme?: "dark" | "light";
+  mask?: string;
+  label?: string;
+}
+
+const { theme = "dark", label, id, mask = null, ...rest } = Astro.props;
+---
+
+<div class="input-group">
+  <input
+    class:list={["input-control", `input-control--${theme}`]}
+    id={id}
+    data-mask={mask}
+    {...rest}
+  />
+  {
+    label && (
+      <label for={id} class="input-label label">
+        {label}
+      </label>
+    )
+  }
+  <span class="input-message input-message--error"
+    >Недопустимое значение поля. Пожалуйста, повторите ввод.</span
+  >
+  <span class="input-message input-message--required">Обязательное поле</span>
+</div>
+
+<script>
+  import Inputmask from "inputmask";
+
+  const maskedInputs = document.querySelectorAll(
+    ".input-control[data-mask]"
+  ) as NodeListOf<HTMLInputElement>;
+
+  maskedInputs.forEach((input) => {
+    Inputmask(input.dataset.mask || "").mask(input);
+  });
+</script>
+
+<style lang="scss">
+  .input {
+    &-group {
+      --input-group-gap: 0.9rem;
+
+      display: flex;
+      flex-direction: column;
+      gap: var(--input-group-gap);
+      margin: 1rem 0;
+    }
+
+    &-label {
+      order: 1;
+      color: currentcolor;
+      opacity: 0.75;
+    }
+
+    &-message {
+      display: none;
+      order: 3;
+
+      margin-top: calc(var(--input-group-gap) * -1 + 3px);
+
+      font-size: 11px;
+      line-height: 16.5px;
+
+      &--error {
+        color: var(--clr-error);
+      }
+
+      &--required {
+        color: var(--clr-400);
+      }
+    }
+
+    &-control {
+      order: 2;
+
+      min-width: 18rem;
+      max-width: 27rem;
+      margin-bottom: 19.5px;
+      padding: 0.5rem 0.5rem 0.65rem;
+
+      line-height: 1.33;
+
+      background-color: transparent;
+      border: none;
+      border-bottom: 1px solid var(--clr-400);
+
+      &::placeholder {
+        color: var(--clr-400);
+      }
+
+      &--light {
+        color: var(--clr-900);
+
+        &:focus-visible,
+        &:hover {
+          background-color: var(--clr-secondary-100);
+        }
+
+        &:disabled,
+        &:disabled::placeholder {
+          color: var(--clr-secondary-100);
+          background-color: transparent;
+          border-color: var(--clr-secondary-100);
+        }
+      }
+
+      &--dark {
+        color: var(--clr-100);
+
+        &:focus-visible,
+        &:hover {
+          background-color: var(--clr-primary-100);
+        }
+
+        &:disabled,
+        &:disabled::placeholder {
+          color: var(--clr-primary-100);
+          background-color: transparent;
+          border-color: var(--clr-primary-100);
+        }
+      }
+
+      &:not(:placeholder-shown) {
+        border-color: var(--clr-secondary-400);
+      }
+
+      &:focus-visible {
+        border-color: var(--clr-secondary-700);
+        outline: none;
+      }
+
+      &:required {
+        margin-bottom: 0;
+
+        & ~ .input-label::after {
+          content: "*";
+        }
+
+        & ~ .input-message--required {
+          display: block;
+        }
+
+        &:invalid {
+          border-bottom: 1px solid var(--clr-error);
+
+          & ~ .input-message--required {
+            display: none;
+          }
+
+          & ~ .input-message--error {
+            display: block;
+          }
+
+          &:focus-visible {
+            margin-bottom: 0;
+            border-bottom: 1px solid var(--clr-error);
+
+            & ~ .input-message--required {
+              display: none;
+            }
+
+            & ~ .input-message--error {
+              display: block;
+            }
+          }
+        }
+      }
+    }
+  }
+</style>

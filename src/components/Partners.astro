@@ -1,0 +1,72 @@
+---
+import Ticker from './Ticker.astro';
+
+const PartnersList = [
+	{
+		src: "/images/partners/1.svg",
+		alt: "Partner 1"
+	},
+	{
+		src: "/images/partners/2.svg",
+		alt: "Partner 2"
+	},
+	{
+		src: "/images/partners/3.svg",
+		alt: "Partner 3"
+	},
+	{
+		src: "/images/partners/4.svg",
+		alt: "Partner 4"
+	},
+	{
+		src: "/images/partners/5.svg",
+		alt: "Partner 5"
+	},
+	{
+		src: "/images/partners/6.svg",
+		alt: "Partner 6"
+	},
+	{
+		src: "/images/partners/1.svg",
+		alt: "Partner 7"
+	}
+];
+---
+<section
+	class="section-block"
+	data-theme="light"
+>
+	<div class="container">
+		<div class="partners__heading">
+			<h4>Наши партнеры</h4>
+			<span></span>
+		</div>
+		<div class="partners__list">
+			<Ticker
+				gap={64}
+			>
+				{PartnersList.map(({ src, alt }) => (
+					<img src={src} alt={alt} />
+				))}
+			</Ticker>
+		</div>
+	</div>
+</section>
+
+<style lang="scss">
+	.section-block {
+		--section-top-padding: 0;
+	}
+
+	.partners__heading {
+		display: flex;
+		gap: 1.25rem;
+		align-items: start;
+
+		& span {
+			flex-grow: 1;
+			height: 0.95rem;
+			border-bottom: 2px solid var(--clr-secondary-400);
+		}
+	}
+</style>

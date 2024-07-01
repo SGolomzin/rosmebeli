@@ -1,0 +1,137 @@
+---
+import { Icon } from 'astro-icon/components';
+
+import AnimatedHeading from '../AnimatedHeading.astro';
+import CustomerForm from '../CustomerForm.astro';
+
+const Addresses = [
+	{
+		label: "Адрес салона",
+		place: "Строй двор Яуза",
+		address: "МО, Осташковское шоссе, 4с2, ТСК 2, пав. 2-23",
+	},
+	{
+		label: "Скоро открытие",
+		place: "ТЦ ЭлитСтрой",
+		address: "МО, Одинцовский район, рабочий посёлок Заречье, Торговая улица, с2"
+	},
+	{
+		label: "Скоро открытие",
+		place: "МТК ГРАНД",
+		address: "МО, Химки, улица Бутаково, 4",
+	},
+	{
+		label: "Скоро открытие",
+		place: "МЦ Roomer",
+		address: "Москва, улица Ленинская Слобода, 26"
+	}
+]
+---
+
+<section id="contacts" class="section-block">
+	<div class="container container-grid">
+		<AnimatedHeading
+			class="container-grid__heading"
+			title="Контакты"
+		/>
+		<ul class="contacts__address-list">
+			{Addresses.map((a) => (
+				<li>
+					<div class="contacts__address-label">
+						<Icon name="map-pin" />
+						<span>{a.label}</span>
+					</div>
+					<p><strong>{a.place}</strong> <br/> {a.address}</p>
+				</li>
+			))}
+		</ul>
+		<div class="contacts__map">
+			<iframe src="https://yandex.ru/map-widget/v1/?ll=37.682817%2C55.900714&mode=search&oid=100195290714&ol=biz&z=17.24" width="100%" height="400" frameborder="0"></iframe>
+		</div>
+		<div class="contacts__form">
+			<div>
+				<h4>Бесплатный вызов замерщика</h4>
+				<CustomerForm id="contacts-form"/>
+			</div>
+		</div>
+	</div>
+</section>
+
+<style lang="scss">
+	@import "../../styles/_breakpoints.scss";
+
+	.contacts {
+		&__address {
+			&-list {
+				--contacts-adress-columns: 1;
+
+				display: grid;
+				grid-column: 1 / -1;
+				grid-template-columns: repeat(var(--contacts-adress-columns), 1fr);
+				gap: 2rem 1.25rem;
+
+				margin: 0;
+				padding: 0;
+
+				list-style: none;
+
+				@include breakpoint(sm) {
+					--contacts-adress-columns: 2;
+				}
+
+				@include breakpoint(lg) {
+					--contacts-adress-columns: 4;
+				}
+			}
+
+			&-label {
+				display: flex;
+				gap: 0.5rem;
+				align-items: center;
+				color: var(--clr-primary-100);
+			}
+		}
+
+		&__map {
+			grid-column: 1 / -1;
+			width: 100%;
+			height: 400px;
+		}
+
+		&__form {
+			grid-column: 1 / -1;
+		}
+
+		&__agreement {
+			max-width: 27rem;
+		}
+
+		@include breakpoint(lg) {
+			&__map {
+				position: relative;
+				grid-column: span 6;
+
+				&::after {
+					--outline-size: 6px;
+
+					content: "";
+
+					position: absolute;
+					z-index: -1;
+					top: 0;
+					left: 0;
+					transform: translate(12px, 12px);
+
+					width: calc(100% - var(--outline-size) / 2);
+					height: calc(100% - var(--outline-size) / 2);
+
+					outline: var(--outline-size) solid var(--clr-secondary-400);
+				}
+			}
+
+			&__form {
+				grid-column: span 5 / -1;
+			}
+		}
+	}
+</style>

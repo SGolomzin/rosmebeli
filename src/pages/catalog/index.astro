@@ -1,0 +1,59 @@
+---
+import Layout from "../../layouts/BaseLayout.astro"
+import { getCollection } from "astro:content";
+
+import type { CollectionEntry } from 'astro:content';
+type Product = CollectionEntry<'catalog'>;
+
+import Breadcrumbs from "../../components/Breadcrumbs.astro";
+import CatalogCard from "../../components/CatalogCard.astro";
+
+const allProducts = await getCollection("catalog");
+
+// const groupedByCategory = Object.groupBy(allProducts, (product) => product.data.category);
+const groupedByCategory = allProducts.reduce((acc: Record<string, Product[]>, product) => {
+  const category = product.data.category;
+  if (!acc[category]) {
+    acc[category] = [];
+  }
+  acc[category].push(product);
+  return acc;
+}, {});
+
+const categoryNames = Object.keys(groupedByCategory) as Array<keyof typeof groupedByCategory>;
+---
+
+<Layout title="Каталог | РОСМЕБЕЛЬ">
+	<main>
+		<section class="section-block">
+			<div class="container">
+				<Breadcrumbs />
+				<h1>Каталог</h1>
+				{categoryNames.map((category) => (
+					<div>
+						<h3>{category}</h3>
+						<div class="catalog-items">
+							{groupedByCategory[category]?.map((product) => (
+								<CatalogCard class="catalog-item" product={product} />
+							))}
+						</div>
+					</div>
+				))}
+		</section>
+	</main>
+</Layout>
+
+<style lang="scss">
+	@import "../../styles/_design.scss";
+	@import "../../styles/_breakpoints.scss";
+
+	.catalog-items {
+		display: flex;
+		flex-direction: row;
+		gap: 1.25rem;
+	}
+
+	.catalog-item {
+		flex-basis: 400px;
+	}
+</style>

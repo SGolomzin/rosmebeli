@@ -1,0 +1,35 @@
+---
+interface Props extends astroHTML.JSX.HTMLAttributes {
+	src: string;
+	alt?: string;
+}
+
+const { src, alt = 'Изображение без описания', class: className, ...rest } = Astro.props;
+---
+<div class:list={["image-thumbnail", className]} {...rest}>
+	<img
+		src={src}
+		alt={alt}
+		decoding="async"
+		loading="lazy"
+	/>
+</div>
+
+<style lang="scss">
+	@import "../styles/_design.scss";
+
+	.image-thumbnail {
+		overflow: hidden;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+
+		img {
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+
+			@include scaleOnHover(1.1);
+		}
+	}
+</style>

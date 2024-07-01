@@ -1,0 +1,36 @@
+---
+import { Icon } from 'astro-icon/components';
+
+interface Props {
+	rating: number;
+}
+
+let { rating } = Astro.props;
+
+const sanitizeRating = (rating: number) => {
+	return Math.max(0, Math.min(5, rating));
+}
+
+rating = sanitizeRating(rating);
+---
+{/*
+	TODO implement half-star rating
+*/}
+<div class="rating">
+	{Array(rating).fill(0).map((_) => <Icon name="star-border" />)}
+	{Array(5 - rating).fill(0).map((_) => <Icon name="star" />)}
+</div>
+
+<style>
+	.rating {
+		display: grid;
+		grid-template-columns: repeat(5, 1fr);
+		gap: 0.25rem;
+
+		width: 8rem;
+
+		font-size: 1.5rem;
+		color: var(--clr-400);
+	}
+</style>
+

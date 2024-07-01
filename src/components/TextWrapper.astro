@@ -1,0 +1,19 @@
+---
+export interface Props {
+	text: string,
+	splitBy?: 'char' | 'word'
+}
+
+const { text, splitBy = 'char' } = Astro.props
+---
+{/*
+	TODO разделенные по частям слова должны быть сгруппированы
+	например во flexbox с flex-wrap: nowrap
+*/}
+<>
+	{
+		splitBy === 'char'
+			? text.split('').map((char) => char === ' ' ? <div style="display: inline-block">&nbsp;</div> : <div style="display: inline-block">{char}</div>)
+			: text.split(/\s+/).map((word) => <div style="display: inline-block">{word}</div><div style="display: inline-block">&nbsp;</div>)
+	}
+<>

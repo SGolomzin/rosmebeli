@@ -1,0 +1,69 @@
+---
+import Layout from './BaseLayout.astro';
+
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+
+const { frontmatter } = Astro.props;
+---
+
+<Layout title=`${frontmatter.title} | РОСМЕБЕЛЬ`>
+	<main>
+		<article class="section-block">
+			<div class="container">
+				<Breadcrumbs class="post__breadcrumbs" currentPage={frontmatter.title}/>
+			</div>
+			<div class="image-container">
+				<img src={frontmatter.image.url} height="100" width="100%" alt={frontmatter.image.alt} />
+			</div>
+			<div class="container">
+				<div class="post__wrapper">
+					<img src={frontmatter.image.url} alt={frontmatter.image.alt} height={350} />
+					<p>{frontmatter.pubDate.toLocaleDateString('ru-RU', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
+					<h1>{frontmatter.title}</h1>
+					<slot />
+				</div>
+			</div>
+		</article>
+	</main>
+</Layout>
+
+<style lang="scss">
+	.section-block {
+		--image-container-height: 6.25rem;
+	}
+
+	.image-container {
+		overflow: hidden;
+		width: 100%;
+		height: var(--image-container-height);
+	}
+
+	.image-container > img {
+		transform: scale(1.1);
+		object-fit: cover;
+		filter: blur(6px);
+	}
+
+	.post {
+		&__wrapper {
+			transform: translateY(calc(-1 * var(--image-container-height) / 2));
+
+			max-width: 60ch;
+			margin-right: auto;
+			margin-left: auto;
+
+			font-size: larger;
+
+			& > img {
+				width: 100%;
+				object-fit: cover;
+			}
+		}
+	}
+</style>
+
+<style is:global>
+	.post__wrapper > p {
+		text-align: justify;
+	}
+</style>

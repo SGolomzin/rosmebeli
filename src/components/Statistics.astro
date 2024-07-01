@@ -1,0 +1,53 @@
+---
+export interface StatisticsProps {
+	value: string;
+	description: string;
+}
+
+interface Props extends astroHTML.JSX.OlHTMLAttributes {
+	stats: StatisticsProps[];
+}
+
+const { stats, class: className,...rest } = Astro.props;
+---
+
+<ul class:list={["statistics", className]} {...rest}>
+	{stats && stats.map((s) => (
+		<li>
+			<h3>{s.value}</h3>
+			<p>{s.description}</p>
+		</li>
+	))}
+</ul>
+
+<style lang="scss">
+	.statistics {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 1.5rem;
+		align-content: flex-end;
+
+		min-height: 200px;
+		margin: 0;
+		padding: 0;
+
+		list-style: none;
+
+		& li {
+			display: flex;
+			flex-direction: column;
+			gap: 0.5rem;
+			height: fit-content;
+
+			& p {
+				color: var(--clr-400);
+			}
+
+			& h3,
+			& p {
+				margin: 0;
+			}
+		}
+	}
+</style>
+

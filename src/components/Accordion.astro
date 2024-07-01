@@ -1,0 +1,63 @@
+---
+import { Icon } from 'astro-icon/components';
+
+interface Props extends astroHTML.JSX.DetailsHTMLAttributes {
+	header: string;
+}
+
+const { header, ...rest } = Astro.props;
+---
+<details {...rest}>
+	<summary>
+		{header}
+		<Icon name="chevron-down" />
+	</summary>
+	<div class="content">
+		<slot />
+	</div>
+</details>
+
+<style lang="scss">
+	details {
+		position: relative;
+		padding: 0 1.2rem;
+		border-top: 1px solid var(--clr-400);
+		border-bottom: 1px solid var(--clr-400);
+
+		& + details {
+			border-top: none;
+		}
+	}
+
+	summary {
+		cursor: pointer;
+
+		display: flex;
+		justify-content: space-between;
+
+		padding: 1.1rem 0;
+
+		font-size: 1.25rem;
+		letter-spacing: 0.02em;
+
+		&::marker {
+			content: none;
+		}
+	}
+
+	[data-icon] {
+		scale: 1.5;
+
+		flex:  0 0 1em;
+
+		font-size: 1.25em;
+
+		fill: currentcolor;
+
+		transition: all 0.3s ease;
+	}
+
+	details[open] [data-icon] {
+		transform: rotate(-180deg);
+	}
+</style>
