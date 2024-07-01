@@ -6,5 +6,5 @@ import icon from "astro-icon";
 export default defineConfig({
   integrations: [icon()],
   site: 'https://sgolomzin.github.io',
-  base: 'rosmebeli',
+  // base: '/rosmebeli/',
 });
