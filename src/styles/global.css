@@ -31,6 +31,36 @@
   --font-family-primary: "TildaSans VF", system-ui, sans-serif;
   --font-family-secondary: "OpenRunde Bold", system-ui, sans-serif;
   --main-header-height: 6.5rem;
+
+  /* text */
+  --text-color: var(--clr-100);
+  --text-color-dim: var(--clr-400);
+  --text-color-highlight: var(--clr-pastel-red);
+
+  /* background */
+  --background-color: var(--clr-primary-400);
+
+  /* accent */
+  --accent-color: var(--clr-secondary-400);
+
+  /* border */
+  --border-color: var(--accent-color);
+}
+
+*[data-theme="light"] {
+  /* text */
+  --text-color: var(--clr-900);
+  --text-color-dim: var(--clr-400);
+  --text-color-highlight: var(--clr-pastel-blue);
+
+  /* background */
+  --background-color: var(--clr-100);
+
+  /* accent */
+  --accent-color: var(--clr-secondary-400);
+
+  /* border */
+  --border-color: var(--accent-color);
 }
 
 html {
@@ -48,7 +78,7 @@ html {
   background-repeat: repeat, repeat-y;
   background-position: 0, center;
 
-  @media (width >= 420px) {
+  @media (width >= 320px) {
     background-position: 0, calc(50vw - 1440px / 2); /* второе значение убирает сдвиг контента при открытии модального окна (50vw выравнивет по центру за вычетом полного размера svg изображения деленного пополам) */
   }
 }
@@ -58,7 +88,7 @@ html {
   display: flex;
   flex-direction: column;
 
-  min-width: 420px;
+  min-width: 320px;
   height: 100%;
   margin: 0;
 }
@@ -72,7 +102,7 @@ main {
 }
 
 h1 {
-  font-size: 2.25rem;
+  font-size: 2rem;
 }
 
 h2 {
@@ -111,31 +141,16 @@ a {
   display: inline-block;
 
   line-height: 1.5;
-  color: var(--clr-400);
+  color: var(--text-color-dim);
   text-decoration: none;
   text-underline-position: under;
 }
 
 a:hover {
-  color: var(--clr-secondary-400);
+  color: var(--accent-color);
   text-decoration: underline;
   text-decoration-style: dotted;
 }
-
-/* a:visited {
-  color: var(--clr-secondary-700);
-} */
-
-/* a::after {
-  content: "";
-
-  position: relative;
-  bottom: 0.2em;
-
-  display: block;
-
-  border-bottom: 1px dashed currentcolor;
-} */
 
 [data-theme="light"] {
   color: var(--clr-900);

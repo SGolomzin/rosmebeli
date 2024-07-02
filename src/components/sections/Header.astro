@@ -3,11 +3,9 @@ import { Icon } from 'astro-icon/components';
 
 import Button from "../Button.astro";
 import Modal from '../Modal.astro';
-import Navigation from "../Navigation.astro";
 import CustomerForm from '../CustomerForm.astro';
 
 interface Props {
-	theme?: "dark" | "light";
 	links: {
 		label: string;
 		href: string;
@@ -15,274 +13,331 @@ interface Props {
 	}[];
 }
 
-const { theme = "dark", links } = Astro.props;
+const { links } = Astro.props;
 ---
 
 <header class="main-header">
 	<div class="container">
-		<a
-			class="header__logo"
-			href="/rosmebeli/"
-			aria-label="Переход на главную страницу"
-		>
-				<Icon name="logo" />
-		</a>
-		<button
-			class="header__menu-button"
-			data-navigation-expanded="false"
-			title="Открыть меню навигации"
-		>
-			<Icon name="menu" />
-			<Icon name="x" />
-		</button>
-		<div class="header__navigation-block">
-			<Navigation
-				links={links}
-			/>
-			<div class="header__promo">
-				<a href="tel:+7 (967) 128-02-00">+7&nbsp;(967)&nbsp;128&#8209;02&#8209;00</a>
-				<Modal id="header-modal">
-					<Button
-						scale
-						appearance="ghost"
-						slot="trigger"
-						onclick="openDialog('header-modal')"
-					>Вызвать&nbsp;замерщика</Button>
-					<CustomerForm id="header-form" method="dialog" theme="light"/>
-				</Modal>
+		<nav class="navbar">
+			<a href="/rosmebeli/" class="navbar__logo"><Icon name="logo" /></a>
+			<Button appearance="ghost" class="navbar-toggler">
+				<Icon name="menu" />
+				<Icon name="x" />
+			</Button>
+			<div class="navbar-collapse">
+				<ul class="navbar-nav">
+					{links.map((link) => (
+						<li class="navbar-nav__item"><a
+							href={link.href}
+							class:list={[
+								{"active": link.active},
+							]}
+						>{link.label}</a></li>
+					))}
+				</ul>
+				<div class="navbar-promo">
+					<a href="tel:+7 (967) 128-02-00">+7&nbsp;(967)&nbsp;128&#8209;02&#8209;00</a>
+					<Modal id="header-modal" data-theme="light">
+						<Button
+							appearance="ghost"
+							slot="trigger"
+							onclick="openDialog('header-modal')"
+						>Вызвать&nbsp;замерщика</Button>
+						<CustomerForm id="header-form" method="dialog" theme="light"/>
+					</Modal>
+				</div>
 			</div>
-		</div>
+		</nav>
 	</div>
 </header>
 
+{/*
+	Скрипт открытия/закрытия навигационной панели
+*/}
 <script>
-	const header = document.querySelector(".main-header");
-	const menuButton = document.querySelector(".header__menu-button") as HTMLElement | null;
+	const toggler = document.querySelector(".navbar-toggler") as HTMLElement | null;
 
-	function isExpanded() {
-		if (!menuButton) return;
-		return menuButton.dataset.navigationExpanded === "true";
+	const toggleExpanded = () => {
+		if (!toggler) return;
+		toggler.classList.toggle("toggled");
 	}
 
-	function setExpanded(expanded: boolean) {
-		if (!menuButton) return;
-		menuButton.dataset.navigationExpanded = expanded ? "true" : "false";
-		menuButton.title = expanded ? "Закрыть меню навигации" : "Открыть меню навигации";
+	const isExpanded = () => {
+		if (!toggler) return Error("navigation toggler not found");
+		return toggler.classList.contains("toggled");
 	}
-
-	// При скролле добавляем/удаляем класс "scrolled"
-	window.addEventListener("scroll", () => {
-		if (window.scrollY > 0) {
-			header?.classList.add("scrolled");
-		} else {
-			header?.classList.remove("scrolled");
-		}
-	});
 
 	// Открываем/закрываем навигацию при нажатии на кнопку
-	menuButton?.addEventListener("click", () => {
-		if (isExpanded()) {
-			setExpanded(false);
-		} else {
-			setExpanded(true);
-		}
-	});
+	toggler?.addEventListener("click", () => toggleExpanded());
 
 	// Закрываем навигацию при клике вне ее области
 	window.addEventListener("click", (event) => {
-		if (!menuButton) return;
-		if (isExpanded() && event.target instanceof Node && !menuButton.contains(event.target)) {
-			setExpanded(false);
+		if (isExpanded() && event.target instanceof Node && !toggler?.contains(event.target)) {
+			toggleExpanded()
 		}
-	})
+	});
 
 	// Закрываем навигацию при клике на Esc
 	window.addEventListener("keydown", (event) => {
 		if (isExpanded() && event.key === "Escape") {
-			setExpanded(false);
+			toggleExpanded();
 		}
 	})
 </script>
 
 {/*
-	TODO SCSS
+	Скрипт для добавления/удаления класса .scrolled при скролле
 */}
-<style>
+<script>
+	const header = document.querySelector(".main-header");
+
+	window.addEventListener("scroll", () => {
+		window.scrollY > 0
+			? header?.classList.add("scrolled")
+			: header?.classList.remove("scrolled");
+	});
+</script>
+
+{/*
+	Скрипт для добавления/удаления класса .active при скролле
+	для якорных ссылок
+*/}
+<script>
+	const links = document.querySelectorAll(".navbar-nav__item a") as NodeListOf<HTMLAnchorElement>;
+	const anchorLinks = [] as Array<HTMLAnchorElement>;
+
+	links.forEach((link) => {
+		if (link.hash) anchorLinks.push(link);
+	});
+
+	const sections = document.querySelectorAll("section") as NodeListOf<HTMLElement>;
+	const sectionsWithId = Array.from(sections).filter((section) => section.id);
+
+	window.addEventListener("scroll", () => {
+		sectionsWithId.forEach((section) => {
+			if (window.scrollY + window.innerHeight / 2 >= section.offsetTop) {
+				anchorLinks.forEach((link) => {
+					if (section.id === link.hash.replace("#", "")) {
+						link.classList.add("active");
+					} else {
+						link.classList.remove("active");
+					}
+				});
+			}
+		})
+	});
+</script>
+
+<style lang="scss">
+	@import "../../styles/_breakpoints.scss";
+
 	.main-header {
 		position: fixed;
 		z-index: 9001;
-		inset: 0;
-
 		width: 100%;
 		height: 0;
+
+		.container::before {
+			content: "";
+
+			position: absolute;
+			z-index: -1;
+			inset: 0;
+
+			width: 100%;
+			height: var(--main-header-height);
+
+			transition: background-color 0.3s backdrop-filter 0.2s;
+		}
+
+		&.scrolled {
+			.container::before {
+				background-color:color-mix(in srgb, var(--clr-primary-700) 95%, transparent);
+				backdrop-filter: blur(5px);
+				box-shadow: 0 4px 4px -2px rgb(24 39 75 / 8%), 0 2px 4px -2px rgb(24 39 75 / 12%);
+			}
+		}
 	}
 
-	.container::before {
-		content: "";
-
-		position: absolute;
-		z-index: -1;
-		inset: 0;
-
-		width: 100%;
-		height: var(--main-header-height);
-
-		transition: 300ms;
-	}
-
-	.scrolled .container::before {
-		background-color:color-mix(in srgb, var(--clr-primary-700) 95%, transparent);
-		backdrop-filter: blur(5px);
-	}
-
-	[data-icon] {
-		font-size: 2.5rem;
-	}
-
-	.container {
+	.navbar {
 		display: grid;
 		grid-template-areas:
-			"logo menu-button"
-			"nav-block nav-block";
+			"logo toggler"
+			"nav nav";
 		grid-template-columns: 1fr auto;
 		grid-template-rows: var(--main-header-height, min-content) 0fr;
 
-		transition: 300ms;
-	}
-
-	.container:has([data-navigation-expanded="true"]) {
-		grid-template-rows: var(--main-header-height, min-content) 1fr;
-	}
-
-	.header__logo {
-		display: flex;
-		grid-area: logo;
-		align-items: center;
-
-		padding: 2rem 0;
-
-		color: currentcolor;
-	}
-
-	.header__menu-button {
-		cursor: pointer;
-
-		display: block;
-		grid-area: menu-button;
-
-		padding: 0;
-
-		line-height: 0;
-		color: currentcolor;
-
-		background-color: transparent;
-		border: none;
-	}
-
-	.header__menu-button:hover,
-	.header__menu-button:focus-visible {
-		color: var(--clr-secondary-400);
-	}
-
-	.header__menu-button:active {
-		color: var(--clr-secondary-700);
-	}
-
-	.header__menu-button[data-navigation-expanded="true"] > [data-icon="menu"],
-	.header__menu-button[data-navigation-expanded="false"] > [data-icon="x"] {
-		display: none;
-	}
-
-	.header__menu-button[data-navigation-expanded="true"] > [data-icon="x"],
-	.header__menu-button[data-navigation-expanded="false"] > [data-icon="menu"] {
-		display: block;
-	}
-
-	.header__navigation-block {
-		overflow: hidden;
-		grid-area: nav-block;
-
-		color: var(--clr-900);
-
-		background-color: var(--clr-100);
-		box-shadow: 0 4px 4px -2px rgb(24 39 75 / 8%), 0 2px 4px -2px rgb(24 39 75 / 12%);
-	}
-
-	.header__navigation-block::before {
-		content: "";
-
-		position: absolute;
-		z-index: -1;
-		left: 0;
-
-		display: none;
-
 		width: 100%;
-		height: 100vh;
 
-		background: rgb(0 0 0 / 50%);
-	}
+		transition: grid-template-rows 300ms;
 
-	.container:has([data-navigation-expanded="true"]) .header__navigation-block::before {
-		display: block;
-	}
-
-	.header__promo {
-		display: flex;
-		flex-direction: column;
-		gap: 1.25rem;
-		align-items: center;
-
-		padding: 1rem 1.5rem;
-	}
-
-	a[href^="tel"] {
-		font-size: 1.5rem;
-		font-weight: 700;
-		color: currentcolor;
-		text-decoration: none;
-	}
-
-	a[href^="tel"]:hover {
-		color: var(--clr-secondary-400);
-	}
-
-	@media (width >= 1200px) {
-		.container {
+		@include breakpoint(xl) {
 			grid-template-areas:
-				"logo nav-block";
+				"logo nav";
 			grid-template-columns: auto 1fr;
 		}
 
-		.header__menu-button {
-			display: none;
+		&:has(.toggled) {
+			grid-template-rows: var(--main-header-height, min-content) 1fr;
 		}
 
-		.header__navigation-block {
-			overflow: visible;
+
+		&__logo {
 			display: flex;
+			grid-area: logo;
 			align-items: center;
-			justify-content: flex-end;
 
-			color: var(--clr-100);
+			margin: auto auto auto 0;
 
-			background-color: transparent;
-			box-shadow: none;
+
+			font-size: 2.5rem;
+			color: currentcolor;
 		}
 
-		.container:has([data-navigation-expanded="true"]) .header__navigation-block::before {
-			display: none;
+		&-toggler{
+			display: block;
+			grid-area: toggler;
+			align-self: center;
+
+			aspect-ratio: 1;
+			min-width: auto;
+
+			& [data-icon] {
+				scale: 1.5;
+			}
+
+			& [data-icon="x"] {
+				display: none;
+			}
+
+			& [data-icon="menu"] {
+				display: block;
+			}
+
+			&.toggled {
+				& [data-icon="x"] {
+					display: block;
+				}
+
+				& [data-icon="menu"] {
+					display: none;
+				}
+			}
+
+			@include breakpoint(xl) {
+				display: none;
+			}
 		}
 
-		.header__promo {
-			flex-direction: row;
+		&-collapse {
+			overflow: hidden;
+			display: flex;
+			grid-area: nav;
+			flex-direction: column;
+
+			font-size: 1.5rem;
+
+			background-color: var(--background-color);
+
+			@include breakpoint(xl) {
+				flex-direction: row;
+				align-items: center;
+				justify-content: flex-end;
+
+				font-size: 1rem;
+
+				background-color: transparent;
+			}
+		}
+
+		&-nav {
+			display: flex;
+			flex-direction: column;
+			gap: 0.25rem;
+			justify-content: center;
+
+			margin: 0;
+			padding: 0 clamp(0.5rem, 1vw, 2rem);
+
+			list-style: none;
+
+			&__item {
+				display: flex;
+
+				& a {
+					flex-basis: 100%;
+
+					box-sizing: border-box;
+					padding: 1rem 1.5rem;
+
+					text-decoration: none;
+					letter-spacing: 0.02em;
+
+					border-bottom: none;
+					border-left: 3px solid transparent;
+
+					transition: border-color 0.2s ease;
+
+					&.active {
+						font-weight: bold;
+						color: currentcolor;
+						border-bottom: none;
+						border-left: 3px solid var(--accent-color);
+
+						&:hover {
+							color: var(--accent-color);
+						}
+					}
+				}
+			}
+
+			@include breakpoint(xl) {
+				flex-direction: row;
+				justify-content: flex-end;
+				background-color: transparent;
+
+				&__item {
+					& a {
+						padding: 0.25rem 1rem;
+						border-bottom: 3px solid transparent;
+						border-left: none;
+
+						&.active {
+							border-bottom: 3px solid var(--accent-color);
+							border-left: none;
+						}
+					}
+				}
+			}
+		}
+
+		&-promo {
+			display: flex;
+			flex-direction: column;
 			gap: 1.25rem;
 			align-items: center;
-			padding: 0;
-		}
 
-		a[href^="tel"] {
-			font-size: 1rem;
+			padding: 1rem 1.5rem;
+
+			a[href^="tel"] {
+				font-weight: bold;
+				color: currentcolor;
+
+				&:hover {
+					color: var(--accent-color);
+				}
+			}
+
+			#header-form {
+				font-size: 1rem;
+			}
+
+			@include breakpoint(xl) {
+				flex-direction: row;
+				gap: 1.25rem;
+				align-items: center;
+				padding: 0;
+			}
 		}
 	}
 </style>

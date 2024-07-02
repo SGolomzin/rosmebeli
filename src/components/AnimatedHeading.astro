@@ -8,7 +8,7 @@ import TextWrapper from './TextWrapper.astro';
 
 const { title, tag: Element = "h1", class: className, ...props} = Astro.props;
 ---
-<Element class:list={["animated-heading", className]} {...props}><TextWrapper text={title} /></Element>
+<Element class:list={["animated-heading", className]} {...props}><TextWrapper text={title} splitByChar /></Element>
 
 {/* GSAP animations */}
 <script>
@@ -19,20 +19,24 @@ const { title, tag: Element = "h1", class: className, ...props} = Astro.props;
 
 	function init() {
 		gsap.utils.toArray<HTMLElement>(".animated-heading").forEach((heading) => {
-			gsap.fromTo(
-				heading.childNodes,
-				{
-					y: 30,
-					opacity: 0,
-				},
-				{
-					y: 0,
-					opacity: 1,
-					stagger: 0.04,
-					ease: "power4.out",
-					scrollTrigger: heading
-				}
-			)
+			const words = heading.childNodes;
+
+			gsap.utils.toArray<HTMLElement>(words).forEach((char) => {
+				gsap.fromTo(
+					char.childNodes,
+					{
+						y: 30,
+						opacity: 0,
+					},
+					{
+						y: 0,
+						opacity: 1,
+						stagger: 0.04,
+						ease: "power4.out",
+						scrollTrigger: heading
+					}
+				)
+			})
 		})
 	}
 

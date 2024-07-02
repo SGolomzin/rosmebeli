@@ -72,7 +72,10 @@ const { thumbnail, name, city, rating, text, isLongText } = Astro.props;
 			left: 50%;
 			transform: translate(-50%, -50%);
 
-			display: none;
+			visibility: hidden;
+			opacity: 0;
+
+			transition: visibility 0s linear 300ms, opacity 300ms;
 		}
 
 		&__thumbnail {
@@ -86,16 +89,17 @@ const { thumbnail, name, city, rating, text, isLongText } = Astro.props;
 				object-fit: cover;
 			}
 
-			&:hover {
-				& > img {
-					filter: brightness(60%);
-				}
-
-				.review__zoom-button {
-					display: block;
-				}
+			&:has(img) {
+				@include styledBackgroundOnHover(rgba(0,0,0,0.33));
 			}
-		}
+
+			&:hover .review__zoom-button {
+				z-index: 2;
+				visibility: visible;
+				opacity: 1;
+				transition: visibility 0s linear 0s, opacity 300ms;
+			}
+	}
 
 		&__content {
 			display: grid;

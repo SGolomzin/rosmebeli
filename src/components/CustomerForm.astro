@@ -11,6 +11,7 @@ const { id, theme = "dark", class: className, ...rest } = Astro.props;
 ---
 
 <form
+	id={id}
 	class:list={[
 		"customer-form",
 		className

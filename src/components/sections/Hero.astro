@@ -110,6 +110,7 @@ const Stats: StatisticsProps[] = [
 	@import "../../styles/_design.scss";
 
 	section {
+		overflow: hidden;
 		min-height: calc(100vh - var(--section-top-padding) - var(--section-bottom-padding));
 	}
 
@@ -122,9 +123,12 @@ const Stats: StatisticsProps[] = [
 
 	.hero__promo {
 		z-index: 1;
+
 		grid-column: 1 / -1;
 		grid-row: 1 / 2;
 		align-self: center;
+
+		margin-top: 5rem;
 
 		&-text {
 			color: var(--clr-secondary-400);
@@ -137,6 +141,7 @@ const Stats: StatisticsProps[] = [
 			line-height: 1.12;
 			text-transform: uppercase;
 			letter-spacing: 0.02em;
+			overflow-wrap: break-word;
 		}
 
 		&-sub-text {
