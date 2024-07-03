@@ -20,7 +20,7 @@ const { links } = Astro.props;
 	<div class="container">
 		<nav class="navbar">
 			<a href="/rosmebeli/" class="navbar__logo"><Icon name="logo" /></a>
-			<Button appearance="ghost" class="navbar-toggler">
+			<Button appearance="ghost" id="navbar-toggler">
 				<Icon name="menu" />
 				<Icon name="x" />
 			</Button>
@@ -55,7 +55,7 @@ const { links } = Astro.props;
 	Скрипт открытия/закрытия навигационной панели
 */}
 <script>
-	const toggler = document.querySelector(".navbar-toggler") as HTMLElement | null;
+	const toggler = document.getElementById("navbar-toggler") as HTMLElement | null;
 
 	const toggleExpanded = () => {
 		if (!toggler) return;
@@ -194,41 +194,6 @@ const { links } = Astro.props;
 			color: currentcolor;
 		}
 
-		&-toggler{
-			display: block;
-			grid-area: toggler;
-			align-self: center;
-
-			aspect-ratio: 1;
-			min-width: auto;
-
-			& [data-icon] {
-				scale: 1.5;
-			}
-
-			& [data-icon="x"] {
-				display: none;
-			}
-
-			& [data-icon="menu"] {
-				display: block;
-			}
-
-			&.toggled {
-				& [data-icon="x"] {
-					display: block;
-				}
-
-				& [data-icon="menu"] {
-					display: none;
-				}
-			}
-
-			@include breakpoint(xl) {
-				display: none !important;
-			}
-		}
-
 		&-collapse {
 			overflow: hidden;
 			display: flex;
@@ -338,6 +303,41 @@ const { links } = Astro.props;
 				align-items: center;
 				padding: 0;
 			}
+		}
+	}
+
+	#navbar-toggler {
+		display: block;
+		grid-area: toggler;
+		align-self: center;
+
+		aspect-ratio: 1;
+		min-width: auto;
+
+		& [data-icon] {
+			scale: 1.5;
+		}
+
+		& [data-icon="x"] {
+			display: none;
+		}
+
+		& [data-icon="menu"] {
+			display: block;
+		}
+
+		&.toggled {
+			& [data-icon="x"] {
+				display: block;
+			}
+
+			& [data-icon="menu"] {
+				display: none;
+			}
+		}
+
+		@include breakpoint(xl) {
+			display: none;
 		}
 	}
 </style>
