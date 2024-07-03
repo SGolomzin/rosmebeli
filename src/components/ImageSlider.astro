@@ -54,10 +54,11 @@
 	function init() {
 		gsap.from('#image-slider', {
 			opacity: 0,
-			yPercent: 200,
+			y: 200,
 			duration: 1,
 			scrollTrigger: {
-				trigger: '#image-slider'
+				trigger: '#image-slider',
+				start: 'top bottom',
 			}
 		})
 	}
@@ -119,5 +120,7 @@
 <style>
 	.section-block {
 		--section-top-padding: 0;
+
+		overflow: hidden;
 	}
 </style>

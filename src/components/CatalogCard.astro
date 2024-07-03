@@ -22,8 +22,8 @@ const { product, class: className, ...rest } = Astro.props
 	{...rest}
 >
 	<ImageThumbnail
-		src={product.data.thumbnail.url}
-		alt={product.data.thumbnail.alt}
+		src={product.data.images[0].url}
+		alt={product.data.images[0].alt}
 	/>
 	<Card class="catalog-card__info" filled>
 		<span class="catalog-card__name">{product.data.name}</span>

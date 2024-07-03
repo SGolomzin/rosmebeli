@@ -1,6 +1,10 @@
 import { z, defineCollection } from "astro:content";
 
-import { productDetailsSchema } from "../schemas";
+import {
+	imageSchema,
+	imagesSchema,
+	productDetailsSchema
+} from "../schemas";
 
 const catalogCollection = defineCollection({
 	type: "content",
@@ -11,11 +15,8 @@ const catalogCollection = defineCollection({
 		price: z.number(),
 		rating: z.number(),
 		isAvailable: z.boolean(),
-		thumbnail: z.object({
-			url: z.string(),
-			alt: z.string()
-		}),
-		details: productDetailsSchema
+		images: imagesSchema,
+		details: productDetailsSchema,
 	})
 })
 
@@ -31,19 +32,16 @@ const postsCollection = defineCollection({
 	schema: z.object({
 		title: z.string(),
 		pubDate: z.date(),
-		description: z.string(),
+		excerpt: z.string(),
 		ttr: z.number(), // time to read
-		image: z.object({
-			url: z.string(),
-			alt: z.string()
-		})
+		image: imageSchema,
 	})
 })
 
 const reviewsCollection = defineCollection({
 	type: "data",
 	schema: z.object({
-		thumbnail: z.string().optional(),
+		image: imageSchema.optional(),
 		name: z.string(),
 		city: z.string(),
 		text: z.string(),

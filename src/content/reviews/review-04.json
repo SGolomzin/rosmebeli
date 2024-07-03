@@ -3,6 +3,9 @@
   "city": "Москва",
   "text": "Заказанный шкаф выполнен в соответствии с договоренностью и в срок. Доставка и сборка также не вызвала никаких претензий. В результате я остался доволен. Спасибо!",
   "isLongText": false,
-  "thumbnail": "/rosmebeli/images/placeholders/placeholder_4.jpg",
+  "image": {
+    "url": "/rosmebeli/images/placeholders/placeholder_0.jpg",
+    "alt": "Фотография готового проекта кухни"
+  },
   "rating": 5
 }

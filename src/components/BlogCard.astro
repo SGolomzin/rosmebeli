@@ -30,7 +30,7 @@ const { post, class: className, ...rest } = Astro.props;
 		/>
 		<Card class="blog-post-card__content">
 			<h4 class="blog-post-card__title">{post.data.title}</h4>
-			<p class="blog-post-card__description">{post.data.description}</p>
+			<p class="blog-post-card__description">{post.data.excerpt}</p>
 			<div class="blog-post-card__meta label-sm">
 				<span>{post.data.pubDate.toLocaleDateString('ru-RU', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
 				<span>Время прочтения: {post.data.ttr} {declOfNum(post.data.ttr, ['минута', 'минуты', 'минут'])}</span>

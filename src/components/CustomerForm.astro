@@ -22,6 +22,7 @@ const { id, theme = "dark", class: className, ...rest } = Astro.props;
 		id=`${id}__customer-name`
 		label="Ваш телефон"
 		type="tel"
+		name="customer-name"
 		placeholder="Введите ваш телефон"
 		mask="+7 (999) 999-99-99"
 		theme={theme}
@@ -29,6 +30,8 @@ const { id, theme = "dark", class: className, ...rest } = Astro.props;
 	<Input
 		id=`${id}__customer-address`
 		label="Ваш адрес"
+		type="text"
+		name="customer-address"
 		placeholder="Введите ваш адрес"
 		theme={theme}
 	/>

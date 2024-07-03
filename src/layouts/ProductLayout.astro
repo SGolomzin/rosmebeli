@@ -8,8 +8,6 @@ import Breadcrumbs from '../components/Breadcrumbs.astro';
 
 const { frontmatter: fm } = Astro.props;
 
-const ImageObject = {url: fm.thumbnail.url, alt: fm.thumbnail.alt}
-
 const formatPrice = (price: number) => new Intl.NumberFormat('ru-RU', { style: 'currency', currency: 'RUB', maximumFractionDigits: 0 }).format(price);
 ---
 
@@ -18,7 +16,7 @@ const formatPrice = (price: number) => new Intl.NumberFormat('ru-RU', { style: '
 		<article class="section-block">
 			<div class="container container-grid product">
 				<Breadcrumbs class="product__breadcrumbs"  currentPage={fm.name} />
-				<ImageGrid class="product__images" images={[ImageObject, ImageObject, ImageObject, ImageObject, ImageObject]} />
+				<ImageGrid class="product__images" images={[...fm.images]} />
 				<h2 class="product__heading">
 					<span class="product__name">{fm.name}</span>
 					<span class="product__price">{formatPrice(fm.price)}</span>

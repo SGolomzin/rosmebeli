@@ -23,6 +23,13 @@ const Stats: StatisticsProps[] = [
 ]
 ---
 <section id="hero" class="section-block">
+	<video
+		class="hero__video"
+		src="/rosmebeli/video/carpentry.mp4"
+		autoplay
+		loop
+		muted
+	/>
 	<div class="container">
 		<div class="hero__promo">
 			<div>
@@ -59,31 +66,6 @@ const Stats: StatisticsProps[] = [
 				<Statistics class="hero__promo-stats" stats={Stats} />
 			</div>
 		</div>
-		<div class="hero__ticker">
-			<Ticker
-				class="ticker ticker--ttb"
-				axis="y"
-				direction="reverse"
-				speed="slow"
-			>
-				<img src="/rosmebeli/images/placeholders/placeholder_1.jpg" alt="placeholder" />
-				<img src="/rosmebeli/images/placeholders/placeholder_3.jpg" alt="placeholder"/>
-				<img src="/rosmebeli/images/placeholders/placeholder_2.jpg" alt="placeholder"/>
-				<img src="/rosmebeli/images/placeholders/placeholder_4.jpg" alt="placeholder"/>
-				<img src="/rosmebeli/images/placeholders/placeholder_5.jpg" alt="placeholder"/>
-			</Ticker>
-			<Ticker
-				class="ticker ticker--btt"
-				axis="y"
-				speed="slow"
-			>
-				<img src="/rosmebeli/images/placeholders/placeholder_1.jpg" alt="placeholder"/>
-				<img src="/rosmebeli/images/placeholders/placeholder_2.jpg" alt="placeholder"/>
-				<img src="/rosmebeli/images/placeholders/placeholder_3.jpg" alt="placeholder"/>
-				<img src="/rosmebeli/images/placeholders/placeholder_4.jpg" alt="placeholder"/>
-				<img src="/rosmebeli/images/placeholders/placeholder_5.jpg" alt="placeholder"/>
-			</Ticker>
-		</div>
 	</div>
 </section>
 
@@ -91,15 +73,13 @@ const Stats: StatisticsProps[] = [
 <script>
 	const tl = gsap.timeline({ defaults:{ opacity: 0, ease: "back" }});
 	function init() {
-		tl.from(".hero__promo", { ease: "linear", autoAlpha: 0 })
+		tl.from(".hero__video", { ease: "linear", autoAlpha: 0, duration: 1 })
+			.from(".hero__promo", { ease: "linear", autoAlpha: 0 })
 			.from(".hero__promo-slogan", { x: 80, duration: 1 })
 			.from(".hero__promo-sub-text", { x: -80, duration:1 }, "<")
 			.from(".hero__promo-text", { y: 30 }, "-=0.2")
 			.from(".hero__promo-button", { y: 50 }, "-=0.4")
 			.from(".hero__promo-stats > *", { y: 50, stagger: 0.2 }, "-=0.4")
-			.from(".hero__ticker", { autoAlpha: 0 }, "<")
-			.from(".ticker--ttb", { y: "-100%", ease: "sine", opacity: 0, duration: 3 })
-			.from(".ticker--btt", { y: "100%", ease: "sine", opacity: 0, duration: 3 }, "<")
 	}
 
 	window.addEventListener("load", init);
@@ -119,6 +99,22 @@ const Stats: StatisticsProps[] = [
 		grid-template-columns: repeat(12, 1fr);
 		grid-template-rows: 1fr;
 		gap: 1.25rem;
+	}
+
+	.hero__video {
+		position: absolute;
+		z-index: -2;
+		top: 0;
+
+		width: 100%;
+		min-width: 320px;
+		height: 100%;
+
+		opacity: 0.3;
+		object-fit: cover;
+		filter: grayscale(65%);
+
+		@include initialHidden();
 	}
 
 	.hero__promo {

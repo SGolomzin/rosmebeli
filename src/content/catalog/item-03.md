@@ -4,9 +4,13 @@ category: "Стенки"
 price: 25000
 rating: 3
 isAvailable: true
-thumbnail:
-  url: "/rosmebeli/images/placeholders/placeholder_0.jpg"
-  alt: "Превью-заглушка товара"
+images:
+  [
+    {
+      url: "/rosmebeli/images/placeholders/placeholder_0.jpg",
+      alt: "Превью-заглушка товара",
+    },
+  ]
 details:
   bodyMaterials: ["МДФ"]
   doorMaterials: ["МДФ"]

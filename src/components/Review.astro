@@ -5,7 +5,10 @@ import IconButton from './IconButton.astro';
 import Card from './Card.astro';
 
 interface Props {
-	thumbnail?: string;
+	image?: {
+		url: string;
+		alt?: string;
+	};
 	name: string;
 	city: string;
 	rating: number;
@@ -13,7 +16,7 @@ interface Props {
 	isLongText?: boolean;
 }
 
-const { thumbnail, name, city, rating, text, isLongText } = Astro.props;
+const { image, name, city, rating, text, isLongText } = Astro.props;
 ---
 
 <Card
@@ -23,10 +26,10 @@ const { thumbnail, name, city, rating, text, isLongText } = Astro.props;
 	shaded
 >
 	<div class="review__thumbnail">
-		{thumbnail && (
-			<img src={thumbnail} alt="Фото сделанное клиентом" />
+		{image && (
+			<img src={image.url} alt={image.alt} />
 			<Modal id={`review__modal--${name}`}>
-				<img src={thumbnail} alt="Фото сделанное клиентом" />
+				<img src={image.url} alt={image.alt} />
 				<IconButton
 					class="review__zoom-button"
 					shape="round"
