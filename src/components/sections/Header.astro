@@ -145,15 +145,15 @@ const { links } = Astro.props;
 			inset: 0;
 
 			width: 100%;
-			height: var(--main-header-height);
+			height:0;
 
-			transition: background-color 0.3s backdrop-filter 0.2s;
+			transition: height 0.2s ease-in-out;
 		}
 
 		&.scrolled {
 			.container::before {
+				height: var(--main-header-height);
 				background-color:color-mix(in srgb, var(--clr-primary-700) 95%, transparent);
-				backdrop-filter: blur(5px);
 				box-shadow: 0 4px 4px -2px rgb(24 39 75 / 8%), 0 2px 4px -2px rgb(24 39 75 / 12%);
 			}
 		}
@@ -177,11 +177,6 @@ const { links } = Astro.props;
 			grid-template-columns: auto 1fr;
 		}
 
-		&:has(.toggled) {
-			grid-template-rows: var(--main-header-height, min-content) 1fr;
-		}
-
-
 		&__logo {
 			display: flex;
 			grid-area: logo;
@@ -202,7 +197,20 @@ const { links } = Astro.props;
 
 			font-size: 1.5rem;
 
-			background-color: var(--background-color);
+			&::before {
+				content: "";
+
+				position: absolute;
+				z-index: -100;
+				inset: 0;
+
+				width: 100%;
+				height: 0;
+
+				background: color-mix(in srgb, var(--clr-primary-400) 95%, transparent);
+
+				transition: height 0.2s ease-in-out;
+			}
 
 			@include breakpoint(xl) {
 				flex-direction: row;
@@ -302,6 +310,14 @@ const { links } = Astro.props;
 				gap: 1.25rem;
 				align-items: center;
 				padding: 0;
+			}
+		}
+
+		&:has(.toggled) {
+			grid-template-rows: var(--main-header-height, min-content) 1fr;
+
+			& .navbar-collapse::before {
+				height: 100vh;
 			}
 		}
 	}

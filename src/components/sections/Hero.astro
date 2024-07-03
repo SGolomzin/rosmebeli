@@ -90,7 +90,9 @@ const Stats: StatisticsProps[] = [
 	@import "../../styles/_design.scss";
 
 	section {
+		position: relative;
 		overflow: hidden;
+		place-content: center;
 		min-height: calc(100vh - var(--section-top-padding) - var(--section-bottom-padding));
 	}
 
@@ -103,28 +105,24 @@ const Stats: StatisticsProps[] = [
 
 	.hero__video {
 		position: absolute;
-		z-index: -2;
+		z-index: -1;
 		top: 0;
 
 		width: 100%;
 		min-width: 320px;
-		height: 100%;
+		min-height: 100%;
 
-		opacity: 0.3;
 		object-fit: cover;
-		filter: grayscale(65%);
+		filter: grayscale(65%) opacity(0.3);
 
 		@include initialHidden();
 	}
 
 	.hero__promo {
 		z-index: 1;
-
 		grid-column: 1 / -1;
 		grid-row: 1 / 2;
 		align-self: center;
-
-		margin-top: 5rem;
 
 		&-text {
 			color: var(--clr-secondary-400);
