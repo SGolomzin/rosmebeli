@@ -12,30 +12,27 @@ const { title, tag: Element = "h1", class: className, ...props} = Astro.props;
 
 {/* GSAP animations */}
 <script>
-	import { gsap } from "gsap";
-	import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-	gsap.registerPlugin(ScrollTrigger);
-
 	function init() {
 		gsap.utils.toArray<HTMLElement>(".animated-heading").forEach((heading) => {
 			const words = heading.childNodes;
+			const chars = [] as ChildNode[];
 
-			gsap.utils.toArray<HTMLElement>(words).forEach((char) => {
-				gsap.fromTo(
-					char.childNodes,
-					{
+			gsap.utils.toArray<HTMLElement>(words).forEach((word) => {
+				chars.push(...word.childNodes);
+			});
+
+			ScrollTrigger.batch(gsap.utils.toArray<HTMLElement>(chars), {
+				onEnter: (elements, triggers) => {
+					gsap.fromTo(elements, {
 						y: 30,
-						opacity: 0,
-					},
-					{
+						opacity: 0
+					}, {
 						y: 0,
 						opacity: 1,
 						stagger: 0.04,
-						ease: "power4.out",
-						scrollTrigger: heading
-					}
-				)
+						ease: "power4.out"
+					});
+				}
 			})
 		})
 	}
