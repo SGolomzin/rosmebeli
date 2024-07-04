@@ -5,6 +5,7 @@ import { Icon } from 'astro-icon/components';
 const PartnersList = [
 	"blum",
 	"egger",
+	"boyard",
 	"hettich",
 	"kronospan",
 	"slotex"
@@ -21,7 +22,7 @@ const PartnersList = [
 		</div>
 		<div class="partners__list">
 			<Ticker
-				gap={40}
+				gap={60}
 			>
 				{PartnersList.map((partner) => (
 					<Icon name={partner} title={partner} />
@@ -50,10 +51,12 @@ const PartnersList = [
 		}
 
 		&__list {
-			font-size: 3rem;
+			font-size: 2rem;
 
 			[data-icon] {
 				--brand-color: var(--clr-primary-100);
+
+				color: var(--clr-primary-700);
 
 				&:hover {
 					--brand-color: unset;
