@@ -126,6 +126,10 @@ const {
 		&[data-speed="slow"] {
 			--ticker-animation-duration: 60s;
 		}
+
+		&:hover .ticker__inner {
+			animation-play-state: paused;
+		}
 	}
 
 	@keyframes ticker-x {
