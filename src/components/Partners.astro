@@ -1,35 +1,13 @@
 ---
 import Ticker from './Ticker.astro';
+import { Icon } from 'astro-icon/components';
 
 const PartnersList = [
-	{
-		src: "/rosmebeli/images/partners/1.svg",
-		alt: "Partner 1"
-	},
-	{
-		src: "/rosmebeli/images/partners/2.svg",
-		alt: "Partner 2"
-	},
-	{
-		src: "/rosmebeli/images/partners/3.svg",
-		alt: "Partner 3"
-	},
-	{
-		src: "/rosmebeli/images/partners/4.svg",
-		alt: "Partner 4"
-	},
-	{
-		src: "/rosmebeli/images/partners/5.svg",
-		alt: "Partner 5"
-	},
-	{
-		src: "/rosmebeli/images/partners/6.svg",
-		alt: "Partner 6"
-	},
-	{
-		src: "/rosmebeli/images/partners/1.svg",
-		alt: "Partner 7"
-	}
+	"blum",
+	"egger",
+	"hettich",
+	"kronospan",
+	"slotex"
 ];
 ---
 <section
@@ -43,10 +21,10 @@ const PartnersList = [
 		</div>
 		<div class="partners__list">
 			<Ticker
-				gap={64}
+				gap={40}
 			>
-				{PartnersList.map(({ src, alt }) => (
-					<img src={src} alt={alt} />
+				{PartnersList.map((partner) => (
+					<Icon name={partner} title={partner} />
 				))}
 			</Ticker>
 		</div>
@@ -58,15 +36,29 @@ const PartnersList = [
 		--section-top-padding: 0;
 	}
 
-	.partners__heading {
-		display: flex;
-		gap: 1.25rem;
-		align-items: start;
+	.partners {
+		&__heading {
+			display: flex;
+			gap: 1.25rem;
+			align-items: start;
 
-		& span {
-			flex-grow: 1;
-			height: 0.95rem;
-			border-bottom: 2px solid var(--clr-secondary-400);
+			& span {
+				flex-grow: 1;
+				height: 0.95rem;
+				border-bottom: 2px solid var(--clr-secondary-400);
+			}
+		}
+
+		&__list {
+			font-size: 3rem;
+
+			[data-icon] {
+				--brand-color: var(--clr-primary-100);
+
+				&:hover {
+					--brand-color: unset;
+				}
+			}
 		}
 	}
 </style>
