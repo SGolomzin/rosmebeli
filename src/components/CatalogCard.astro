@@ -6,6 +6,7 @@ interface Props extends astroHTML.JSX.HTMLAttributes {
 }
 
 import Card from "./Card.astro";
+import Tag from "./Tag.astro";
 import ImageThumbnail from './ImageThumbnail.astro';
 import Link from "./Link.astro";
 
@@ -21,12 +22,15 @@ const { product, class: className, ...rest } = Astro.props
 	filled
 	{...rest}
 >
-	<ImageThumbnail
-		src={product.data.images[0].url}
-		alt={product.data.images[0].alt}
-	/>
+	<a class="catalog-card__image" href={`/rosmebeli/catalog/${product.slug}`}>
+		<ImageThumbnail
+			src={product.data.images[0].url}
+			alt={product.data.images[0].alt}
+		/>
+	</a>
 	<Card class="catalog-card__info" filled>
 		<span class="catalog-card__name">{product.data.name}</span>
+		<Tag class="catalog-card__category">{product.data.category}</Tag>
 		<span class="catalog-card__variant">{product.data.variant}</span>
 	</Card>
 	<Link class="catalog-card__link" href={`/rosmebeli/catalog/${product.slug}`} appearance="button" icon="arrow-right">Подробнее</Link>
@@ -37,24 +41,33 @@ const { product, class: className, ...rest } = Astro.props
 
 	.catalog-card {
 		display: grid;
-		grid-template-rows: 375px 2lh min-content;
+		grid-template-rows: 300px minmax(4rem, max-content) min-content;
 		gap: 0.5rem;
+
+		width: 100%;
 		margin: 1rem;
 
 		@include scaleOnHover(1.05);
 
+		&__image {
+			display: block;
+		}
+
 		&__info {
 			display: flex;
-			flex-direction: column;
-			align-items: flex-start;
-			align-self: start;
+			flex-flow: row wrap;
+			gap: 0.25rem;
+			place-content: center space-between;
+			align-items: center;
 		}
 
 		&__name {
-			font-weight: bold;
+			font-family: var(--font-family-secondary);
+			font-size: 1.25rem;
 		}
 
 		&__variant {
+			flex: 1 0 100%;
 			color: var(--clr-400);
 		}
 	}

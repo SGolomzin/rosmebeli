@@ -10,7 +10,7 @@ const catalogCollection = defineCollection({
 	type: "content",
 	schema: z.object({
 		name: z.string(),
-		category: z.enum(['Кухни', 'Шкафы', 'Стенки', 'Детские', 'Прихожие', 'Обеденные', "Рабочие зоны"]),
+		category: z.enum(['Кухни', 'Шкафы', 'Стенки', 'Детские', 'Прихожие', 'Обеденные', 'Рабочие зоны']),
 		variant: z.string().optional(),
 		price: z.number(),
 		rating: z.number(),
@@ -31,6 +31,7 @@ const postsCollection = defineCollection({
 	type: "content",
 	schema: z.object({
 		title: z.string(),
+		category: z.enum(['Дизайн', 'Интерьер', 'Материалы', 'Советы']),
 		pubDate: z.date(),
 		excerpt: z.string(),
 		ttr: z.number(), // time to read

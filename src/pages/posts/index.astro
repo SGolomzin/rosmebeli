@@ -6,6 +6,7 @@ import BlogCard from "../../components/BlogCard.astro";
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 
 const allPosts = await getCollection("posts");
+const categories = [...new Set(allPosts.map((post) => post.data.category))];
 ---
 
 <Layout title="Статьи | РОСМЕБЕЛЬ">
@@ -14,10 +15,27 @@ const allPosts = await getCollection("posts");
 			<div class="container">
 				<Breadcrumbs />
 				<h1>Статьи</h1>
-				<div class="posts">
-					{allPosts.map((post) => (
-						<BlogCard post={post} />
-					))}
+				<div class="blog">
+					<div class="blog__filter label">
+						<p>Фильтр по категориям:</p>
+						{categories.map((category) => (
+							<div class="filter-input">
+								<input type="checkbox" id={category} name={category} checked/>
+								<label for={category}>{category}</label>
+							</div>
+						))}
+					</div>
+
+					<div class="blog-list">
+						{allPosts.map((post) => (
+							<div
+								class="catalog-list__item"
+								data-category={post.data.category}
+							>
+								<BlogCard post={post} />
+							</div>
+						))}
+					</div>
 				</div>
 		</section>
 	</main>
@@ -26,17 +44,54 @@ const allPosts = await getCollection("posts");
 <style lang="scss">
 	@import "../../styles/_breakpoints.scss";
 
-	.posts {
-		display: grid;
-		grid-template-columns: repeat(1, minmax(0, 1fr));
+	$categories: 'Дизайн', 'Интерьер', 'Материалы', 'Советы';
+
+	h1 {
+		margin-bottom: 1rem;
+	}
+
+	.blog {
+		display: flex;
+		flex-direction: column;
 		gap: 1.25rem;
 
-		@include breakpoint(md) {
-			grid-template-columns: repeat(2, minmax(0, 1fr));
+		&__filter {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 0.5rem;
+			margin-bottom: 1.25rem;
 		}
 
-		@include breakpoint(xl) {
-			grid-template-columns: repeat(3, minmax(0, 1fr));
+		&-list {
+			display: grid;
+			grid-template-columns: repeat(auto-fill, 1fr);
+			grid-template-rows: masonry;
+			gap: 1.25rem;
+
+			@include breakpoint(md) {
+				grid-template-columns: repeat(auto-fill, minmax(385px, 1fr));
+			}
 		}
+
+		@each $category in $categories {
+			&:has(input[name="#{$category}"]:checked) {
+				.catalog-list__item[data-category="#{$category}"] {
+					display: block;
+				}
+			}
+
+			&:has(input[name="#{$category}"]:not(:checked)) {
+				.catalog-list__item[data-category="#{$category}"] {
+					display: none;
+				}
+			}
+		}
+	}
+
+	.filter-input {
+		display: flex;
+		gap: 0.5rem;
+		align-items: center;
+		accent-color: var(--accent-color);
 	}
 </style>

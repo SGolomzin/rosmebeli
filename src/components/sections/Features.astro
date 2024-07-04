@@ -89,12 +89,23 @@ const FeatureItems = [
 
 			& > li {
 				padding-left: 2.25rem;
-				text-wrap: pretty;
 				border-left: 3px solid transparent;
 
 				&[data-is-active="true"] {
 					border-left-color: var(--clr-secondary-400);
 				}
+			}
+		}
+
+		&__text {
+			padding-inline-end: 1rem;
+			text-align: start;
+			text-wrap: balance;
+
+			@include breakpoint(md) {
+				padding-inline-end: 1rem;
+				text-align: justify;
+				text-wrap: pretty;
 			}
 		}
 

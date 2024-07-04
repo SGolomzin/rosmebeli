@@ -6,21 +6,11 @@ import type { CollectionEntry } from 'astro:content';
 type Product = CollectionEntry<'catalog'>;
 
 import Breadcrumbs from "../../components/Breadcrumbs.astro";
+import Input from "../../components/Input.astro";
 import CatalogCard from "../../components/CatalogCard.astro";
 
 const allProducts = await getCollection("catalog");
-
-// const groupedByCategory = Object.groupBy(allProducts, (product) => product.data.category);
-const groupedByCategory = allProducts.reduce((acc: Record<string, Product[]>, product) => {
-  const category = product.data.category;
-  if (!acc[category]) {
-    acc[category] = [];
-  }
-  acc[category].push(product);
-  return acc;
-}, {});
-
-const categoryNames = Object.keys(groupedByCategory) as Array<keyof typeof groupedByCategory>;
+const categories = [...new Set(allProducts.map((product) => product.data.category))];
 ---
 
 <Layout title="Каталог | РОСМЕБЕЛЬ">
@@ -29,31 +19,79 @@ const categoryNames = Object.keys(groupedByCategory) as Array<keyof typeof group
 			<div class="container">
 				<Breadcrumbs />
 				<h1>Каталог</h1>
-				{categoryNames.map((category) => (
-					<div>
-						<h3>{category}</h3>
-						<div class="catalog-items">
-							{groupedByCategory[category]?.map((product) => (
-								<CatalogCard class="catalog-item" product={product} />
-							))}
-						</div>
+				<div class="catalog">
+					<div class="catalog__filter label">
+						<p>Фильтр по категориям:</p>
+						{categories.map((category) => (
+							<div class="filter-input">
+								<input type="checkbox" id={category} name={category} checked/>
+								<label for={category}>{category}</label>
+							</div>
+						))}
 					</div>
-				))}
+
+					<div class="catalog-list">
+						{allProducts.map((product) => (
+							<div
+								class="catalog-list__item"
+								data-category={product.data.category}
+							>
+								<CatalogCard product={product} />
+							</div>
+						))}
+					</div>
+				</div>
 		</section>
 	</main>
 </Layout>
 
 <style lang="scss">
-	@import "../../styles/_design.scss";
 	@import "../../styles/_breakpoints.scss";
 
-	.catalog-items {
-		display: flex;
-		flex-direction: row;
-		gap: 1.25rem;
+	$categories: 'Кухни', 'Шкафы', 'Стенки', 'Детские', 'Прихожие', 'Обеденные', "Рабочие зоны";
+
+	h1 {
+		margin-bottom: 1rem;
 	}
 
-	.catalog-item {
-		flex-basis: 400px;
+	.catalog {
+		display: flex;
+		flex-direction: column;
+		gap: 1.25rem;
+
+		&__filter {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 0.5rem;
+			margin-bottom: 1.25rem;
+		}
+
+		&-list {
+			display: grid;
+			grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+			grid-template-rows: masonry;
+			gap: 1.25rem;
+		}
+
+		@each $category in $categories {
+			&:has(input[name="#{$category}"]:checked) {
+				.catalog-list__item[data-category="#{$category}"] {
+					display: block;
+				}
+			}
+
+			&:has(input[name="#{$category}"]:not(:checked)) {
+				.catalog-list__item[data-category="#{$category}"] {
+					display: none;
+				}
+			}
+		}
+	}
+
+	.filter-input {
+		display: flex;
+		gap: 0.5rem;
+		align-items: center;
+		accent-color: var(--accent-color);
 	}
 </style>

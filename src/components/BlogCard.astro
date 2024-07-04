@@ -9,6 +9,7 @@ import { declOfNum } from '../helpers/helpers';
 
 import ImageThumbnail from './ImageThumbnail.astro';
 import Card from './Card.astro';
+import Tag from './Tag.astro';
 
 const { post, class: className, ...rest } = Astro.props;
 ---
@@ -29,7 +30,8 @@ const { post, class: className, ...rest } = Astro.props;
 			alt={post.data.image.alt}
 		/>
 		<Card class="blog-post-card__content">
-			<h4 class="blog-post-card__title">{post.data.title}</h4>
+			<Tag>{post.data.category}</Tag>
+			<p class="blog-post-card__title">{post.data.title}</p>
 			<p class="blog-post-card__description">{post.data.excerpt}</p>
 			<div class="blog-post-card__meta label-sm">
 				<span>{post.data.pubDate.toLocaleDateString('ru-RU', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
@@ -58,10 +60,14 @@ const { post, class: className, ...rest } = Astro.props;
 			flex-direction: column;
 			gap: 0.5rem;
 			justify-content: space-between;
+
+			min-height: 270px;
 		}
 
-		&__title {;
+		&__title {
 			margin: 0;
+			font-family: var(--font-family-secondary);;
+			font-size: 1.25em;
 		}
 
 		&__description {
@@ -70,13 +76,17 @@ const { post, class: className, ...rest } = Astro.props;
 
 		&__meta {;
 			display: flex;
-			flex-direction: row;
+			flex-flow: row wrap;
 			gap: 0.5rem;
 			justify-content: space-between;
 
 			margin-top: auto;
 
-			opacity: .65;
+			color: var(--text-color-dim);
+
+			& > span {
+				flex-basis: max-content;
+			}
 		}
 	}
 </style>
