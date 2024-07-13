@@ -92,9 +92,9 @@ const { image, name, city, rating, text, isLongText } = Astro.props;
 				object-fit: cover;
 			}
 
-			&:has(img) {
-				@include styledBackgroundOnHover(rgba(0,0,0,0.33));
-			}
+			// &:has(img) {
+			// 	@include styledBackgroundOnHover(rgba(0,0,0,0.33));
+			// }
 
 			&:hover .review__zoom-button {
 				z-index: 2;

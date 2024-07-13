@@ -39,9 +39,9 @@ const FeatureItems = [
 				))}
 			</ul>
 			<div class="features__preview">
-				<img src="/rosmebeli/images/placeholders/placeholder_1.jpg" alt="Tab 1" data-tab="1" />
-				<img src="/rosmebeli/images/placeholders/placeholder_2.jpg" alt="Tab 2" data-tab="2"/>
-				<img src="/rosmebeli/images/placeholders/placeholder_3.jpg" alt="Tab 3" data-tab="3" />
+				<img src="/rosmebeli/images/features/closet-project.webp" alt="Пример 3D проекта шкафа" data-tab="1"/>
+				<img src="/rosmebeli/images/features/kitchen-sketch.webp" alt="Схема проекта кухни нарисавнная от руки" data-tab="2" />
+				<img src="/rosmebeli/images/features/materials.webp" alt="Фото образцов материалов из дерева" data-tab="3" />
 			</div>
 		</div>
 	</div>
@@ -59,7 +59,23 @@ const FeatureItems = [
 			f.setAttribute("data-is-active", "true");
 		})
 	});
+</script>
 
+{/* GSAP animations */}
+<script>
+	const tl = gsap.timeline({ scrollTrigger: { trigger: ".features" }, defaults:{ opacity: 0, ease: "linear" }});
+
+	function init() {
+		tl.from(".features__list", { autoAlpha: 0 })
+			.from(".features__list > *", {
+				ease: "back",
+				y: 150,
+				stagger: 0.5
+			}, ">")
+			.from(".features__preview", { autoAlpha: 0 }, ">")
+	}
+
+	window.addEventListener("load", init);
 </script>
 
 <style lang="scss">

@@ -3,7 +3,7 @@ import { Icon } from 'astro-icon/components';
 
 import Copyright from '../Copyright.astro';
 ---
-<footer>
+<footer class="main-footer">
 	<div class="container">
 		<div class="footer-promo">
 			<Icon name="logo" />
@@ -36,18 +36,35 @@ import Copyright from '../Copyright.astro';
 			<h4>Остались вопросы?</h4>
 			<address class="footer-contacts__list label">
 				<div>На связи ежедневно c&nbsp;10:00 до&nbsp;20:00</div>
-				<div>Тел.: <a href="tel:+79671280200">+7&nbsp;(967)&nbsp;128&nbsp;02&nbsp;00</a></div>
-				<div>Email: <a href="mailto:zakaz@rosmebeli.ru">zakaz@rosmebeli.ru</a></div>
+				<div>Тел.: <a href="tel:+79671280200" aria-label="Телефон для связи">+7&nbsp;(967)&nbsp;128&nbsp;02&nbsp;00</a></div>
+				<div>Email: <a href="mailto:zakaz@rosmebeli.ru" aria-label="Email для связи">zakaz@rosmebeli.ru</a></div>
 			</address>
 		</div>
 	</div>
 	<Copyright />
 </footer>
 
+{/* GSAP animations */}
+<script>
+	const tl = gsap.timeline({ scrollTrigger: { trigger: ".main-footer" }, defaults:{ opacity: 0, ease: "linear" }});
+
+	function init() {
+		tl.from(".footer-promo", { autoAlpha: 0 })
+			.from(".footer-nav__list > *", {
+				ease: "back",
+				y: 50,
+				stagger: 0.1
+			}, "<")
+			.from(".footer-contacts", { autoAlpha: 0 })
+	}
+
+	window.addEventListener("load", init);
+</script>
+
 <style lang="scss">
 	@import "../../styles/_breakpoints.scss";
 
-	footer {
+	.main-footer {
 		background-color: var(--clr-primary-700);
 		background-image: url("/rosmebeli/images/noise.webp");
 		border-top: 1px solid var(--clr-400);
@@ -62,6 +79,7 @@ import Copyright from '../Copyright.astro';
   }
 
 	.container {
+		overflow: hidden;
 		display: flex;
 		flex-wrap: wrap;
 		gap: 2.5rem 1.25rem;

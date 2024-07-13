@@ -26,11 +26,6 @@ const { steps, ...rest } = Astro.props;
 
 {/* GSAP animations */}
 <script>
-	import { gsap } from "gsap";
-	import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-	gsap.registerPlugin(ScrollTrigger);
-
 	const tl = gsap.timeline({ scrollTrigger: { trigger: ".steps" }, defaults: { opacity: 0, ease: "back" } });
 
 	function init() {

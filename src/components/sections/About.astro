@@ -1,6 +1,7 @@
 ---
 import Button from "../Button.astro"
 import AnimatedHeading from "../AnimatedHeading.astro"
+import Link from "../Link.astro";
 ---
 
 <section
@@ -14,11 +15,12 @@ import AnimatedHeading from "../AnimatedHeading.astro"
 			<p>Наш коллектив предлагает вниманию клиентов новинки современной мебели где каждый покупатель сможет выбрать себе мебельные изделия по доступным ценам. Мы всегда рады видеть вас в числе постоянных клиентов. Вас очень удивит широкий ассортимент и множество возможностей заказа на страницах нашего каталога.</p>
 			<p>Здесь вся мебель представляется с гарантией от производителя. Специалисты нашей компании с радостью помогут заказать выгодный вариант мебели, которая поможет создать в вашем доме необыкновенный уют и комфорт.</p>
 
-			<Button
-				class="about-us__button"
-				appearance="primary"
+			<Link
+				class="about-us__link"
+				href="/rosmebeli/about"
+				appearance="button"
 				icon="arrow-right"
-			>Подробнее</Button>
+			>Подробнее</Link>
 		</div>
 	</div>
 </section>
@@ -59,7 +61,7 @@ import AnimatedHeading from "../AnimatedHeading.astro"
 			align-self: baseline;
 		}
 
-		&__button {
+		&__link {
 			margin-top: 2.25rem;
 		}
 

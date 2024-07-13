@@ -57,6 +57,24 @@ const Addresses = [
 	</div>
 </section>
 
+{/* GSAP animations */}
+<script>
+	const tl = gsap.timeline({ scrollTrigger: { trigger: ".contacts__address-list" }, defaults:{ opacity: 0, ease: "linear" }});
+
+	function init() {
+		tl.from(".contacts__address-list", { autoAlpha: 0 })
+			.from(".contacts__address-list > *", {
+				ease: "back",
+				y: 150,
+				stagger: 0.5
+			}, ">")
+			.from(".contacts__map", { autoAlpha: 0 }, ">")
+			.from(".contacts__form", { autoAlpha: 0 })
+	}
+
+	window.addEventListener("load", init);
+</script>
+
 <style lang="scss">
 	@import "../../styles/_breakpoints.scss";
 

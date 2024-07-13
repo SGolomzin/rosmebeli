@@ -4,9 +4,11 @@ import { getCollection } from "astro:content";
 import AnimatedHeading from "../AnimatedHeading.astro";
 import CatalogCard from "../CatalogCard.astro";
 import Link from "../Link.astro";
+import IconButton from "../IconButton.astro";
 
 const allProducts = await getCollection("catalog");
 ---
+
 
 <section id="catalog" class="section-block">
 	<div class="container container-grid">
@@ -23,7 +25,6 @@ const allProducts = await getCollection("catalog");
 				space-between="20"
 				slides-per-view="auto"
 				keyboard="true"
-				scrollbar-hide="true"
 			>
 				{
 					allProducts.map((product) => (
@@ -33,6 +34,8 @@ const allProducts = await getCollection("catalog");
 					))
 				}
 			</swiper-container>
+			<IconButton id="catalog-slider-button-prev" size="lg" icon="chevron-left" aria-label="Предыдущая работа" disabled />
+			<IconButton id="catalog-slider-button-next" size="lg" icon="chevron-right" aria-label="Следующая работа" />
 		</div>
 	</div>
 </section>
@@ -41,6 +44,8 @@ const allProducts = await getCollection("catalog");
 	import type { SwiperContainer } from 'swiper/element/bundle';
 
 	const slider: SwiperContainer | null = document.querySelector('#catalog-slider');
+	const buttonPrev = document.getElementById('catalog-slider-button-prev') as HTMLButtonElement;
+	const buttonNext = document.getElementById('catalog-slider-button-next') as HTMLButtonElement;
 
 	const breakpoints = {
     0: {
@@ -57,11 +62,37 @@ const allProducts = await getCollection("catalog");
 	if (slider) {
 		Object.assign(slider, { breakpoints: breakpoints });
 	}
+
+	buttonPrev?.addEventListener('click', () => {
+		slider?.swiper.slidePrev();
+	})
+
+	buttonNext?.addEventListener('click', () => {
+		slider?.swiper.slideNext();
+	})
+
+	slider?.swiper.on('slideChange', function () {
+		if (slider.swiper.isBeginning && buttonPrev) {
+			buttonPrev.disabled = true;
+		} else {
+			buttonPrev.disabled = false;
+		}
+
+		if (slider.swiper.isEnd && buttonNext) {
+			buttonNext.disabled = true;
+		} else {
+			buttonNext.disabled = false;
+		}
+	});
 </script>
 
 <style lang="scss">
 	@import "../../styles/_design.scss";
 	@import "../../styles/_breakpoints.scss";
+
+	.container {
+		position: relative;
+	}
 
 	.container-grid__heading {
 		& .catalog-heading {
@@ -77,6 +108,24 @@ const allProducts = await getCollection("catalog");
 				flex-direction: row;
 				align-items: baseline;
 			}
+		}
+	}
+
+	#catalog-slider-button {
+		&-prev,
+		&-next {
+			position: absolute;
+			z-index: 1;
+		}
+
+		&-prev {
+			top: 50%;
+			left: 0;
+		}
+
+		&-next {
+			top: 50%;
+			right: 0;
 		}
 	}
 </style>
