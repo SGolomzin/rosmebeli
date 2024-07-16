@@ -1,20 +1,13 @@
 ---
 import Rating from './Rating.astro';
-import Modal from './Modal.astro';
-import IconButton from './IconButton.astro';
+
 import Card from './Card.astro';
 
-interface Props {
-	image?: {
-		url: string;
-		alt?: string;
-	};
-	name: string;
-	city: string;
-	rating: number;
-	text: string;
-	isLongText?: boolean;
-}
+import type { CollectionEntry } from 'astro:content';
+type ReviewsType = CollectionEntry<'reviews'>;
+type ReviewData = ReviewsType['data'];
+
+interface Props extends ReviewData {};
 
 const { image, name, city, rating, text, isLongText } = Astro.props;
 ---
@@ -22,116 +15,80 @@ const { image, name, city, rating, text, isLongText } = Astro.props;
 <Card
 	class="review"
 	filled
-	bordered
-	shaded
 >
-	<div class="review__thumbnail">
-		{image && (
-			<img src={image.url} alt={image.alt} />
-			<Modal id={`review__modal--${name}`}>
-				<img src={image.url} alt={image.alt} />
-				<IconButton
-					class="review__zoom-button"
-					shape="round"
-					icon="zoom-in"
-					slot="trigger"
-					onclick={`openDialog('review__modal--${name}')`}
-				/>
-			</Modal>
-		)}
-	</div>
-	<Card class="review__content">
-		<h4 class="review__name">{name}</h4>
-		<p class="review__city label-sm">{city}</p>
-		<p class="review__text">“{text}”</p>
-		<span class="review__read-more">
-			{isLongText && (<a>Читать далее</a>)}
-		</span>
+	<div class="review__content">
 		<Rating rating={rating} />
-	</Card>
+		<p class="review__text">&laquo;{text}&raquo;</p>
+	</div>
+	<div class="review__author">
+		<span class="review__name">{name}</span>
+		<span class="review__city">{city}</span>
+	</div>
 </Card>
 
 <style lang="scss">
-	@import "../styles/_design.scss";
-
 	.review {
-		--review-img-height: 12.5rem;
-
 		display: grid;
 		grid-template-columns: 1fr;
-		grid-template-rows: var(--review-img-height) auto;
+		grid-template-rows: minmax(14rem, max-content) min-content;
+		gap: 1rem;
+		place-items: baseline center;
 
-		max-width: 25rem;
-		margin-top: 1rem;
-		margin-bottom: 1rem;
-
-		text-align: center;
-
-		@include scaleOnHover(1.05);
-
-		&__zoom-button {
-			position: absolute;
-			top: 50%;
-			left: 50%;
-			transform: translate(-50%, -50%);
-
-			visibility: hidden;
-			opacity: 0;
-
-			transition: visibility 0s linear 300ms, opacity 300ms;
-		}
-
-		&__thumbnail {
-			position: relative;
-			background-color: var(--clr-secondary-100);
-
-			& > img {
-				display: block;
-				width: 100%;
-				height: var(--review-img-height);
-				object-fit: cover;
-			}
-
-			// &:has(img) {
-			// 	@include styledBackgroundOnHover(rgba(0,0,0,0.33));
-			// }
-
-			&:hover .review__zoom-button {
-				z-index: 2;
-				visibility: visible;
-				opacity: 1;
-				transition: visibility 0s linear 0s, opacity 300ms;
-			}
-	}
+		padding: 3rem 2rem;
 
 		&__content {
-			display: grid;
-			grid-template-columns: 1fr;
-			grid-template-rows: auto auto 1fr 1.5rem auto;
-			gap: 0.25rem;
-			justify-items: center;
-		}
+			position: relative;
 
-		&__name {
-			margin: 0;
-		}
+			display: flex;
+			flex-direction: column;
+			place-items: center;
+			align-self: flex-end;
 
-		&__city {
-			margin: 0;
-			color: var(--clr-400);
+			padding: 1rem 1.5rem;
+
+			background-color: var(--background-color);
+			border-radius: 0.75rem;
+			box-shadow: 0 4px 4px -2px rgb(24 39 75 / 8%), 0 2px 4px -2px rgb(24 39 75 / 12%);
+
+			// triangle in the middle
+			&::before {
+				content: '';
+
+				position: absolute;
+				bottom: -1rem;
+				left: 50%;
+				transform: translateX(-50%);
+
+				width: 0;
+				height: 0;
+
+				filter: drop-shadow(0 4px 2px rgb(24 39 75 / 8%)) drop-shadow(0 1px 0 rgb(24 39 75 / 12%));
+				border-color: var(--background-color) transparent transparent transparent;
+				border-style: solid;
+				border-width: 1rem 1rem 0;
+			}
 		}
 
 		&__text {
-			overflow: hidden;
-			display: -webkit-box;
-			-webkit-box-orient: vertical;
+			text-align: center;
+			text-wrap: pretty;
+		}
 
-			min-height: 7.5em;
-			margin: 0;
+		&__author {
+			display: flex;
+			flex-direction: column;
+			gap: 0.25rem;
+			place-items: center;
 
-			overflow-wrap: break-word;
+			margin-top: 0.5rem;
+		}
 
-			-webkit-line-clamp: 5;
+		&__name {
+			font-weight: 700;
+		}
+
+		&__city {
+			font-size: 0.75rem;
 		}
 	}
 </style>

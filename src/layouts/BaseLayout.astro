@@ -43,13 +43,21 @@ const HeaderLinks = isMainPage(Astro.url.pathname)
         href: "/rosmebeli/"
       },
       {
+        label: "О компании",
+        href: "/rosmebeli/about"
+      },
+      {
         label: "Каталог",
         href: "/rosmebeli/catalog"
       },
       {
         label: "Статьи",
         href: "/rosmebeli/posts"
-      }
+      },
+      {
+        label: "Услуги",
+        href: "/rosmebeli/services"
+      },
     ];
 
 interface Props {
@@ -91,21 +99,14 @@ const { title } = Astro.props;
 
 <style is:global>
 	swiper-container {
+    --swiper-pagination-bullet-inactive-color: var(--clr-900);
+		--swiper-theme-color: var(--clr-secondary-700);
+
 		width: 100%;
-		height: 100%;
+    height: 100%;
 	}
 
 	swiper-slide {
-		display: flex;
-		place-items: center;
-		width: 30%;
-		height: 100%;
-	}
-
-	swiper-slide > img {
-		display: block;
-		width: 100%;
-		height: 200px;
-		object-fit: cover;
+		width: clamp(30%, 30rem, 50vw);
 	}
 </style>

@@ -17,7 +17,7 @@ const Stats: StatisticsProps[] = [
 		description: "довольных клиентов"
 	},
 	{
-		value: "18",
+		value: "36",
 		description: "месяцев гарантии"
 	}
 ]
@@ -25,11 +25,13 @@ const Stats: StatisticsProps[] = [
 <section id="hero" class="section-block">
 	<video
 		class="hero__video"
-		src="/rosmebeli/video/carpentry.mp4"
 		autoplay
 		loop
 		muted
-	/>
+		playsinline
+	>
+		<source data-src="/rosmebeli/video/carpentry.mp4" type="video/mp4">
+	</video>
 	<div class="container">
 		<div class="hero__promo">
 			<div>
@@ -69,17 +71,36 @@ const Stats: StatisticsProps[] = [
 	</div>
 </section>
 
+{/* Lazy load video */}
+<script>
+	const lazyLoad = () => {
+		const video = document.querySelector(".hero__video") as HTMLVideoElement;
+		const videoSources = [...video.children] as HTMLSourceElement[];
+
+		for (const source of videoSources) {
+			if (typeof source.tagName === "string" && source.tagName === "SOURCE") {
+				source.src = source.dataset.src || "";
+			}
+		}
+
+		video.load();
+	}
+
+	document.addEventListener("DOMContentLoaded", lazyLoad);
+</script>
+
 {/* GSAP animations */}
 <script>
 	const tl = gsap.timeline({ defaults:{ opacity: 0, ease: "back" }});
 	function init() {
-		tl.from(".hero__video", { ease: "linear", autoAlpha: 0, duration: 1 })
-			.from(".hero__promo", { ease: "linear", autoAlpha: 0 })
+		tl.from(".hero__promo", { ease: "linear", autoAlpha: 0 })
 			.from(".hero__promo-slogan", { x: 80, duration: 1 })
 			.from(".hero__promo-sub-text", { x: -80, duration:1 }, "<")
 			.from(".hero__promo-text", { y: 30 }, "-=0.2")
 			.from(".hero__promo-button", { y: 50 }, "-=0.4")
-			.from(".hero__promo-stats > *", { y: 50, stagger: 0.2 }, "-=0.4")
+			.from(".hero__promo-stats > *", { y: 50, stagger: 0.2 }, "-=0.4");
+
+		gsap.from(".hero__video", { ease: "linear", autoAlpha: 0, duration: 1 });
 	}
 
 	window.addEventListener("load", init);

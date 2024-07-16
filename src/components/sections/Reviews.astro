@@ -5,7 +5,6 @@ type ReviewsType = CollectionEntry<'reviews'>
 
 import AnimatedHeading from "../AnimatedHeading.astro";
 import Review from "../Review.astro";
-import IconButton from "../IconButton.astro";
 
 const allReviews = await getCollection("reviews");
 ---
@@ -19,11 +18,10 @@ const allReviews = await getCollection("reviews");
 
 		<swiper-container
 			id="reviews-slider"
-			centered-slides="true"
-			centered-slides-bounds="true"
-			space-between="20"
+			autoplay="true"
 			loop="true"
-			keyboard="true"
+			pagination="true"
+			direction="vertical"
 		>
 			{allReviews.map((review: ReviewsType) => (
 				<swiper-slide>
@@ -32,70 +30,40 @@ const allReviews = await getCollection("reviews");
 				))
 			}
 		</swiper-container>
-		<IconButton id="reviews-slider-button-prev" shape="round" size="lg" icon="chevron-left" aria-label="Предыдущий отзыв" />
-		<IconButton id="reviews-slider-button-next" shape="round" size="lg" icon="chevron-right" aria-label="Следующий отзыв" />
+	</div>
 </section>
 
 <script>
 	import type { SwiperContainer } from 'swiper/element/bundle';
 
-	const slider: SwiperContainer | null = document.querySelector('#reviews-slider');
-	const buttonPrev = document.getElementById('reviews-slider-button-prev');
-	const buttonNext = document.getElementById('reviews-slider-button-next');
+	const slider = document.getElementById('reviews-slider') as SwiperContainer;
 
-	const breakpoints = {
-    0: {
-      slidesPerView: 1
-    },
-    768: {
-      slidesPerView: 2
-    },
-		1200: {
-			slidesPerView: 3
-		}
-  }
 
 	if (slider) {
-		Object.assign(slider, { breakpoints: breakpoints });
+		Object.assign(slider, { autoplay: { delay: 5000 }});
 	}
-
-	buttonPrev?.addEventListener('click', () => {
-		slider?.swiper.slidePrev();
-	})
-
-	buttonNext?.addEventListener('click', () => {
-		slider?.swiper.slideNext();
-	})
 </script>
 
 <style lang="scss">
+	section {
+		--section-bottom-padding: 0;
+	}
+
 	swiper-slide {
-		width: min(25rem, 80vw);
+		display: flex;
+		place-items: center;
+		place-self: center center;
+
+		width: 100%;
+		min-width: 45ch;
+		max-width: 80ch;
 	}
 
-	.container {
-		position: relative;
-
-		.reviews-heading {
-			text-align: center;
-		}
+	.reviews-heading {
+		text-align: center;
 	}
 
-	#reviews-slider-button {
-		&-prev,
-		&-next {
-			position: absolute;
-			z-index: 1;
-		}
-
-		&-prev {
-			top: 50%;
-			left: 0;
-		}
-
-		&-next {
-			top: 50%;
-			right: 0;
-		}
+	#reviews-slider {
+		height: 33rem;
 	}
 </style>

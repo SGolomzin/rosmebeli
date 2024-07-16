@@ -128,14 +128,34 @@ const { links } = Astro.props;
 	});
 </script>
 
+{/*
+	Скрипт для добавления класса .light при использовании светлой темы в "body > main"
+*/}
+<script>
+	const header = document.querySelector(".main-header");
+
+	const bodyMain = document.querySelector("body > main") as HTMLElement;
+	const isLightTheme = bodyMain.dataset.theme === "light";
+
+	if (header && isLightTheme) {
+		header.classList.add("light");
+	}
+</script>
+
 <style lang="scss">
 	@import "../../styles/_breakpoints.scss";
 
 	.main-header {
+		--main-header-color: var(--clr-100);
+		--main-header-bg-color: var(--clr-primary-700);
+
 		position: fixed;
 		z-index: 9001;
+
 		width: 100%;
 		height: 0;
+
+		color: var(--main-header-color);
 
 		.container::before {
 			content: "";
@@ -153,9 +173,15 @@ const { links } = Astro.props;
 		&.scrolled {
 			.container::before {
 				height: var(--main-header-height);
-				background-color:color-mix(in srgb, var(--clr-primary-700) 95%, transparent);
+				background-color: color-mix(in srgb, var(--main-header-bg-color) 95%, transparent);
 				box-shadow: 0 4px 4px -2px rgb(24 39 75 / 8%), 0 2px 4px -2px rgb(24 39 75 / 12%);
 			}
+		}
+
+		&.light {
+			--main-header-color: var(--clr-900);
+			--main-header-bg-color: var(--clr-100);
+			--accent-color: var(--clr-secondary-700);
 		}
 	}
 
@@ -187,6 +213,10 @@ const { links } = Astro.props;
 
 			font-size: 2.5rem;
 			color: currentcolor;
+
+			&:active {
+				color: var(--clr-pastel-red);
+			}
 		}
 
 		&-collapse {
@@ -207,7 +237,7 @@ const { links } = Astro.props;
 				width: 100%;
 				height: 0;
 
-				background: color-mix(in srgb, var(--clr-primary-400) 95%, transparent);
+				background: color-mix(in srgb, var(--main-header-bg-color) 95%, transparent);
 
 				transition: height 0.2s ease-in-out;
 			}
@@ -243,6 +273,7 @@ const { links } = Astro.props;
 					box-sizing: border-box;
 					padding: 1rem 1.5rem;
 
+					color: currentcolor;
 					text-decoration: none;
 					letter-spacing: 0.02em;
 
@@ -253,13 +284,16 @@ const { links } = Astro.props;
 
 					&.active {
 						font-weight: bold;
-						color: currentcolor;
 						border-bottom: none;
 						border-left: 3px solid var(--accent-color);
+					}
 
-						&:hover {
-							color: var(--accent-color);
-						}
+					&:hover {
+						color: var(--accent-color);
+					}
+
+					&:active {
+						color: var(--clr-pastel-red);
 					}
 				}
 			}

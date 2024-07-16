@@ -27,8 +27,6 @@ import Copyright from '../Copyright.astro';
 			<div class="footer-nav__list label">
 				<a href="./catalog">Каталог</a>
 				<a href="./services">Услуги</a>
-				<a href="./prices">Цены</a>
-				<a href="./promotions">Акции</a>
 			</div>
 		</div>
 
@@ -36,8 +34,8 @@ import Copyright from '../Copyright.astro';
 			<h4>Остались вопросы?</h4>
 			<address class="footer-contacts__list label">
 				<div>На связи ежедневно c&nbsp;10:00 до&nbsp;20:00</div>
-				<div>Тел.: <a href="tel:+79671280200" aria-label="Телефон для связи">+7&nbsp;(967)&nbsp;128&nbsp;02&nbsp;00</a></div>
-				<div>Email: <a href="mailto:zakaz@rosmebeli.ru" aria-label="Email для связи">zakaz@rosmebeli.ru</a></div>
+				<div class="footer-contacts__list-item"><Icon name="phone" />Тел.: <a href="tel:+79671280200" aria-label="Телефон для связи">+7&nbsp;(967)&nbsp;128&nbsp;02&nbsp;00</a></div>
+				<div class="footer-contacts__list-item"><Icon name="mail" />Email: <a href="mailto:zakaz@rosmebeli.ru" aria-label="Email для связи">zakaz@rosmebeli.ru</a></div>
 			</address>
 		</div>
 	</div>
@@ -113,6 +111,17 @@ import Copyright from '../Copyright.astro';
 
 			font-style: normal;
 			line-height: 1.5;
+
+			&-item {
+				display: inline-flex;
+				gap: 0.5em;
+				align-items: center;
+			}
+
+			[data-icon] {
+				font-size: 1.5em;
+				color: var(--accent-color);
+			}
 		}
 
 		@include breakpoint(md) {
