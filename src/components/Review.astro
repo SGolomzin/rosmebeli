@@ -27,6 +27,8 @@ const { image, name, city, rating, text, isLongText } = Astro.props;
 </Card>
 
 <style lang="scss">
+	@import "../styles/_breakpoints.scss";
+
 	.review {
 		display: grid;
 		grid-template-columns: 1fr;
@@ -34,7 +36,11 @@ const { image, name, city, rating, text, isLongText } = Astro.props;
 		gap: 1rem;
 		place-items: baseline center;
 
-		padding: 3rem 2rem;
+		padding: 1rem 1.5rem;
+
+		@include breakpoint(md) {
+			padding: 3rem 2rem;
+		}
 
 		&__content {
 			position: relative;
