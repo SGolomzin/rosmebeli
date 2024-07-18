@@ -2,20 +2,18 @@
 import { Icon } from 'astro-icon/components';
 
 import Copyright from '../Copyright.astro';
+import Socials from '../Socials.astro';
 ---
 <footer class="main-footer">
 	<div class="container">
 		<div class="footer-promo">
 			<Icon name="logo" />
 			<div>Мы создаем качественную мебель на заказ по индивидуальным проектам</div>
-			<div class="socials">
-				<a href="https://vk.com/rosmebeli.moskva"><Icon name="vk" title="Наша страница в ВКонтакте" /></a>
-				<a href="https://ok.ru/mebelizakaz"><Icon name="ok" fill="currentColor" title="Наша страница в Одноклассниках" /></a>
-			</div>
+			<Socials />
 		</div>
 
 		<div class="footer-nav">
-			<h4>О нас</h4>
+			<span class="pseudo-h4">О нас</span>
 			<div class="footer-nav__list label">
 				<a href="./about">О компании</a>
 				<a href="./posts">Статьи</a>
@@ -23,7 +21,7 @@ import Copyright from '../Copyright.astro';
 		</div>
 
 		<div class="footer-nav">
-			<h4>Покупателям</h4>
+			<span class="pseudo-h4">Покупателям</span>
 			<div class="footer-nav__list label">
 				<a href="./catalog">Каталог</a>
 				<a href="./services">Услуги</a>
@@ -31,7 +29,7 @@ import Copyright from '../Copyright.astro';
 		</div>
 
 		<div class="footer-contacts">
-			<h4>Остались вопросы?</h4>
+			<span class="pseudo-h4">Остались вопросы?</span>
 			<address class="footer-contacts__list label">
 				<div>На связи ежедневно c&nbsp;10:00 до&nbsp;20:00</div>
 				<div class="footer-contacts__list-item"><Icon name="phone" />Тел.: <a href="tel:+79671280200" aria-label="Телефон для связи">+7&nbsp;(967)&nbsp;128&nbsp;02&nbsp;00</a></div>

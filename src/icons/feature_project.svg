@@ -1,0 +1,45 @@
+<svg id="prefix__icons" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 38.7 40.1">
+  <defs>
+    <style>
+      .prefix__cls-3,
+      .prefix__cls-6 {
+        stroke-width: 0
+      }
+
+      .prefix__cls-9 {
+        fill: none;
+        stroke: #414042;
+        stroke-miterlimit: 10
+      }
+
+      .prefix__cls-3 {
+        fill: #fff
+      }
+
+      .prefix__cls-6 {
+        fill: #414042
+      }
+    </style>
+  </defs>
+  <path stroke-width="0" fill="#e6e7e8" d="M9.1 0h24v35.3h-24z" />
+  <path class="prefix__cls-6"
+    d="M21.6 4.7h8.8v1h-8.8zM21.6 8.3h8.8v1h-8.8zM21.6 11.8h8.8v1h-8.8zM12.7 15.4h17.7v1H12.7zM12.7 18.9h17.7v1H12.7zM12.7 22.5h17.7v1H12.7zM12.7 26h17.7v1H12.7zM12.7 29.6h8.4v1h-8.4z" />
+  <path fill="#d1d3d4" stroke-width="0" d="M12.4 4.3h8v9.1h-8z" />
+  <g>
+    <path class="prefix__cls-3" d="M38.2 6.8v28h-3v-28l1.4-3.7c0-.1.1-.1.2 0l1.4 3.7z" />
+    <path fill="#36d7b7" stroke-width="0" d="M35.2 6.8h3v28h-3z" />
+    <path fill="#86e7d4" stroke-width="0" d="M35.2 6.8h1.5v28h-1.5z" />
+    <path class="prefix__cls-3" d="M35.1 31.3h3.1v3.5h-3.1z" />
+    <path class="prefix__cls-9" d="M38.2 6.8v28h-3v-28l1.4-3.7c0-.1.1-.1.2 0l1.4 3.7zM35.2 31.3h2.6M35.4 6.8H38" />
+  </g>
+  <circle class="prefix__cls-9" cx="14.1" cy="35.8" r="3.8" />
+  <path class="prefix__cls-9" d="M17.7 35.1c0-1.1.9-2.1 2.1-2.1 1.1 0 2.1.9 2.1 2.1" />
+  <circle class="prefix__cls-9" cx="25.6" cy="35.8" r="3.8" />
+  <path class="prefix__cls-9" d="M10.4 35.8l18.1 2.3M11 38.1l18.2-2.3" />
+  <g>
+    <path fill="#f5ab35" stroke-width="0" d="M0 1.3h7v33.9H0z" />
+    <path fill="#f9cd86" stroke-width="0" d="M3.9 1.3H7v33.9H3.9z" />
+    <path class="prefix__cls-9"
+      d="M7 6.4H4.8M7 1.7H4.8M7 11.1H4.8M7 15.9H4.8M7 20.6H4.8M7 30.1H4.8M7 25.3H4.8M7 34.8H4.8" />
+  </g>
+</svg>

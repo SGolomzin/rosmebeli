@@ -1,7 +1,10 @@
 ---
+import { Icon } from 'astro-icon/components';
 import Layout from './BaseLayout.astro';
 
 import Breadcrumbs from '../components/Breadcrumbs.astro';
+
+import { declOfNum } from '../helpers/helpers';
 
 const { frontmatter } = Astro.props;
 ---
@@ -18,7 +21,16 @@ const { frontmatter } = Astro.props;
 			<div class="container">
 				<div class="post__wrapper">
 					<img src={frontmatter.image.url} alt={frontmatter.image.alt} height={350} />
-					<p>{frontmatter.pubDate.toLocaleDateString('ru-RU', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
+					<div class="post__meta label">
+						<span>
+							<Icon name="calendar" />
+							{frontmatter.pubDate.toLocaleDateString('ru-RU', { year: 'numeric', month: 'long', day: 'numeric' })}
+						</span>
+						<span>
+							<Icon name="clock" />
+							Время прочтения: {frontmatter.ttr} {declOfNum(frontmatter.ttr, ['минута', 'минуты', 'минут'])}
+						</span>
+					</div>
 					<h1>{frontmatter.title}</h1>
 					<slot />
 				</div>
@@ -53,6 +65,29 @@ const { frontmatter } = Astro.props;
 			margin-left: auto;
 
 			font-size: larger;
+		}
+
+		&__meta {
+			display: flex;
+			flex-flow: row wrap;
+			gap: 0.5rem;
+			justify-content: space-between;
+
+			margin-bottom: 1rem;
+
+			& > span {
+				display: flex;
+				flex-basis: max-content;
+				gap: 0.5rem;
+				align-items: center;
+
+				[data-icon] {
+					width: 1lh;
+					height: 1lh;
+					padding: 0.1lh;
+					color: var(--accent-color);
+				}
+			}
 		}
 	}
 </style>

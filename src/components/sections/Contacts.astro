@@ -3,6 +3,9 @@ import { Icon } from 'astro-icon/components';
 
 import AnimatedHeading from '../AnimatedHeading.astro';
 import CustomerForm from '../CustomerForm.astro';
+import Card from '../Card.astro';
+
+import YMap from '../YMap.astro';
 
 const Addresses = [
 	{
@@ -45,13 +48,17 @@ const Addresses = [
 				</li>
 			))}
 		</ul>
-		<div class="contacts__map">
-			<iframe src="https://yandex.ru/map-widget/v1/?ll=37.682817%2C55.900714&mode=search&oid=100195290714&ol=biz&z=17.24" width="100%" height="400" frameborder="0"></iframe>
-		</div>
-		<div class="contacts__form">
-			<div>
-				<h4>Бесплатный вызов замерщика</h4>
-				<CustomerForm id="contacts-form"/>
+	</div>
+	<div class="map-container">
+		<div class="container">
+			<div class="map-container__map">
+				<YMap />
+			</div>
+			<div class="map-container__form">
+				<Card class="contacts-form-card" data-theme="dark">
+					<span class="pseudo-h4">Заказать обратный звонок</span>
+					<CustomerForm id="contacts-form"/>
+				</Card>
 			</div>
 		</div>
 	</div>
@@ -67,9 +74,8 @@ const Addresses = [
 				ease: "back",
 				y: 150,
 				stagger: 0.5
-			}, ">")
-			.from(".contacts__map", { autoAlpha: 0 }, ">")
-			.from(".contacts__form", { autoAlpha: 0 })
+			})
+			.from(".contacts-form-card", { autoAlpha: 0 }, "<")
 	}
 
 	window.addEventListener("load", init);
@@ -77,6 +83,10 @@ const Addresses = [
 
 <style lang="scss">
 	@import "../../styles/_breakpoints.scss";
+
+	#contacts {
+		--section-bottom-padding: 0;
+	}
 
 	.contacts {
 		&__address {
@@ -88,7 +98,7 @@ const Addresses = [
 				grid-template-columns: repeat(var(--contacts-adress-columns), 1fr);
 				gap: 2rem 1.25rem;
 
-				margin: 0;
+				margin: 0 0 2rem;
 				padding: 0;
 
 				list-style: none;
@@ -106,49 +116,64 @@ const Addresses = [
 				display: flex;
 				gap: 0.5rem;
 				align-items: center;
-				color: var(--clr-primary-100);
+				color: color-mix(in srgb, currentcolor 50%, transparent);
 			}
+		}
+	}
+
+	.map-container {
+		position: relative;
+
+		.container {
+			display: grid;
+			grid-template-columns: 100%;
+			grid-template-rows: 600px 1fr;
+			gap: 2rem;
 		}
 
 		&__map {
-			grid-column: 1 / -1;
+			position: absolute;
+			top: 0;
+			left: 0;
+
 			width: 100%;
-			height: 400px;
+			height: 100%;
 		}
 
 		&__form {
-			grid-column: 1 / -1;
-		}
+			z-index: 2;
+			grid-row: 2 / 3;
 
-		&__agreement {
-			max-width: 27rem;
+			.contacts-form-card {
+				& > span {
+					font-family: var(--font-family-secondary);
+					text-align: center;
+				}
+			}
 		}
 
 		@include breakpoint(lg) {
+			.container {
+				grid-template-rows: auto 1fr auto;
+				height: 600px;
+			}
+
 			&__map {
-				position: relative;
-				grid-column: span 6;
-
-				&::after {
-					--outline-size: 6px;
-
-					content: "";
-
-					position: absolute;
-					z-index: -1;
-					top: 0;
-					left: 0;
-					transform: translate(12px, 12px);
-
-					width: calc(100% - var(--outline-size) / 2);
-					height: calc(100% - var(--outline-size) / 2);
-
-					outline: var(--outline-size) solid var(--clr-secondary-400);
-				}
+				grid-column: 1 / -1;
+				grid-row: 1 / -1;
 			}
 
 			&__form {
-				grid-column: span 5 / -1;
+				grid-column: 1 / -1;
+				grid-row: 2 / 3;
+				place-self: center flex-end;
+
+				.contacts-form-card {
+					place-self: center flex-end;
+					padding: 2rem 2rem 3.5rem 3rem;
+					background-color: var(--background-color);
+					border: 3px solid var(--text-color-dim);
+				}
 			}
 		}
 	}

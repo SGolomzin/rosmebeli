@@ -13,11 +13,9 @@ const sanitizeRating = (rating: number) => {
 
 rating = sanitizeRating(rating);
 ---
-{/*
-	TODO implement half-star rating
-*/}
+
 <div class="rating">
-	{Array(rating).fill(0).map((_) => <Icon name="star-border" />)}
+	{Array(rating).fill(0).map((_) => <Icon name="star"  class="filled"/>)}
 	{Array(5 - rating).fill(0).map((_) => <Icon name="star" />)}
 </div>
 
@@ -31,6 +29,10 @@ rating = sanitizeRating(rating);
 
 		font-size: 1.5rem;
 		color: var(--clr-400);
+	}
+
+	.filled {
+		color: var(--accent-color);
 	}
 </style>
 

@@ -1,11 +1,14 @@
 ---
 import Layout from "../layouts/BaseLayout.astro";
+
+import Breadcrumbs from "../components/Breadcrumbs.astro";
 ---
 
 <Layout title="Услуги | РОСМЕБЕЛЬ">
 	<main data-theme="light">
 		<section class="section-block">
 			<div class="container container-grid">
+				<Breadcrumbs class="container-grid__heading" currentPage="Услуги"/>
 				<h1 class="container-grid__heading">Услуги</h1>
 
 				<div class="service service__measurer">

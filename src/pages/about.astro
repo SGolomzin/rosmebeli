@@ -1,5 +1,7 @@
 ---
 import Layout from "../layouts/BaseLayout.astro";
+
+import Breadcrumbs from "../components/Breadcrumbs.astro";
 ---
 
 <Layout title="О нас | РОСМЕБЕЛЬ">
@@ -7,6 +9,7 @@ import Layout from "../layouts/BaseLayout.astro";
 		<section class="section-block">
 			<div class="container container-grid">
 				<div class="about-us">
+					<Breadcrumbs currentPage="О нас"/>
 					<h1>О нас</h1>
 
 					<p>Компания <b>&laquo;РОСМЕБЕЛЬ&raquo;</b> уже более 14 лет на рынке производства мебели на заказ. Мы предлагаем своим клиентам выскокачественные и уникальные решения для любых типов помещений. Наша фабрика сочетает современные технологии и мастерство, что позволяет создавать мебель, соответствующую самым высоким стандартам качества.</p>

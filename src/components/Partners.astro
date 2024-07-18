@@ -17,7 +17,7 @@ const PartnersList = [
 >
 	<div class="container">
 		<div class="partners__heading">
-			<h4>Наши партнеры</h4>
+			<div class="pseudo-h4">Наши партнеры</div>
 			<span></span>
 		</div>
 		<div class="partners__list">
@@ -25,7 +25,7 @@ const PartnersList = [
 				gap={60}
 			>
 				{PartnersList.map((partner) => (
-					<Icon name={partner} title={partner} />
+					<Icon name={`brand_${partner}`} title={partner} />
 				))}
 			</Ticker>
 		</div>

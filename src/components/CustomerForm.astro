@@ -1,13 +1,12 @@
 ---
 interface Props extends astroHTML.JSX.FormHTMLAttributes {
 	id: string;
-	theme?: "dark" | "light";
 };
 
 import Input from './Input.astro';
 import Button from './Button.astro';
 
-const { id, theme = "dark", class: className, ...rest } = Astro.props;
+const { id, class: className, ...rest } = Astro.props;
 ---
 
 <form
@@ -20,23 +19,46 @@ const { id, theme = "dark", class: className, ...rest } = Astro.props;
 >
 	<Input
 		id=`${id}__customer-name`
+		label="Ваше имя"
+		type="text"
+		name="name"
+		placeholder="Как к Вам обращаться?"
+		/>
+		<Input
+		id=`${id}__customer-phone`
 		label="Ваш телефон"
 		type="tel"
-		name="customer-name"
+		name="phone"
 		placeholder="Введите ваш телефон"
 		mask="+7 (999) 999-99-99"
-		theme={theme}
 	/>
-	<Input
-		id=`${id}__customer-address`
-		label="Ваш адрес"
-		type="text"
-		name="customer-address"
-		placeholder="Введите ваш адрес"
-		theme={theme}
-	/>
-	<p class="contacts__agreement">Нажимая кнопку “Отправить” вы соглашаетесь на обработку
+	<p class="agreement">Нажимая кнопку “Отправить” вы соглашаетесь на обработку
 		<a href="/rosmebeli/privacy" target="_blank" rel="noopener noreferrer" aria-label="Политика конфиденциальности">персональных данных</a>
 	</p>
 	<Button type="submit">Отправить</Button>
 </form>
+
+<script>
+	const forms = document.querySelectorAll('.customer-form');
+
+	forms.forEach((form) => {
+		form.addEventListener('submit', (event) => {
+			event.preventDefault();
+			const method = form.getAttribute('method');
+
+			if (method === 'dialog') {
+				const dialog = form.closest('dialog');
+				dialog?.close();
+			}
+
+			console.log('Форма отправлена');
+		})
+	})
+</script>
+
+<style lang="scss">
+	.agreement{
+		max-width: 50ch;
+		text-wrap: pretty;
+	}
+</style>

@@ -3,10 +3,9 @@ import IconButton from './IconButton.astro';
 
 interface Props {
 	id: string;
-	isForm?: boolean;
 }
 
-const { id, isForm = false } = Astro.props;
+const { id, ...rest } = Astro.props;
 ---
 <Fragment>
 	<slot name="trigger">
@@ -15,15 +14,18 @@ const { id, isForm = false } = Astro.props;
 		>Открыть</button>
 	</slot>
 
-	<dialog id={id}>
+	<dialog id={id} {...rest}>
 		<div class="dialog__wrapper">
-			<IconButton
-				class="dialog__close-button"
-				size="sm"
-				icon="x"
-				aria-label="Закрыть модальное окно"
-				onclick={`closeDialog('${id}')`}
-			/>
+			<div class="dialog__title">
+				<slot name="title"></slot>
+				<IconButton
+					class="dialog__close-button"
+					size="sm"
+					icon="x"
+					aria-label="Закрыть модальное окно"
+					onclick={`closeDialog('${id}')`}
+				/>
+			</div>
 			<slot>Здесь ничего нет. Нажмите `Esc` чтобы закрыть</slot>
 		</div>
 	</dialog>
@@ -70,15 +72,23 @@ const { id, isForm = false } = Astro.props;
 			background: rgb(0 0 0 / 50%);
 		}
 
-		.dialog__wrapper {
-			display: flex;
-			flex-direction: column;
-			gap: 1rem;
-			padding: 1rem 1rem 2rem;
-		}
+		.dialog {
+			&__title {
+				display: flex;
+				align-items: baseline;
+				justify-content: space-between;
+			}
 
-		.dialog__close-button {
-			align-self: flex-end;
+			&__close-button {
+				margin-left: auto;
+			}
+
+			&__wrapper {
+				display: flex;
+				flex-direction: column;
+				gap: 1rem;
+				padding: 1rem 1rem 2rem;
+			}
 		}
 	}
 </style>

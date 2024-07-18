@@ -57,14 +57,9 @@ const { currentPage, class: className, ...rest } = Astro.props;
 </nav>
 
 <style lang="scss">
-	[data-icon] {
-		scale: 2;
-	}
-
 	.breadcrumbs {
 		display: flex;
 		flex-wrap: wrap;
-		gap: 0.5rem;
 
 		margin: 0 0 0.5rem;
 		padding: 0;
@@ -74,12 +69,16 @@ const { currentPage, class: className, ...rest } = Astro.props;
 
 		&__item {
 			display: flex;
-			gap: 0.5rem;
 			align-items: center;
 
 			span {
 				font-weight: bold;
 			}
+		}
+
+		[data-icon] {
+			width: 1.2lh;
+			height: 1.2lh;
 		}
 	}
 </style>

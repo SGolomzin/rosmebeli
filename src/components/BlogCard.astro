@@ -1,5 +1,6 @@
 ---
 import type { CollectionEntry } from 'astro:content';
+import { Icon } from 'astro-icon/components';
 
 interface Props extends astroHTML.JSX.HTMLAttributes {
 	post: CollectionEntry<'posts'>
@@ -34,8 +35,14 @@ const { post, class: className, ...rest } = Astro.props;
 			<p class="blog-post-card__title">{post.data.title}</p>
 			<p class="blog-post-card__description">{post.data.excerpt}</p>
 			<div class="blog-post-card__meta label-sm">
-				<span>{post.data.pubDate.toLocaleDateString('ru-RU', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
-				<span>Время прочтения: {post.data.ttr} {declOfNum(post.data.ttr, ['минута', 'минуты', 'минут'])}</span>
+				<span>
+					<Icon name="calendar" />
+					{post.data.pubDate.toLocaleDateString('ru-RU', { year: 'numeric', month: 'long', day: 'numeric' })}
+				</span>
+				<span>
+					<Icon name="clock" />
+					Время прочтения: {post.data.ttr} {declOfNum(post.data.ttr, ['минута', 'минуты', 'минут'])}
+				</span>
 			</div>
 		</Card>
 	</Card>
@@ -85,7 +92,17 @@ const { post, class: className, ...rest } = Astro.props;
 			color: var(--text-color-dim);
 
 			& > span {
+				display: flex;
 				flex-basis: max-content;
+				gap: 0.25rem;
+				align-items: center;
+
+				[data-icon] {
+					width: 1lh;
+					height: 1lh;
+					padding: 0.1lh;
+					color: var(--text-color);
+				}
 			}
 		}
 	}

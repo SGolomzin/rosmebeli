@@ -1,0 +1,35 @@
+---
+import { Icon } from 'astro-icon/components';
+---
+
+<div class="socials">
+	<span>Наши социальные сети:</span>
+	<a href="https://vk.com/rosmebeli.moskva" target="_blank" rel="me">
+		<Icon name="vk" title="Наша страница в ВКонтакте" />
+	</a>
+	<a href="https://ok.ru/mebelizakaz" target="_blank" rel="me">
+		<Icon name="ok" fill="currentColor" title="Наша страница в Одноклассниках" />
+	</a>
+</div>
+
+<style lang="scss">
+	.socials {
+		display: flex;
+		gap: 1.5rem;
+		align-items: center;
+
+		[data-icon] {
+			scale: 1.125em;
+
+			width: 1.2lh;
+			height: 1.2lh;
+			padding: 0.15lh;
+
+			border: 1px solid currentcolor;
+
+			&:hover {
+				scale: 1.1;
+			}
+		}
+	}
+</style>

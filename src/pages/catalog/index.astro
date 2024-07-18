@@ -2,11 +2,7 @@
 import Layout from "../../layouts/BaseLayout.astro"
 import { getCollection } from "astro:content";
 
-import type { CollectionEntry } from 'astro:content';
-type Product = CollectionEntry<'catalog'>;
-
 import Breadcrumbs from "../../components/Breadcrumbs.astro";
-import Input from "../../components/Input.astro";
 import CatalogCard from "../../components/CatalogCard.astro";
 
 const allProducts = await getCollection("catalog");

@@ -1,16 +1,15 @@
 ---
 interface Props extends astroHTML.JSX.InputHTMLAttributes {
-  theme?: "dark" | "light";
   mask?: string;
   label?: string;
 }
 
-const { theme = "dark", label, id, mask = null, ...rest } = Astro.props;
+const { label, id, mask = null, ...rest } = Astro.props;
 ---
 
 <div class="input-group">
   <input
-    class:list={["input-control", `input-control--${theme}`]}
+    class="input-control"
     id={id}
     data-mask={mask}
     {...rest}
@@ -74,7 +73,7 @@ const { theme = "dark", label, id, mask = null, ...rest } = Astro.props;
       }
 
       &--required {
-        color: var(--clr-400);
+        color: var(--text-color-dim);
       }
     }
 
@@ -87,49 +86,38 @@ const { theme = "dark", label, id, mask = null, ...rest } = Astro.props;
       padding: 0.5rem 0.5rem 0.65rem;
 
       line-height: 1.33;
+      color: currentcolor;
 
       background-color: transparent;
       border: none;
       border-bottom: 1px solid var(--clr-400);
 
       &::placeholder {
-        color: var(--clr-400);
+        color: var(--text-color-dim);
       }
 
-      &--light {
-        color: var(--clr-900);
+      &:focus-visible,
+      &:hover {
+        background-color: color-mix(in srgb, var(--clr-900) 15%, transparent);
 
-        &:focus-visible,
-        &:hover {
-          background-color: var(--clr-secondary-100);
-        }
-
-        &:disabled,
-        &:disabled::placeholder {
-          color: var(--clr-secondary-100);
-          background-color: transparent;
-          border-color: var(--clr-secondary-100);
+        &::placeholder {
+          color: currentcolor;
         }
       }
 
-      &--dark {
-        color: var(--clr-100);
+      &:disabled {
+        cursor: not-allowed;
+        background-color: color-mix(in srgb, var(--clr-400) 35%, transparent);
+        border-color: var(--clr-400);
+      }
 
-        &:focus-visible,
-        &:hover {
-          background-color: var(--clr-primary-100);
-        }
-
-        &:disabled,
-        &:disabled::placeholder {
-          color: var(--clr-primary-100);
-          background-color: transparent;
-          border-color: var(--clr-primary-100);
-        }
+      &:disabled,
+      &:disabled::placeholder {
+        color: color-mix(in srgb, currentcolor 55%, transparent);
       }
 
       &:not(:placeholder-shown) {
-        border-color: var(--clr-secondary-400);
+        border-color: var(--accent-color);
       }
 
       &:focus-visible {

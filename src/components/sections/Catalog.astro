@@ -65,10 +65,16 @@ const allProducts = await getCollection("catalog");
 
 	buttonPrev?.addEventListener('click', () => {
 		slider?.swiper.slidePrev();
+		if (slider?.swiper.isBeginning) {
+			buttonPrev.disabled = true;
+		}
 	})
 
 	buttonNext?.addEventListener('click', () => {
 		slider?.swiper.slideNext();
+		if (slider?.swiper.isEnd) {
+			buttonNext.disabled = true;
+		}
 	})
 
 	slider?.swiper.on('slideChange', function () {

@@ -1,0 +1,50 @@
+<svg id="prefix___Слой_1" data-name="Слой 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 44.6 37.6">
+  <defs>
+    <style>
+      .prefix__cls-1 {
+        fill: #58595b
+      }
+
+      .prefix__cls-1,
+      .prefix__cls-3 {
+        stroke-width: 0
+      }
+
+      .prefix__cls-7 {
+        fill: none;
+        stroke: #414042;
+        stroke-miterlimit: 10
+      }
+
+      .prefix__cls-3 {
+        fill: #f1f2f2
+      }
+    </style>
+  </defs>
+  <g id="prefix__icons">
+    <path d="M40.3 16.5c-.2-.5-.7-.9-1.3-.9h-8v12.6c2.4 0 4.3 1.9 4.3 4.3h7.6V24l-2.6-7.5z" fill="#f5ab35"
+      stroke-width="0" />
+    <path d="M33.9 23.1h7c.3 0 .7.1.9.1l1.1.4-2.6-7.1s-.3-1.3-2.5-.9h-5v6.6c.1.5.6.9 1.1.9z" fill="#414042"
+      stroke-width="0" />
+    <path class="prefix__cls-7" d="M39.1 15.6h-8v12.6c2.4 0 4.3 1.9 4.3 4.3" />
+    <path class="prefix__cls-3"
+      d="M43.7 32.4c0 .2-.2.4-.4.4h-3.4c-.2 0-.4-.2-.4-.4v-1.9c0-.2.2-.4.4-.4h3.4c.2 0 .4.2.4.4v1.9z" />
+    <path class="prefix__cls-7"
+      d="M43.7 32.4c0 .2-.2.4-.4.4h-3.4c-.2 0-.4-.2-.4-.4v-1.9c0-.2.2-.4.4-.4h3.4c.2 0 .4.2.4.4v1.9z" />
+    <circle class="prefix__cls-1" cx="14.1" cy="32.8" r="3" />
+    <circle class="prefix__cls-7" cx="14.1" cy="32.8" r="3" />
+    <circle class="prefix__cls-3" cx="14.1" cy="32.8" r="1.2" />
+    <circle class="prefix__cls-1" cx="31" cy="32.8" r="3" />
+    <circle class="prefix__cls-7" cx="31" cy="32.8" r="3" />
+    <circle class="prefix__cls-3" cx="31" cy="32.8" r="1.2" />
+    <circle class="prefix__cls-1" cx="6.7" cy="32.8" r="3" />
+    <circle class="prefix__cls-7" cx="6.7" cy="32.8" r="3" />
+    <circle class="prefix__cls-3" cx="6.7" cy="32.8" r="1.2" />
+    <path class="prefix__cls-7" d="M29.1 30.3H18.5M2.3 32.1c0-2 1.6-3.6 3.6-3.6h8.9c2 0 3.6 1.6 3.6 3.6v.8" />
+    <path fill="#36d7b7" stroke-width="0" d="M.2 10.6h28.9v17H.2z" />
+    <path class="prefix__cls-7" d="M29.1 10.6v17H.2" />
+    <path fill="#fff" stroke-width="0" d="M2.5 16.3h23.3v4.8H2.5z" />
+    <path class="prefix__cls-7"
+      d="M38.7 15.5L32 9.8M34.2 11.8v3.1M0 37.1h44.6M40.4 6.5H27.7M35.2 3.5H9.6M17.8.5H0M19.3.5h4.1M21.6 6.5h4" />
+  </g>
+</svg>
