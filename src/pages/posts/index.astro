@@ -41,6 +41,21 @@ const categories = [...new Set(allPosts.map((post) => post.data.category))];
 	</main>
 </Layout>
 
+{/*
+	Обновляем ScrollTrigger при изменении фильтров
+	так как меняется размер страницы, меняются и изначальные координаты запуска анимаций
+	(в данном случае анимации футера), во избежание этого нужно обновлять ScrollTrigger
+*/}
+<script>
+	const filterInputs = document.querySelectorAll(".blog__filter .filter-input input");
+
+	filterInputs.forEach((input) => {
+		input.addEventListener("change", () => {
+			ScrollTrigger.refresh();
+		});
+	});
+</script>
+
 <style lang="scss">
 	@import "../../styles/_breakpoints.scss";
 
