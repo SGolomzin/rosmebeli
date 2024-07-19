@@ -5,6 +5,7 @@ import DetailsTable from '../components/DetailsTable.astro';
 import ImageGrid from '../components/ImageGrid.astro';
 import Button from '../components/Button.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
+import Tag from '../components/Tag.astro';
 
 const { frontmatter: fm } = Astro.props;
 
@@ -19,6 +20,7 @@ const formatPrice = (price: number) => new Intl.NumberFormat('ru-RU', { style: '
 				<ImageGrid class="product__images" images={[...fm.images]} />
 				<div class="product__content">
 					<div class="product__info">
+						<Tag class:list={["product__availibility", { "isAvailible": fm.isAvailable }]} size="lg">● {fm.isAvailable ? 'В наличии' : 'Под заказ'}</Tag>
 						<h1 class="product__name">{fm.name}</h1>
 						<h2 class="product__price">от {formatPrice(fm.price)}</h2>
 						<hr />
@@ -44,6 +46,14 @@ const formatPrice = (price: number) => new Intl.NumberFormat('ru-RU', { style: '
 		&__images,
 		&__content {
 			grid-column: 1 / -1;
+		}
+
+		&__availibility {
+			--text-color-highlight: var(--clr-info);
+
+			&.isAvailible {
+				--text-color-highlight: var(--clr-success);
+			}
 		}
 
 		&__content {

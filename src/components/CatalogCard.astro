@@ -58,6 +58,7 @@ const { product, class: className, ...rest } = Astro.props
 			gap: 0.25rem;
 			place-content: center space-between;
 			align-items: center;
+			justify-content: flex-end;
 		}
 
 		&__availibility {
@@ -69,13 +70,13 @@ const { product, class: className, ...rest } = Astro.props
 		}
 
 		&__name {
-			flex: 1 0 max-content;
+			flex: 1 0 auto;
 			font-family: var(--font-family-secondary);
 			font-size: 1.25rem;
 		}
 
 		&__variant {
-			flex: 1 0 50%;
+			flex: 1 0 100%;
 			color: var(--clr-400);
 		}
 	}
