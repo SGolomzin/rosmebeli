@@ -47,35 +47,58 @@ const FeatureItems = [
 	</div>
 </section>
 
-<script>
-	const FeaturesList = document.querySelector(".features__list");
-	const Features = [...FeaturesList?.children || []];
-
-	Features.forEach((f) => {
-		f.addEventListener("click", () => {
-			Features.forEach((item) => {
-				item.setAttribute("data-is-active", "false");
-			});
-			f.setAttribute("data-is-active", "true");
-		})
-	});
-</script>
-
 {/* GSAP animations */}
 <script>
-	const tl = gsap.timeline({ scrollTrigger: { trigger: ".features" }, defaults:{ opacity: 0, ease: "linear" }});
-
 	function init() {
-		tl.from(".features__list", { autoAlpha: 0 })
-			.from(".features__list > *", {
-				ease: "back",
-				y: 150,
-				stagger: 0.5
-			}, ">")
-			.from(".features__preview", { autoAlpha: 0 }, ">")
+		const featuresList = document.querySelector(".features__list") as HTMLElement;
+		const numberOfFeatures = featuresList.children.length;
+		const listStyles = getComputedStyle(featuresList);
+		const listGap = listStyles.gap;
+
+		gsap.utils.toArray<HTMLElement>(".features__list > li").forEach((li, idx) => {
+			gsap.fromTo(li, {
+				x: 150,
+				opacity: 0,
+				autoAlpha: 0
+			},
+			{
+				x: 0,
+				opacity: 1,
+				autoAlpha: 1,
+				scrollTrigger: {
+					trigger: li,
+					start: `top-=${listGap} 60%`,
+					end: `bottom 50%`,
+					onEnter: () => {
+						li.setAttribute("data-is-active", "true");
+					},
+					onEnterBack: () => {
+						li.setAttribute("data-is-active", "true");
+					},
+					onLeave: () => {
+						if (idx === numberOfFeatures - 1) return;
+						li.setAttribute("data-is-active", "false");
+					},
+					onLeaveBack: () => {
+						if(idx === 0) return;
+						li.setAttribute("data-is-active", "false");
+					}
+				}
+			});
+		});
+
+		gsap.fromTo(".features__preview", {
+			autoAlpha: 0
+		}, {
+			autoAlpha: 1,
+			scrollTrigger: {
+				trigger: ".features",
+				start: "top center"
+			}
+		});
 	}
 
-	window.addEventListener("load", init);
+	window.addEventListener("load", () => init());
 </script>
 
 <style lang="scss">

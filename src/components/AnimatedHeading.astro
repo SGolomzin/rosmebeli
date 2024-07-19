@@ -25,15 +25,17 @@ const { title, tag: Element = "h1", class: className, ...props} = Astro.props;
 				onEnter: (elements, triggers) => {
 					gsap.fromTo(elements, {
 						y: 30,
-						opacity: 0
-					}, {
+						opacity: 0,
+					},
+					{
 						y: 0,
 						opacity: 1,
 						stagger: 0.04,
 						ease: "power4.out"
 					});
-				}
-			})
+				},
+				once: true
+			});
 		})
 	}
 
