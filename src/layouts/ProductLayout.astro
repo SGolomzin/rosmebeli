@@ -5,6 +5,8 @@ import DetailsTable from '../components/DetailsTable.astro';
 import ImageGrid from '../components/ImageGrid.astro';
 import Button from '../components/Button.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
+import Modal from '../components/Modal.astro';
+import CustomerForm from '../components/CustomerForm.astro';
 import Tag from '../components/Tag.astro';
 
 const { frontmatter: fm } = Astro.props;
@@ -25,11 +27,20 @@ const formatPrice = (price: number) => new Intl.NumberFormat('ru-RU', { style: '
 						<h2 class="product__price">от {formatPrice(fm.price)}</h2>
 						<hr />
 						<DetailsTable details={fm.details} />
+
 						<hr />
 						<slot />
 					</div>
 					<div class="product__actions">
-						<Button appearance="ghost">Вызвать замерщика</Button>
+						<Modal id="product-modal" data-theme="light">
+							<Button
+								slot="trigger"
+								appearance="ghost"
+								onclick="openDialog('product-modal')"
+							>Вызвать замерщика</Button>
+							<CustomerForm id="product-form" method="dialog"/>
+							<span class="label" slot="title">Заказать обратный звонок</span>
+						</Modal>
 						<Button disabled>Расчитать стоимость</Button>
 					</div>
 				</div>
