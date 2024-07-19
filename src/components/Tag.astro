@@ -18,8 +18,13 @@ const { size = "sm", class: className, ...rest } = Astro.props;
 
 <style lang="scss">
 	.tag {
+		display: inline-flex;
+		gap: 0.25em;
+		place-items: center;
+
 		width: max-content;
-		padding: 0.2rem 0.5rem;
+		height: 1lh;
+		padding: 4px 6px;
 
 		font-family: var(--font-family-primary);
 		font-weight: 700;
@@ -28,6 +33,7 @@ const { size = "sm", class: className, ...rest } = Astro.props;
 
 		background-color: var(--text-color-highlight);
 		border-radius: 0.45em;
+		box-shadow: 0 0.2em color-mix(in srgb, var(--text-color-highlight) 55%, var(--clr-900));
 
 		&--sm {
 			font-size: 0.65rem;

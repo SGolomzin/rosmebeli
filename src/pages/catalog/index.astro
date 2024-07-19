@@ -44,7 +44,7 @@ const categories = [...new Set(allProducts.map((product) => product.data.categor
 <style lang="scss">
 	@import "../../styles/_breakpoints.scss";
 
-	$categories: 'Кухни', 'Шкафы', 'Стенки', 'Детские', 'Прихожие', 'Обеденные', "Рабочие зоны";
+	$categories: 'Кухни', 'Шкафы', 'Стенки', 'Детские', 'Прихожие', 'Обеденные', "Рабочие зоны", "Мебель для ванной";
 
 	h1 {
 		margin-bottom: 1rem;
@@ -67,6 +67,10 @@ const categories = [...new Set(allProducts.map((product) => product.data.categor
 			grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
 			grid-template-rows: masonry;
 			gap: 1.25rem;
+
+			@include breakpoint(md) {
+				grid-template-columns: repeat(auto-fill, minmax(385px, 1fr));
+			}
 		}
 
 		@each $category in $categories {

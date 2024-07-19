@@ -1,4 +1,5 @@
 ---
+import { Icon } from 'astro-icon/components';
 import type { CollectionEntry } from 'astro:content';
 
 interface Props extends astroHTML.JSX.HTMLAttributes {
@@ -19,7 +20,6 @@ const { product, class: className, ...rest } = Astro.props
 		className
 	]}
 	shaded
-	filled
 	{...rest}
 >
 	<a class="catalog-card__image" href={`/rosmebeli/catalog/${product.slug}`}>
@@ -31,6 +31,7 @@ const { product, class: className, ...rest } = Astro.props
 	<Card class="catalog-card__info" filled>
 		<span class="catalog-card__name">{product.data.name}</span>
 		<Tag class="catalog-card__category">{product.data.category}</Tag>
+		<Tag class:list={["catalog-card__availibility", { "isAvailible": product.data.isAvailable }]}>● {product.data.isAvailable ? 'В наличии' : 'Под заказ'}</Tag>
 		<span class="catalog-card__variant">{product.data.variant}</span>
 	</Card>
 	<Link class="catalog-card__link" href={`/rosmebeli/catalog/${product.slug}`} appearance="button" icon="arrow-right">Подробнее</Link>
@@ -43,9 +44,7 @@ const { product, class: className, ...rest } = Astro.props
 		display: grid;
 		grid-template-rows: 300px minmax(4rem, max-content) min-content;
 		gap: 0.5rem;
-
 		width: 100%;
-		padding: 1rem;
 
 		@include scaleOnHover(1.05);
 
@@ -61,13 +60,22 @@ const { product, class: className, ...rest } = Astro.props
 			align-items: center;
 		}
 
+		&__availibility {
+			--text-color-highlight: var(--clr-info);
+
+			&.isAvailible {
+				--text-color-highlight: var(--clr-success);
+			}
+		}
+
 		&__name {
+			flex: 1 0 max-content;
 			font-family: var(--font-family-secondary);
 			font-size: 1.25rem;
 		}
 
 		&__variant {
-			flex: 1 0 100%;
+			flex: 1 0 50%;
 			color: var(--clr-400);
 		}
 	}
