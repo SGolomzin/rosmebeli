@@ -1,4 +1,5 @@
 ---
+import { Icon } from 'astro-icon/components';
 import Statistics from '../Statistics.astro';
 import type { StatisticsProps } from '../Statistics.astro';
 
@@ -31,6 +32,7 @@ const Stats: StatisticsProps[] = [
 	>
 		<source data-src="/rosmebeli/video/carpentry.mp4" type="video/mp4">
 	</video>
+
 	<div class="container">
 		<div class="hero__promo">
 			<div>
@@ -51,6 +53,11 @@ const Stats: StatisticsProps[] = [
 			</div>
 		</div>
 	</div>
+
+	<Button appearance="ghost" id="video-control" aria-label="Кнопка паузы/воспроизвдения видео">
+		<Icon name="play" aria-labelledby="video-control" />
+		<Icon name="pause" aria-labelledby="video-control" />
+	</Button>
 </section>
 
 {/* Lazy load video */}
@@ -69,6 +76,23 @@ const Stats: StatisticsProps[] = [
 	}
 
 	document.addEventListener("DOMContentLoaded", lazyLoad);
+</script>
+
+{/*
+	Скрипт паузы/воспроизведения видео
+*/}
+<script>
+	const videoControl = document.getElementById("video-control") as HTMLButtonElement;
+	const video = document.querySelector(".hero__video") as HTMLVideoElement;
+
+	const toggleVideoPlayback = () => {
+		if (!videoControl || !video) return;
+		const isPaused = videoControl.classList.contains("paused");
+		video[isPaused ? "play" : "pause"]();
+		videoControl.classList.toggle("paused");
+	}
+
+	videoControl?.addEventListener("click", () => toggleVideoPlayback());
 </script>
 
 {/* GSAP animations */}
@@ -121,6 +145,34 @@ const Stats: StatisticsProps[] = [
 		@include initialHidden();
 	}
 
+	#video-control {
+		position: absolute;
+		z-index: 2;
+		right: 1rem;
+		bottom: 1rem;
+
+		min-width: auto;
+		padding: 0.875rem;
+
+		[data-icon="play"] {
+			display: none;
+		}
+
+		[data-icon="pause"] {
+			display: block;
+		}
+
+		&.paused {
+			[data-icon="pause"] {
+				display: none;
+			}
+
+			[data-icon="play"] {
+				display: block;
+			}
+		}
+	}
+
 	.hero__promo {
 		z-index: 1;
 		grid-column: 1 / -1;
@@ -150,33 +202,6 @@ const Stats: StatisticsProps[] = [
 		@include breakpoint(xl) {
 			grid-column: 1 / span 8;
 			grid-row: 1 / span 1;
-		}
-	}
-
-	.hero__ticker {
-		display: grid;
-		grid-column: 1 / -1;
-		grid-row: 2 / 3;
-		grid-template-columns: 1fr 1fr;
-		gap: 1.25rem;
-
-		max-height: calc((100vh - var(--section-top-padding) - var(--section-bottom-padding)) / 1.5);
-
-		mask: none;
-
-		@include initialHidden();
-
-		@include breakpoint(xl) {
-			grid-column: span 6 / -1;
-			grid-row: 1 / span 1;
-			max-height: calc(100vh - var(--section-top-padding) - var(--section-bottom-padding));
-			mask: linear-gradient(
-				90deg,
-				transparent,
-				white 30%,
-				white 70%,
-				transparent
-			);
 		}
 	}
 </style>
