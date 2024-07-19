@@ -53,7 +53,7 @@ const FeatureItems = [
 		const featuresList = document.querySelector(".features__list") as HTMLElement;
 		const numberOfFeatures = featuresList.children.length;
 		const listStyles = getComputedStyle(featuresList);
-		const listGap = listStyles.gap;
+		const listGap = parseInt(listStyles.gap);
 
 		gsap.utils.toArray<HTMLElement>(".features__list > li").forEach((li, idx) => {
 			gsap.fromTo(li, {
@@ -67,8 +67,8 @@ const FeatureItems = [
 				autoAlpha: 1,
 				scrollTrigger: {
 					trigger: li,
-					start: `top-=${listGap} 60%`,
-					end: `bottom 50%`,
+					start: `top-=${listGap / 2} center`,
+					end: `bottom+=${listGap / 2} center`,
 					onEnter: () => {
 						li.setAttribute("data-is-active", "true");
 					},
