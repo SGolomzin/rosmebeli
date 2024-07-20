@@ -7,8 +7,8 @@ rating: 5
 isAvailable: true
 images:
   [
-    { url: "/rosmebeli/images/catalog/kitchen_nordatlant_1.jpg" },
-    { url: "/rosmebeli/images/catalog/kitchen_nordatlant_2.jpg" },
+    { src: "../../assets/catalog/kitchen_nordatlant_1.jpg" },
+    { src: "../../assets/catalog/kitchen_nordatlant_2.jpg" },
   ]
 details:
   bodyMaterials: ["МДФ", "ЛДСП"]

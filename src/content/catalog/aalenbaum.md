@@ -7,9 +7,9 @@ rating: 5
 isAvailable: true
 images:
   [
-    { url: "/rosmebeli/images/catalog/kitchen_aalenbaum_1.jpg" },
-    { url: "/rosmebeli/images/catalog/kitchen_aalenbaum_2.jpg" },
-    { url: "/rosmebeli/images/catalog/kitchen_aalenbaum_3.jpg" },
+    { src: "../../assets/catalog/kitchen_aalenbaum_1.jpg" },
+    { src: "../../assets/catalog/kitchen_aalenbaum_2.jpg" },
+    { src: "../../assets/catalog/kitchen_aalenbaum_3.jpg" },
   ]
 details:
   bodyMaterials: ["МДФ", "ЛДСП"]

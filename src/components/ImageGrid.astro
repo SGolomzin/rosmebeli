@@ -1,6 +1,8 @@
 ---
+import { Image } from 'astro:assets';
+
 type Image = {
-	url: string;
+	src: ImageMetadata;
 	alt: string;
 }
 
@@ -12,11 +14,7 @@ const { images, class: className, ...rest } = Astro.props;
 ---
 <div class:list={["image-grid", className]} {...rest}>
 	{images.slice(0, 5).map((image, i) => (
-		<img
-			src={image.url}
-			alt={image.alt}
-			data-name={`image-${i}`}
-		/>
+		<Image src={image.src} alt={image.alt || ''} data-name={`image-${i}`}/>
 	))}
 </div>
 

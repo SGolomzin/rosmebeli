@@ -1,4 +1,6 @@
 ---
+import { Image } from 'astro:assets';
+
 import AnimatedHeading from "../AnimatedHeading.astro";
 
 const FeatureItems = [
@@ -17,7 +19,11 @@ const FeatureItems = [
 		text: "Для создания мебели на заказ мы используем только лучшие материалы. От прочной древесины твердых пород до роскошной отделки — наша приверженность качеству гарантирует, что ваша мебель выдержит испытание временем и превзойдет ваши ожидания.",
 		isActive: false
 	}
-]
+];
+
+import projectImage from "../../assets/features/closet-project.webp";
+import sketchImage from "../../assets/features/kitchen-sketch.webp";
+import materialsImage from "../../assets/features/materials.webp";
 ---
 
 <section
@@ -39,9 +45,27 @@ const FeatureItems = [
 				))}
 			</ul>
 			<div class="features__preview">
-				<img src="/rosmebeli/images/features/closet-project.webp" alt="Пример 3D проекта шкафа" data-tab="1"/>
-				<img src="/rosmebeli/images/features/kitchen-sketch.webp" alt="Схема проекта кухни нарисавнная от руки" data-tab="2" />
-				<img src="/rosmebeli/images/features/materials.webp" alt="Фото образцов материалов из дерева" data-tab="3" />
+				<Image
+					src={projectImage}
+					alt="Пример 3D проекта шкафа"
+					format="avif"
+					widths={[280, 540, 720, projectImage.width]}
+					sizes={`(width < 320px) 240px, (width < 768px) 540px, (width < 1400px) 720px, ${projectImage.width}px`}
+				/>
+				<Image
+					src={sketchImage}
+					alt="Схема проекта кухни нарисавнная от руки"
+					format="avif"
+					widths={[280, 540, 720, sketchImage.width]}
+					sizes={`(width < 320px) 240px, (width < 768px) 540px, (width < 1400px) 720px, ${sketchImage.width}px`}
+				/>
+				<Image
+					src={materialsImage}
+					alt="Фото образцов материалов из дерева"
+					format="avif"
+					widths={[280, 540, 720, materialsImage.width]}
+					sizes={`(width < 320px) 240px, (width < 768px) 540px, (width < 1400px) 720px, ${materialsImage.width}px`}
+				/>
 			</div>
 		</div>
 	</div>

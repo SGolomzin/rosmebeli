@@ -5,7 +5,7 @@ variant: "Пленка МДФ"
 price: 49500
 rating: 5
 isAvailable: true
-images: [{ url: "/rosmebeli/images/catalog/kitchen_nasswald_1.jpg" }]
+images: [{ src: "../../assets/catalog/kitchen_nasswald_1.jpg" }]
 details:
   bodyMaterials: ["МДФ", "ЛДСП"]
   doorMaterials: ["МДФ"]

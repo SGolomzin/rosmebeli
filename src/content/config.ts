@@ -1,21 +1,20 @@
 import { z, defineCollection } from "astro:content";
 
-import {
-	imageSchema,
-	imagesSchema,
-	productDetailsSchema
-} from "../schemas";
+import { productDetailsSchema } from "../schemas";
 
 const catalogCollection = defineCollection({
 	type: "content",
-	schema: z.object({
+	schema: ({ image }) => z.object({
 		name: z.string(),
 		category: z.enum(['Кухни', 'Шкафы', 'Стенки', 'Детские', 'Прихожие', 'Обеденные', 'Рабочие зоны', 'Мебель для ванной']),
 		variant: z.string().optional(),
 		price: z.number(),
 		rating: z.number(),
 		isAvailable: z.boolean(),
-		images: imagesSchema,
+		images: z.array(z.object({
+			src: image(),
+			alt: z.string().optional()
+		})),
 		details: productDetailsSchema,
 	})
 })
@@ -29,20 +28,24 @@ const faqCollection = defineCollection({
 
 const postsCollection = defineCollection({
 	type: "content",
-	schema: z.object({
+	schema: ({ image }) => z.object({
 		title: z.string(),
 		category: z.enum(['Дизайн', 'Интерьер', 'Материалы', 'Советы']),
 		pubDate: z.date(),
 		excerpt: z.string(),
 		ttr: z.number(), // time to read
-		image: imageSchema,
+		cover: image(),
+		coverAlt: z.string()
 	})
 })
 
 const reviewsCollection = defineCollection({
 	type: "data",
 	schema: z.object({
-		image: imageSchema.optional(),
+		image: z.object({
+			url: z.string(),
+			alt: z.string().optional()
+		}).optional(),
 		name: z.string(),
 		city: z.string(),
 		text: z.string(),
