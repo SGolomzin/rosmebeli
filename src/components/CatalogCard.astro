@@ -21,8 +21,8 @@ const { product, class: className, ...rest } = Astro.props
 	shaded
 	{...rest}
 >
-	<a class="catalog-card__cover" href={`/rosmebeli/catalog/${product.slug}`}>
-		<Image src={product.data.images[0].src} alt={product.data.images[0].alt || ""} width={700} />
+	<a class="catalog-card__cover" href={`/rosmebeli/catalog/${product.slug}`} aria-label=`Перейти на страницу продукта - ${product.data.name}`>
+		<Image src={product.data.images[0].src} alt={product.data.images[0].alt || `Превью продукта - ${product.data.name}`} width={700} />
 	</a>
 	<Card class="catalog-card__info" filled>
 		<span class="catalog-card__name">{product.data.name}</span>
