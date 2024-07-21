@@ -15,17 +15,17 @@ import Tag from './Tag.astro';
 const { post, class: className, ...rest } = Astro.props;
 ---
 
-<a href={`/rosmebeli/posts/${post.slug}`}>
-	<Card
-		class:list={[
-			"blog-post-card",
-			className
-		]}
-		bordered
-		shaded
-		filled
-		{...rest}
-	>
+<Card
+	class:list={[
+		"blog-post-card",
+		className
+	]}
+	bordered
+	shaded
+	filled
+	{...rest}
+>
+	<a href={`/rosmebeli/posts/${post.slug}`}>
 		<div class="blog-post-card__cover">
 			<Image src={post.data.cover} alt={post.data.coverAlt} width={650} />
 		</div>
@@ -44,21 +44,20 @@ const { post, class: className, ...rest } = Astro.props;
 				</span>
 			</div>
 		</Card>
-	</Card>
-</a>
+	</a>
+</Card>
 
 <style lang="scss">
 	@import "../styles/_design.scss";
 
-	a {
-		display: block;
+	.blog-post-card a {
+		display: grid;
+		grid-template-rows: 220px auto;
 		color: var(--clr-100);
 		text-decoration: none;
 	}
 
-	.blog-post-card {
-		display: grid;
-		grid-template-rows: 220px auto;
+	.blog-post-card{
 
 		@include scaleOnHover(1.05);
 
