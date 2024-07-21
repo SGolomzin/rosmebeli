@@ -60,6 +60,7 @@ const recentPosts = sortedPosts.slice(0, 3);
 
 	.recent-posts {
 		display: grid;
+		grid-auto-rows: min-content;
 		grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
 		gap: 1.25rem;
 
