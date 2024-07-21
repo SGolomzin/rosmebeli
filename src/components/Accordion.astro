@@ -39,6 +39,7 @@ const { header, ...rest } = Astro.props;
 
 		font-size: 1.25rem;
 		letter-spacing: 0.02em;
+		list-style: none;
 
 		&::marker {
 			content: none;
@@ -59,5 +60,9 @@ const { header, ...rest } = Astro.props;
 
 	details[open] [data-icon] {
 		transform: rotate(-180deg);
+	}
+
+	details summary::-webkit-details-marker {
+		display:none;
 	}
 </style>

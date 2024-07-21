@@ -11,15 +11,15 @@ const recentPosts = sortedPosts.slice(0, 3);
 ---
 
 <section class="section-block">
-	<div class="container conainer-grid">
-		<div class="container-grid__heading container-grid__heading--centered">
+	<div class="container">
+		<div class="section-title">
 			<AnimatedHeading class="features__heading" title="Последние статьи" tag="h2"/>
 			<p class="features__text">Следите за новостями в нашем блоге о дизайне интерьера.</p>
 		</div>
-		<div class="features__content container-grid__content">
+		<div class="features__content">
 			<div class="recent-posts">
 				{recentPosts.map((post) => (
-					<BlogCard post={post} />
+					<BlogCard class="card" post={post} />
 				))}
 			</div>
 
@@ -35,6 +35,12 @@ const recentPosts = sortedPosts.slice(0, 3);
 
 <style lang="scss">
 	@import "../../styles/_breakpoints.scss";
+
+	.section-title {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
 
 	.features__heading {
 		margin-bottom: 0;
@@ -53,15 +59,15 @@ const recentPosts = sortedPosts.slice(0, 3);
 
 	.recent-posts {
 		display: grid;
-		grid-template-columns: repeat(1, minmax(0, 1fr));
+		grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
 		gap: 1.25rem;
 
 		@include breakpoint(md) {
-			grid-template-columns: repeat(2, minmax(0, 1fr));
+			grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
 		}
 
-		@include breakpoint(xl) {
-			grid-template-columns: repeat(3, minmax(0, 1fr));
+		@include breakpoint(lg) {
+			grid-template-columns: repeat(auto-fill, minmax(425px, 1fr));
 		}
 	}
 
