@@ -41,15 +41,11 @@ const postsCollection = defineCollection({
 
 const reviewsCollection = defineCollection({
 	type: "data",
-	schema: z.object({
-		image: z.object({
-			url: z.string(),
-			alt: z.string().optional()
-		}).optional(),
+	schema: ({ image }) => z.object({
+		picture: image().optional(),
 		name: z.string(),
 		city: z.string(),
-		text: z.string(),
-		isLongText: z.boolean().optional(),
+		text: z.string().refine(text => text.length < 410, { message: 'Отзыв должен быть меньше 410 символов' }),
 		rating: z.number()
 	})
 })

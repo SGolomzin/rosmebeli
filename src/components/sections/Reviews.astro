@@ -45,6 +45,8 @@ const allReviews = await getCollection("reviews");
 </script>
 
 <style lang="scss">
+	@import "../../styles/_breakpoints.scss";
+
 	section {
 		--section-bottom-padding: 0;
 	}
@@ -68,5 +70,9 @@ const allReviews = await getCollection("reviews");
 
 	#reviews-slider {
 		height: 33rem;
+
+		@include breakpoint(xl) {
+			height: 23rem;
+		}
 	}
 </style>
