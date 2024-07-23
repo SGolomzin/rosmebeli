@@ -7,6 +7,7 @@ import AnimatedHeading from "../AnimatedHeading.astro";
 import Review from "../Review.astro";
 
 const allReviews = await getCollection("reviews");
+const reviews = import.meta.env.PROD ? allReviews.slice(0, 5) : allReviews;
 ---
 <section
 	id="reviews"
@@ -23,7 +24,7 @@ const allReviews = await getCollection("reviews");
 			pagination="true"
 			direction="vertical"
 		>
-			{allReviews.map((review: ReviewsType) => (
+			{reviews.map((review: ReviewsType) => (
 				<swiper-slide>
 					<Review {...review.data} />
 				</swiper-slide>

@@ -7,6 +7,7 @@ import Link from "../Link.astro";
 import IconButton from "../IconButton.astro";
 
 const allProducts = await getCollection("catalog");
+const products = import.meta.env.PROD ? allProducts.slice(0, 10) : allProducts;
 ---
 
 
@@ -27,7 +28,7 @@ const allProducts = await getCollection("catalog");
 				keyboard="true"
 			>
 				{
-					allProducts.map((product) => (
+					products.map((product) => (
 						<swiper-slide>
 							<CatalogCard product={product} />
 						</swiper-slide>
