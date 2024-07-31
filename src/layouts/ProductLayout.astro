@@ -90,6 +90,7 @@ const formatPrice = (price: number) => new Intl.NumberFormat('ru-RU', { style: '
 			display: flex;
 			flex-direction: column;
 			gap: 2rem;
+			margin-inline: 2rem;
 		}
 
 		&__actions {
@@ -125,6 +126,7 @@ const formatPrice = (price: number) => new Intl.NumberFormat('ru-RU', { style: '
 
 				& > div {
 					max-width: 60ch;
+					margin-inline: 0;
 				}
 			}
 		}
