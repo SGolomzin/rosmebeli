@@ -1,16 +1,16 @@
 ---
-name: "Ulmstadt"
-category: "Рабочие зоны"
+name: "Kandee"
+category: "Шкафы"
 isAvailable: false
 images:
   [
-    { src: "../../assets/catalog/workspace_ulmstadt_1.jpg" },
-    { src: "../../assets/catalog/workspace_ulmstadt_2.jpg" },
+    { src: "../../assets/catalog/closet_4_1.jpg" },
+    { src: "../../assets/catalog/closet_4_2.jpg" },
   ]
 details:
   bodyMaterials: ["ЛДСП"]
   doorMaterials: ["МДФ/пленка ПВХ"]
-  accessories: ["Boyard"]
+  accessories: ["Hettich"]
   timeProduction: "1 месяц"
   dimensions: "любой размер и цвет по вашему выбору"
 ---

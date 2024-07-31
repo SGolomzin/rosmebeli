@@ -1,15 +1,16 @@
 ---
-name: "Ulmstadt"
+name: "Gottevoir"
 category: "Рабочие зоны"
 isAvailable: false
 images:
   [
-    { src: "../../assets/catalog/workspace_ulmstadt_1.jpg" },
-    { src: "../../assets/catalog/workspace_ulmstadt_2.jpg" },
+    { src: "../../assets/catalog/workspace_1_1.jpg" },
+    { src: "../../assets/catalog/workspace_1_2.jpg" },
   ]
 details:
   bodyMaterials: ["ЛДСП"]
   doorMaterials: ["МДФ/пленка ПВХ"]
+  tableMaterials: ["Постформинг"]
   accessories: ["Boyard"]
   timeProduction: "1 месяц"
   dimensions: "любой размер и цвет по вашему выбору"

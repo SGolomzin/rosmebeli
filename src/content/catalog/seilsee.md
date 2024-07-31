@@ -1,16 +1,16 @@
 ---
-name: "Ulmstadt"
-category: "Рабочие зоны"
+name: "Seilsee"
+category: "Шкафы"
 isAvailable: false
 images:
   [
-    { src: "../../assets/catalog/workspace_ulmstadt_1.jpg" },
-    { src: "../../assets/catalog/workspace_ulmstadt_2.jpg" },
+    { src: "../../assets/catalog/closet_2_1.jpg" },
+    { src: "../../assets/catalog/closet_2_2.jpg" },
   ]
 details:
   bodyMaterials: ["ЛДСП"]
   doorMaterials: ["МДФ/пленка ПВХ"]
-  accessories: ["Boyard"]
+  accessories: ["Blum"]
   timeProduction: "1 месяц"
   dimensions: "любой размер и цвет по вашему выбору"
 ---

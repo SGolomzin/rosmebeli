@@ -19,29 +19,34 @@ const formatPrice = (price: number) => new Intl.NumberFormat('ru-RU', { style: '
 		<article class="section-block">
 			<div class="container container-grid product">
 				<Breadcrumbs class="product__breadcrumbs"  currentPage={fm.name} />
+			</div>
+			<div class="product__grid">
 				<ImageGrid class="product__images" images={[...fm.images]} />
 				<div class="product__content">
-					<div class="product__info">
-						<Tag class:list={["product__availibility", { "isAvailible": fm.isAvailable }]} size="lg">● {fm.isAvailable ? 'В наличии' : 'Под заказ'}</Tag>
-						<h1 class="product__name">{fm.name}</h1>
-						<h2 class="product__price">от {formatPrice(fm.price)}</h2>
-						<hr />
-						<DetailsTable details={fm.details} />
-
-						<hr />
-						<slot />
-					</div>
-					<div class="product__actions">
-						<Modal id="product-modal" data-theme="light">
-							<Button
-								slot="trigger"
-								appearance="ghost"
-								onclick="openDialog('product-modal')"
-							>Вызвать замерщика</Button>
-							<CustomerForm id="product-form" method="dialog"/>
-							<span class="label" slot="title">Заказать обратный звонок</span>
-						</Modal>
-						<Button disabled>Расчитать стоимость</Button>
+					<div>
+						<div class="product__info">
+							<Tag class="product__category" size="lg">{fm.category}</Tag>
+							<Tag class:list={["product__availibility", { "isAvailible": fm.isAvailable }]} size="lg">● {fm.isAvailable ? 'В наличии' : 'Под заказ'}</Tag>
+							<h1 class="product__name">{fm.name}</h1>
+							{ fm.price && <h2 class="product__price">от {formatPrice(fm.price)} за п/м</h2> }
+							<hr />
+							<DetailsTable details={fm.details} />
+	
+							<hr />
+							<slot />
+						</div>
+						<div class="product__actions">
+							<Modal id="product-modal" data-theme="light">
+								<Button
+									slot="trigger"
+									appearance="ghost"
+									onclick="openDialog('product-modal')"
+								>Вызвать замерщика</Button>
+								<CustomerForm id="product-form" method="dialog"/>
+								<span class="label" slot="title">Заказать обратный звонок</span>
+							</Modal>
+							<Button disabled>Расчитать стоимость</Button>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -53,6 +58,20 @@ const formatPrice = (price: number) => new Intl.NumberFormat('ru-RU', { style: '
 	@import "../styles/_breakpoints.scss";
 
 	.product {
+		&__grid {
+			display: grid;
+			grid-template-columns: repeat(2, 1fr);
+			gap: 1.25rem;
+
+			@include breakpoint(md) {
+				grid-template-columns: repeat(4, 1fr);
+			}
+
+			@include breakpoint(xl) {
+				grid-template-columns: repeat(12, 1fr);
+			}
+		}
+
 		&__breadcrumbs,
 		&__images,
 		&__content {
@@ -67,7 +86,7 @@ const formatPrice = (price: number) => new Intl.NumberFormat('ru-RU', { style: '
 			}
 		}
 
-		&__content {
+		&__content > div {
 			display: flex;
 			flex-direction: column;
 			gap: 2rem;
@@ -103,6 +122,10 @@ const formatPrice = (price: number) => new Intl.NumberFormat('ru-RU', { style: '
 
 			&__content {
 				grid-column: 8 / 13;
+
+				& > div {
+					max-width: 60ch;
+				}
 			}
 		}
 	}

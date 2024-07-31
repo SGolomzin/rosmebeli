@@ -1,11 +1,12 @@
 ---
-name: "Ulmstadt"
-category: "Рабочие зоны"
+name: "Wernsee"
+category: "Мебель для ванной"
 isAvailable: false
 images:
   [
-    { src: "../../assets/catalog/workspace_ulmstadt_1.jpg" },
-    { src: "../../assets/catalog/workspace_ulmstadt_2.jpg" },
+    { src: "../../assets/catalog/bathroom_1_1.jpg" },
+    { src: "../../assets/catalog/bathroom_1_2.jpg" },
+    { src: "../../assets/catalog/bathroom_1_3.jpg" },
   ]
 details:
   bodyMaterials: ["ЛДСП"]

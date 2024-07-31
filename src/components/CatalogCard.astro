@@ -28,7 +28,7 @@ const { product, class: className, ...rest } = Astro.props
 		<span class="catalog-card__name">{product.data.name}</span>
 		<Tag class="catalog-card__category">{product.data.category}</Tag>
 		<Tag class:list={["catalog-card__availibility", { "isAvailible": product.data.isAvailable }]}>● {product.data.isAvailable ? 'В наличии' : 'Под заказ'}</Tag>
-		<span class="catalog-card__variant">{product.data.variant}</span>
+		<span class="catalog-card__variant">{product.data.details.doorMaterials}</span>
 	</Card>
 	<Link class="catalog-card__link" href={`/rosmebeli/catalog/${product.slug}`} appearance="button" icon="arrow-right">Подробнее</Link>
 </Card>

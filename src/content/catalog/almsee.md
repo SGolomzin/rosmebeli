@@ -1,16 +1,18 @@
 ---
-name: "Ulmstadt"
-category: "Рабочие зоны"
+name: "Almsee"
+category: "Кухни"
+price: 80000
 isAvailable: false
 images:
   [
-    { src: "../../assets/catalog/workspace_ulmstadt_1.jpg" },
-    { src: "../../assets/catalog/workspace_ulmstadt_2.jpg" },
+    { src: "../../assets/catalog/kitchen_4_1.jpg" },
+    { src: "../../assets/catalog/kitchen_4_2.jpg" },
+    { src: "../../assets/catalog/kitchen_4_3.jpg" },
   ]
 details:
   bodyMaterials: ["ЛДСП"]
-  doorMaterials: ["МДФ/пленка ПВХ"]
-  accessories: ["Boyard"]
+  doorMaterials: ["МДФ Alvic"]
+  accessories: ["Blum"]
   timeProduction: "1 месяц"
   dimensions: "любой размер и цвет по вашему выбору"
 ---
