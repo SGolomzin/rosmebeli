@@ -33,7 +33,7 @@ const { id, class: className, ...rest } = Astro.props;
 		mask="+7 (999) 999-99-99"
 	/>
 	<p class="agreement">Нажимая кнопку “Отправить” вы соглашаетесь на обработку
-		<a href="/rosmebeli/privacy" target="_blank" rel="noopener noreferrer" aria-label="Политика конфиденциальности">персональных данных</a>
+		<a href="/privacy" target="_blank" rel="noopener noreferrer" aria-label="Политика конфиденциальности">персональных данных</a>
 	</p>
 	<Button type="submit">Отправить</Button>
 </form>
@@ -54,17 +54,23 @@ const { id, class: className, ...rest } = Astro.props;
 
 			const formData = new FormData(form);
 
-			fetch("send_email.php", {
+			fetch("/send_email.php", {
 				method: "POST",
 				body: formData,
 			}).then((response) => {
-				console.log(formData, response);
-				if (response.ok) {
-					form.reset();
-					console.log('Спасибо за заявку! Менеджер свяжется с Вами в ближайшее время.');
-				} else {
-					console.log('Произошла ошибка при отправке заявки. Попробуйте ещё раз.');
+				if (!response.ok) {
+					console.error('Произошла ошибка при отправке заявки.', response);
 				}
+				return response.json();
+			}).then((data) => {
+				if (data.success) {
+					alert('Спасибо за заявку! Менеджер свяжется с Вами в ближайшее время.');
+				} else {
+					alert('Произошла ошибка при отправке заявки. Пожалуйста, повторите попытку позже.');
+				}
+				console.log(data.message);
+			}).finally(() => {
+				form.reset();
 			});
 		})
 	})
