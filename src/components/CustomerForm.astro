@@ -39,19 +39,33 @@ const { id, class: className, ...rest } = Astro.props;
 </form>
 
 <script>
-	const forms = document.querySelectorAll('.customer-form');
+	const forms = document.querySelectorAll('.customer-form') as NodeListOf<HTMLFormElement>;
 
 	forms.forEach((form) => {
 		form.addEventListener('submit', (event) => {
 			event.preventDefault();
 			const method = form.getAttribute('method');
 
+			// закрываем модальное окно при нажатии кнопки "Отправить"
 			if (method === 'dialog') {
 				const dialog = form.closest('dialog');
 				dialog?.close();
 			}
 
-			console.log('Форма отправлена');
+			const formData = new FormData(form);
+
+			fetch("send_email.php", {
+				method: "POST",
+				body: formData,
+			}).then((response) => {
+				console.log(formData, response);
+				if (response.ok) {
+					form.reset();
+					console.log('Спасибо за заявку! Менеджер свяжется с Вами в ближайшее время.');
+				} else {
+					console.log('Произошла ошибка при отправке заявки. Попробуйте ещё раз.');
+				}
+			});
 		})
 	})
 </script>
