@@ -137,17 +137,19 @@ const { label, id, mask = null, ...rest } = Astro.props;
         }
 
         &:invalid {
-          border-bottom: 1px solid var(--clr-error);
+          &:not(:placeholder-shown) {
+            border-bottom: 1px solid var(--clr-error);
 
-          & ~ .input-message--required {
-            display: none;
+            & ~ .input-message--required {
+              display: none;
+            }
+
+            & ~ .input-message--error {
+              display: block;
+            }
           }
 
-          & ~ .input-message--error {
-            display: block;
-          }
-
-          &:focus-visible {
+          &:focus-visible:empty {
             margin-bottom: 0;
             border-bottom: 1px solid var(--clr-error);
 

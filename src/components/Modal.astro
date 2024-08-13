@@ -57,7 +57,7 @@ const { id, ...rest } = Astro.props;
 	}
 
 	dialogs.forEach((dialog) => {
-		dialog.addEventListener("click", closeOnBackDropClick);
+		dialog.addEventListener("mousedown", closeOnBackDropClick);
 	})
 </script>
 

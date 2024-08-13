@@ -23,18 +23,22 @@ const { id, class: className, ...rest } = Astro.props;
 		type="text"
 		name="name"
 		placeholder="Как к Вам обращаться?"
-		/>
-		<Input
+		required
+	/>
+	<Input
 		id=`${id}__customer-phone`
 		label="Ваш телефон"
 		type="tel"
 		name="phone"
 		placeholder="Введите ваш телефон"
 		mask="+7 (999) 999-99-99"
+		required
 	/>
 	<p class="agreement">Нажимая кнопку “Отправить” вы соглашаетесь на обработку
 		<a href="/privacy" target="_blank" rel="noopener noreferrer" aria-label="Политика конфиденциальности">персональных данных</a>
 	</p>
+	<div class="g-recaptcha" data-sitekey="6LfCKSYqAAAAAFC8VL70cAF5p0ZgBd13AA4IjOGT"></div>
+	<br/>
 	<Button type="submit">Отправить</Button>
 </form>
 
