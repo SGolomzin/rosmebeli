@@ -6,6 +6,8 @@ interface Props extends astroHTML.JSX.HTMLAttributes {
 	product: CollectionEntry<'catalog'>
 }
 
+import { baseUrl } from '../helpers/helpers';
+
 import Card from "./Card.astro";
 import Tag from "./Tag.astro";
 import Link from "./Link.astro";
@@ -21,7 +23,7 @@ const { product, class: className, ...rest } = Astro.props
 	shaded
 	{...rest}
 >
-	<a class="catalog-card__cover" href={`/rosmebeli/catalog/${product.slug}`} aria-label=`Перейти на страницу продукта - ${product.data.name}`>
+	<a class="catalog-card__cover" href={baseUrl(`catalog/${product.slug}`)} aria-label=`Перейти на страницу продукта - ${product.data.name}`>
 		<Image src={product.data.images[0].src} alt={product.data.images[0].alt || `Превью продукта - ${product.data.name}`} width={700} />
 	</a>
 	<Card class="catalog-card__info" filled>
@@ -30,7 +32,7 @@ const { product, class: className, ...rest } = Astro.props
 		<Tag class:list={["catalog-card__availibility", { "isAvailible": product.data.isAvailable }]}>● {product.data.isAvailable ? 'В наличии' : 'Под заказ'}</Tag>
 		<span class="catalog-card__variant">{product.data.details.doorMaterials}</span>
 	</Card>
-	<Link class="catalog-card__link" href={`/rosmebeli/catalog/${product.slug}`} appearance="button" icon="arrow-right">Подробнее</Link>
+	<Link class="catalog-card__link" href={baseUrl(`catalog/${product.slug}`)} appearance="button" icon="arrow-right">Подробнее</Link>
 </Card>
 
 <style lang="scss">

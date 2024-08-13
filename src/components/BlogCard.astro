@@ -7,7 +7,7 @@ interface Props extends astroHTML.JSX.HTMLAttributes {
 	post: CollectionEntry<'posts'>
 }
 
-import { declOfNum } from '../helpers/helpers';
+import { declOfNum, baseUrl } from '../helpers/helpers';
 
 import Card from './Card.astro';
 import Tag from './Tag.astro';
@@ -25,7 +25,7 @@ const { post, class: className, ...rest } = Astro.props;
 	filled
 	{...rest}
 >
-	<a href={`/rosmebeli/posts/${post.slug}`}>
+	<a href={baseUrl(`posts/${post.slug}`)}>
 		<div class="blog-post-card__cover">
 			<Image src={post.data.cover} alt={post.data.coverAlt} width={650} />
 		</div>

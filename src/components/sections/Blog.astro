@@ -1,6 +1,8 @@
 ---
 import { getCollection } from "astro:content";
 
+import { baseUrl } from '../../helpers/helpers';
+
 import AnimatedHeading from "../AnimatedHeading.astro";
 import Link from "../Link.astro";
 import BlogCard from "../BlogCard.astro";
@@ -25,7 +27,7 @@ const recentPosts = sortedPosts.slice(0, 3);
 
 			<Link
 				class="show-all"
-				href="/rosmebeli/posts"
+				href={baseUrl("posts")}
 				appearance="button-ghost"
 				icon="arrow-right"
 			>Смотреть все</Link>

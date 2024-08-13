@@ -1,6 +1,8 @@
 ---
 import { getCollection } from "astro:content";
 
+import { baseUrl } from '../../helpers/helpers';
+
 import AnimatedHeading from "../AnimatedHeading.astro";
 import CatalogCard from "../CatalogCard.astro";
 import Link from "../Link.astro";
@@ -17,7 +19,7 @@ const products = import.meta.env.PROD ? allProducts.slice(0, 10) : allProducts;
 			<AnimatedHeading class="catalog-heading" title="Наши работы" tag="h1" />
 			<div class="container-grid__heading-slogan">
 				<p>Мы создаем мебель, которая вдохновляет.</p>
-				<Link href="/rosmebeli/catalog" appearance="button-ghost" icon="arrow-right">Перейти в каталог</Link>
+				<Link href={baseUrl("catalog")} appearance="button-ghost" icon="arrow-right">Перейти в каталог</Link>
 			</div>
 		</div>
 		<div class="container-grid__content">

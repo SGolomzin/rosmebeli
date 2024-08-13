@@ -1,6 +1,8 @@
 ---
 import Layout from "../layouts/BaseLayout.astro";
 import Link from "../components/Link.astro";
+
+import { baseUrl } from "../helpers/helpers";
 ---
 
 <Layout title="404 | РОСМЕБЕЛЬ">
@@ -10,7 +12,7 @@ import Link from "../components/Link.astro";
 				<span class="error-code">404</span>
 				<h1>Страница не найдена</h1>
 				<p>Похоже, такой страницы не существует, пожалуйста перейдите на главную</p>
-				<Link href="/rosmebeli/" appearance="button-ghost">Перейти на главную</Link>
+				<Link href={baseUrl("./")} appearance="button-ghost">Перейти на главную</Link>
 			</div>
 		</section>
 	</main>

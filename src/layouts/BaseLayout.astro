@@ -6,6 +6,8 @@ import "../styles/layout.scss";
 import Header from "../components/sections/Header.astro";
 import Footer from "../components/sections/Footer.astro";
 
+import { baseUrl } from "../helpers/helpers";
+
 function isMainPage(pathname: string) {
   return Boolean(pathname === import.meta.env.BASE_URL
     || pathname === `${import.meta.env.BASE_URL}/`
@@ -17,46 +19,46 @@ const HeaderLinks = isMainPage(Astro.url.pathname)
   ? [
       {
         label: "Главная",
-        href: "/rosmebeli/#hero",
+        href: baseUrl("#hero"),
         active: true
       },
       {
         label: "О Нас",
-        href: "/rosmebeli/#about-us"
+        href: baseUrl("#about-us")
       },
       {
         label: "Наши работы",
-        href: "/rosmebeli/#catalog"
+        href: baseUrl("#catalog")
       },
       {
         label: "Отзывы",
-        href: "/rosmebeli/#reviews"
+        href: baseUrl("#reviews")
       },
       {
         label: "Контакты",
-        href: "/rosmebeli/#contacts"
+        href: baseUrl("#contacts")
       }
     ]
   : [
       {
         label: "Главная",
-        href: "/rosmebeli/"
+        href: baseUrl("./")
       },
       {
         label: "О компании",
-        href: "/rosmebeli/about"
+        href: baseUrl("about")
       },
       {
         label: "Каталог",
-        href: "/rosmebeli/catalog"
+        href: baseUrl("catalog")
       },
       {
         label: "Статьи",
-        href: "/rosmebeli/posts"
+        href: baseUrl("posts")
       },
       {
         label: "Услуги",
-        href: "/rosmebeli/services"
+        href: baseUrl("services")
       },
     ];
 
@@ -74,7 +76,7 @@ const { title } = Astro.props;
     <meta charset="UTF-8" />
     <meta name="description" content={description} />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="icon" type="image/svg+xml" href="/rosmebeli/favicon.svg" />
+    <link rel="icon" type="image/svg+xml" href={baseUrl("favicon.svg")} />
     <link rel="sitemap" href="/sitemap-index.xml" />
     <meta name="generator" content={Astro.generator} />
     <meta property="og:locale" content="ru_RU" />

@@ -1,6 +1,8 @@
 ---
 import { Icon } from 'astro-icon/components';
 
+import { baseUrl } from '../../helpers/helpers';
+
 import Copyright from '../Copyright.astro';
 import Socials from '../Socials.astro';
 ---
@@ -15,17 +17,17 @@ import Socials from '../Socials.astro';
 		<div class="footer-nav">
 			<span class="pseudo-h4">О нас</span>
 			<div class="footer-nav__list label">
-				<a href="/rosmebeli/about">О компании</a>
-				<a href="/rosmebeli/posts">Статьи</a>
+				<a href={baseUrl("about")}>О компании</a>
+				<a href={baseUrl("posts")}>Статьи</a>
 			</div>
 		</div>
 
 		<div class="footer-nav">
 			<span class="pseudo-h4">Покупателям</span>
 			<div class="footer-nav__list label">
-				<a href="/rosmebeli/catalog">Каталог</a>
-				<a href="/rosmebeli/services">Услуги</a>
-				<a href="/rosmebeli/reviews">Отзывы</a>
+				<a href={baseUrl("catalog")}>Каталог</a>
+				<a href={baseUrl("services")}>Услуги</a>
+				<a href={baseUrl("reviews")}>Отзывы</a>
 			</div>
 		</div>
 

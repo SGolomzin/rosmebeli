@@ -1,4 +1,6 @@
 ---
+import { baseUrl } from '../../helpers/helpers';
+
 import AnimatedHeading from "../AnimatedHeading.astro"
 import Link from "../Link.astro";
 ---
@@ -16,7 +18,7 @@ import Link from "../Link.astro";
 
 			<Link
 				class="about-us__link"
-				href="/rosmebeli/about"
+				href={baseUrl("about")}
 				appearance="button"
 				icon="arrow-right"
 			>Подробнее</Link>

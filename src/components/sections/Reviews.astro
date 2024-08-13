@@ -3,6 +3,8 @@ import { getCollection } from "astro:content";
 import type { CollectionEntry } from 'astro:content';
 type ReviewsType = CollectionEntry<'reviews'>
 
+import { baseUrl } from '../../helpers/helpers';
+
 import AnimatedHeading from "../AnimatedHeading.astro";
 import Review from "../Review.astro";
 import Link from "../Link.astro";
@@ -45,7 +47,7 @@ const reviews = Shuffle(allReviews).slice(0, 5);
 		</swiper-container>
 
 		<div class="reviews-link__wrapper">
-			<Link class="reviews-link" href="/rosmebeli/reviews" appearance="button-ghost" icon="arrow-right">Посмотреть все отзывы</Link>
+			<Link class="reviews-link" href={baseUrl("reviews")} appearance="button-ghost" icon="arrow-right">Посмотреть все отзывы</Link>
 		</div>
 	</div>
 </section>

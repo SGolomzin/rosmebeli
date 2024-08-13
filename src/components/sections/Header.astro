@@ -1,6 +1,8 @@
 ---
 import { Icon } from 'astro-icon/components';
 
+import { baseUrl } from '../../helpers/helpers';
+
 import Button from "../Button.astro";
 import Modal from '../Modal.astro';
 import CustomerForm from '../CustomerForm.astro';
@@ -19,7 +21,7 @@ const { links } = Astro.props;
 <header class="main-header">
 	<div class="container">
 		<nav class="navbar">
-			<a href="/rosmebeli/" class="navbar__logo" aria-label="Переход на главную страницу"><Icon name="logo" /></a>
+			<a href={baseUrl("./")} class="navbar__logo" aria-label="Переход на главную страницу"><Icon name="logo" /></a>
 			<Button appearance="ghost" id="navbar-toggler" aria-label="Кнопка открытия/закрытия навигационной панели">
 				<Icon name="menu" />
 				<Icon name="x" />
