@@ -1,0 +1,50 @@
+---
+import { getCollection } from "astro:content";
+
+import Layout from "../layouts/BaseLayout.astro";
+
+import Breadcrumbs from "../components/Breadcrumbs.astro";
+import Review from "../components/Review.astro";
+
+const allReviews = await getCollection("reviews");
+---
+
+<Layout title="Отзывы | РОСМЕБЕЛЬ">
+	<main data-theme="light">
+		<section class="section-block">
+			<div class="container container-grid">
+				<div class="reviews-page">
+					<Breadcrumbs currentPage="Отзывы"/>
+					<div class="reviews">
+						{
+							allReviews.map((review) => (
+								<Review {...review.data} />
+							))
+						}
+					</div>
+				</div>
+			</div>
+		</section>
+	</main>
+</Layout>
+
+<style lang="scss">
+	@import "../styles/_breakpoints.scss";
+
+	.reviews-page {
+		grid-column: 1 / -1;
+		text-align: justify;
+		text-wrap: pretty;
+
+		.reviews {
+			display: flex;
+			flex-direction: column;
+		}
+
+		@include breakpoint(xl) {
+			max-width: 80ch;
+			margin: 0 auto;
+		}
+	}
+
+</style>

@@ -5,10 +5,22 @@ type ReviewsType = CollectionEntry<'reviews'>
 
 import AnimatedHeading from "../AnimatedHeading.astro";
 import Review from "../Review.astro";
+import Link from "../Link.astro";
+
+function Shuffle(arr: any[]) {
+	for (var i = arr.length - 1; i > 0; i--) {
+		var j = Math.floor(Math.random() * (i + 1));
+		var temp = arr[i];
+		arr[i] = arr[j];
+		arr[j] = temp;
+	}
+	return arr;
+}
 
 const allReviews = await getCollection("reviews");
-const reviews = import.meta.env.PROD ? allReviews.slice(0, 5) : allReviews;
+const reviews = Shuffle(allReviews).slice(0, 5);
 ---
+
 <section
 	id="reviews"
 	class="section-block"
@@ -31,6 +43,10 @@ const reviews = import.meta.env.PROD ? allReviews.slice(0, 5) : allReviews;
 				))
 			}
 		</swiper-container>
+
+		<div class="reviews-link__wrapper">
+			<Link class="reviews-link" href="/rosmebeli/reviews" appearance="button-ghost" icon="arrow-right">Посмотреть все отзывы</Link>
+		</div>
 	</div>
 </section>
 
@@ -67,6 +83,14 @@ const reviews = import.meta.env.PROD ? allReviews.slice(0, 5) : allReviews;
 
 	.reviews-heading {
 		text-align: center;
+	}
+
+	.reviews-link {
+		&__wrapper {
+			display: flex;
+			justify-content: center;
+			margin-top: 2rem;
+		}
 	}
 
 	#reviews-slider {
